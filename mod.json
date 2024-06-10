@@ -1,0 +1,19 @@
+{
+	"geode": "3.0.0-alpha.2",
+	"gd": {
+		"win": "2.206"
+	},
+	"version": "v0.0.1",
+	"id": "sabe.persistencyutils",
+	"name": "PersistencyUtils",
+	"developer": "sabe",
+	"description": "",
+	"api": {
+		"include": [
+			"include/*.hpp",
+			"include/hooks/cocos2d/*.hpp",
+			"include/hooks/*.hpp",
+			"include/util/*.hpp"
+		]
+	}
+}
