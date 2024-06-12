@@ -52,10 +52,12 @@ inline void persistencyUtils::operator>>(InputStream& i_stream, PUPlayerCheckpoi
 	SEPARATOR_I
 	i_stream >> o_value.m_isGoingLeft;
 	SEPARATOR_I
-	i_stream.read((char*)o_value.m_unkBytes2, 27);
+	i_stream.read((char*)o_value.m_unkBytes2, 34);
 	SEPARATOR_I
 	// TODO SEE IF IT IS A PTR
-	i_stream >> o_value.m_maybeAPointer;
+	i_stream >> o_value.m_hideAttemptCount;
+	SEPARATOR_I
+	i_stream.read((char*)o_value.m_unkBytes3, 7);
 	SEPARATOR_I
 	i_stream >> o_value.m_unkBool;
 	SEPARATOR_I
@@ -65,11 +67,11 @@ inline void persistencyUtils::operator>>(InputStream& i_stream, PUPlayerCheckpoi
 	SEPARATOR_I
 	i_stream >> o_value.m_timeOrPercentRelated;
 	SEPARATOR_I
-	i_stream.read((char*)o_value.m_unkBytes3, 4);
+	i_stream.read((char*)o_value.m_unkBytes4, 4);
 	VEC_SEPARATOR_I
 	i_stream >> o_value.m_yPositionVector;
 	VEC_SEPARATOR_I
-	i_stream.read((char*)o_value.m_unkBytes4, 8);
+	i_stream.read((char*)o_value.m_unkBytes5, 8);
 	SEPARATOR_I
 }
 
@@ -110,10 +112,11 @@ inline void persistencyUtils::operator<<(OutputStream& o_stream, PUPlayerCheckpo
 	SEPARATOR_O
 	o_stream << i_value.m_isGoingLeft;
 	SEPARATOR_O
-	o_stream.write((char*)i_value.m_unkBytes2, 27);
+	o_stream.write((char*)i_value.m_unkBytes2, 34);
 	SEPARATOR_O
-	// TODO SEE IF IT IS A PTR
-	o_stream << i_value.m_maybeAPointer;
+	o_stream << i_value.m_hideAttemptCount;
+	SEPARATOR_O
+	o_stream.write((char*)i_value.m_unkBytes3, 7);
 	SEPARATOR_O
 	o_stream << i_value.m_unkBool;
 	SEPARATOR_O
@@ -123,11 +126,11 @@ inline void persistencyUtils::operator<<(OutputStream& o_stream, PUPlayerCheckpo
 	SEPARATOR_O
 	o_stream << i_value.m_timeOrPercentRelated;
 	SEPARATOR_O
-	o_stream.write((char*)i_value.m_unkBytes3, 4);
+	o_stream.write((char*)i_value.m_unkBytes4, 4);
 	VEC_SEPARATOR_O
 	o_stream << i_value.m_yPositionVector;
 	VEC_SEPARATOR_O
-	o_stream.write((char*)i_value.m_unkBytes4, 8);
+	o_stream.write((char*)i_value.m_unkBytes5, 8);
 	SEPARATOR_O
 }
 
