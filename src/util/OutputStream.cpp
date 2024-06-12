@@ -192,15 +192,11 @@ void OutputStream::operator<<<int, EnhancedGameObject*>(gd::unordered_map<int, E
 	//geode::log::info("Unordered Map CustomWrite EnhancedGameObject* SIZE out: {}", l_size);
 	if (l_size == 0) return;
 	int l_objectIndex;
+	PUPlayLayer* l_playLayer = static_cast<PUPlayLayer*>(PlayLayer::get());
 	for (std::pair<int, EnhancedGameObject*> l_pair : i_value) {
 		this->write(reinterpret_cast<char*>(&l_pair.first), sizeof(int));
 		int l_objectIndex = -1;
-		if (!l_pair.second) {
-			//geode::log::info("no game object??");
-		} else {
-			PUPlayLayer* l_playLayer = static_cast<PUPlayLayer*>(PlayLayer::get());
-			if (l_playLayer) l_objectIndex = l_playLayer->getGameObjectIndex(l_pair.second);
-		}
+		if (l_playLayer) l_objectIndex = l_playLayer->getGameObjectIndex(l_pair.second);
 		this->write(reinterpret_cast<char*>(&l_objectIndex), sizeof(int));
 	}
 }

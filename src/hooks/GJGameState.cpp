@@ -195,20 +195,12 @@ inline void persistencyUtils::operator>>(InputStream& i_stream, PUGJGameState& o
 	i_stream >> o_value.m_unkUint7;
 	SEPARATOR_I
 	int l_objectIndex;
-	PlayLayer* l_playLayer = PlayLayer::get();
+	PUPlayLayer* l_playLayer = static_cast<PUPlayLayer*>(PlayLayer::get());
 	i_stream >> l_objectIndex;
-	if (l_playLayer && l_objectIndex != -1) {
-		o_value.m_unkGameObjPtr1 = static_cast<GameObject*>(l_playLayer->m_objects->objectAtIndex(l_objectIndex));
-	} else {
-		o_value.m_unkGameObjPtr1 = nullptr;
-	}
+	if (l_playLayer) o_value.m_unkGameObjPtr1 = l_playLayer->getGameObject(l_objectIndex);
 	SEPARATOR_I
 	i_stream >> l_objectIndex;
-	if (l_playLayer && l_objectIndex != -1) {
-		o_value.m_unkGameObjPtr2 = static_cast<GameObject*>(l_playLayer->m_objects->objectAtIndex(l_objectIndex));
-	} else {
-		o_value.m_unkGameObjPtr2 = nullptr;
-	}
+	if (l_playLayer) o_value.m_unkGameObjPtr2 = l_playLayer->getGameObject(l_objectIndex);
 	SEPARATOR_I
 	i_stream >> o_value.m_cameraPosition;
 	SEPARATOR_I
@@ -552,17 +544,12 @@ inline void persistencyUtils::operator<<(OutputStream& o_stream, PUGJGameState& 
 	o_stream << i_value.m_unkUint7;
 	SEPARATOR_O
 	int l_objectIndex = -1;
-	if (i_value.m_unkGameObjPtr1) {
-		PUPlayLayer* l_playLayer = static_cast<PUPlayLayer*>(PlayLayer::get());
-		if (l_playLayer) l_objectIndex = l_playLayer->getGameObjectIndex(i_value.m_unkGameObjPtr1);
-	}
+	PUPlayLayer* l_playLayer = static_cast<PUPlayLayer*>(PlayLayer::get());
+	if (l_playLayer) l_objectIndex = l_playLayer->getGameObjectIndex(i_value.m_unkGameObjPtr1);
 	o_stream << l_objectIndex;
 	SEPARATOR_O
 	l_objectIndex = -1;
-	if (i_value.m_unkGameObjPtr2) {
-		PUPlayLayer* l_playLayer = static_cast<PUPlayLayer*>(PlayLayer::get());
-		if (l_playLayer) l_objectIndex = l_playLayer->getGameObjectIndex(i_value.m_unkGameObjPtr2);
-	}
+	if (l_playLayer) l_objectIndex = l_playLayer->getGameObjectIndex(i_value.m_unkGameObjPtr2);
 	o_stream << l_objectIndex;
 	SEPARATOR_O
 	o_stream << i_value.m_cameraPosition;
@@ -859,16 +846,11 @@ void PUGJGameState::describe() {
 	log::info("[PUGJGameState - describe] m_unkUint6: {}", m_unkUint6);
 	log::info("[PUGJGameState - describe] m_unkUint7: {}", m_unkUint7);
 	int l_objectIndex = -1;
-	if (m_unkGameObjPtr1) {
-		PUPlayLayer* l_playLayer = static_cast<PUPlayLayer*>(PlayLayer::get());
-		if (l_playLayer) l_objectIndex = l_playLayer->getGameObjectIndex(m_unkGameObjPtr1);
-	}
+	PUPlayLayer* l_playLayer = static_cast<PUPlayLayer*>(PlayLayer::get());
+	if (l_playLayer) l_objectIndex = l_playLayer->getGameObjectIndex(m_unkGameObjPtr1);
 	log::info("[PUGJGameState - describe] m_unkGameObjPtr1 objectIndex: {}", l_objectIndex);
 	l_objectIndex = -1;
-	if (m_unkGameObjPtr2) {
-		PUPlayLayer* l_playLayer = static_cast<PUPlayLayer*>(PlayLayer::get());
-		if (l_playLayer) l_objectIndex = l_playLayer->getGameObjectIndex(m_unkGameObjPtr2);
-	}
+	if (l_playLayer) l_objectIndex = l_playLayer->getGameObjectIndex(m_unkGameObjPtr2);
 	log::info("[PUGJGameState - describe] m_unkGameObjPtr2 objectIndex: {}", l_objectIndex);
 	log::info("[PUGJGameState - describe] m_cameraPosition: {}", m_cameraPosition);
 	log::info("[PUGJGameState - describe] m_unkBool8: {}", m_unkBool8);
@@ -944,12 +926,8 @@ void PUGJGameState::describe() {
 	for (std::pair<int, EnhancedGameObject*> l_pair : m_stateObjects) {
 		log::info("[PUGJGameState - describe] m_stateObjects element {} key: {}", i, l_pair.first);
 		int l_objectIndex = -1;
-		if (!l_pair.second) {
-			//log::info("no game object??");
-		} else {
-			PUPlayLayer* l_playLayer = static_cast<PUPlayLayer*>(PlayLayer::get());
-			if (l_playLayer) l_objectIndex = l_playLayer->getGameObjectIndex(l_pair.second);
-		}
+		PUPlayLayer* l_playLayer = static_cast<PUPlayLayer*>(PlayLayer::get());
+		if (l_playLayer) l_objectIndex = l_playLayer->getGameObjectIndex(l_pair.second);
 		log::info("[PUGJGameState - describe] m_stateObjects element {} value (l_objectIndex): {}", i, l_objectIndex);
 		i++;
 	}

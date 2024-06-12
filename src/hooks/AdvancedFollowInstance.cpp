@@ -18,12 +18,8 @@ void PUAdvancedFollowInstance::save(OutputStream& o_stream) {
 inline void persistencyUtils::operator>>(InputStream& i_stream, PUAdvancedFollowInstance& o_value) {
 	int l_objectIndex;
 	i_stream >> l_objectIndex;
-	PlayLayer* l_playLayer = PlayLayer::get();
-	if (l_playLayer && l_objectIndex != -1) {
-		o_value.m_gameObject = static_cast<GameObject*>(l_playLayer->m_objects->objectAtIndex(l_objectIndex));
-	} else {
-		o_value.m_gameObject = nullptr;
-	}
+	PUPlayLayer* l_playLayer = static_cast<PUPlayLayer*>(PlayLayer::get());
+	if (l_playLayer) o_value.m_gameObject = l_playLayer->getGameObject(l_objectIndex);
 	SEPARATOR_I
 	i_stream.read(reinterpret_cast<char*>(&o_value) + offsetof(PUAdvancedFollowInstance,m_gameObject) + sizeof(GameObject*), 24);
 	SEPARATOR_I
@@ -31,10 +27,8 @@ inline void persistencyUtils::operator>>(InputStream& i_stream, PUAdvancedFollow
 
 inline void persistencyUtils::operator<<(OutputStream& o_stream, PUAdvancedFollowInstance& i_value) {
 	int l_objectIndex = -1;
-	if (i_value.m_gameObject) {
-		PUPlayLayer* l_playLayer = static_cast<PUPlayLayer*>(PlayLayer::get());
-		if (l_playLayer) l_objectIndex = l_playLayer->getGameObjectIndex(i_value.m_gameObject);
-	}
+	PUPlayLayer* l_playLayer = static_cast<PUPlayLayer*>(PlayLayer::get());
+	if (l_playLayer) l_objectIndex = l_playLayer->getGameObjectIndex(i_value.m_gameObject);
 	o_stream << l_objectIndex;
 	SEPARATOR_O
 	o_stream.write(reinterpret_cast<char*>(&i_value) + offsetof(PUAdvancedFollowInstance,m_gameObject) + sizeof(GameObject*), 24);
@@ -45,10 +39,8 @@ inline void persistencyUtils::operator<<(OutputStream& o_stream, PUAdvancedFollo
 void PUAdvancedFollowInstance::describe() {
 	log::info("[PUAdvancedFollowInstance - describe] pad_1: [{}]", hexStr(reinterpret_cast<unsigned char*>(this) + offsetof(PUAdvancedFollowInstance,m_gameObject) + sizeof(GameObject*), 24));
 	int l_objectIndex = -1;
-	if (m_gameObject) {
-		PUPlayLayer* l_playLayer = static_cast<PUPlayLayer*>(PlayLayer::get());
-		if (l_playLayer) l_objectIndex = l_playLayer->getGameObjectIndex(m_gameObject);
-	}
+	PUPlayLayer* l_playLayer = static_cast<PUPlayLayer*>(PlayLayer::get());
+	if (l_playLayer) l_objectIndex = l_playLayer->getGameObjectIndex(m_gameObject);
 	log::info("[PUAdvancedFollowInstance - describe] m_gameObject l_objectIndex: {}", l_objectIndex);
 }
 #endif

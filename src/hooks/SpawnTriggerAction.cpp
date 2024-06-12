@@ -20,12 +20,8 @@ inline void persistencyUtils::operator>>(InputStream& i_stream, PUSpawnTriggerAc
 	SEPARATOR_I
 	int l_objectIndex;
 	i_stream >> l_objectIndex;
-	PlayLayer* l_playLayer = PlayLayer::get();
-	if (l_playLayer && l_objectIndex != -1) {
-		o_value.m_gameObject = static_cast<GameObject*>(l_playLayer->m_objects->objectAtIndex(l_objectIndex));
-	} else {
-		o_value.m_gameObject = nullptr;
-	}
+	PUPlayLayer* l_playLayer = static_cast<PUPlayLayer*>(PlayLayer::get());
+	if (l_playLayer) o_value.m_gameObject = l_playLayer->getGameObject(l_objectIndex);
 	VEC_SEPARATOR_I
 	int l_size = o_value.m_unkVecInt.size();
 	i_stream >> o_value.m_unkVecInt;
@@ -36,10 +32,8 @@ inline void persistencyUtils::operator<<(OutputStream& o_stream, PUSpawnTriggerA
 	o_stream.write(reinterpret_cast<char*>(&i_value), 40);
 	SEPARATOR_O
 	int l_objectIndex = -1;
-	if (i_value.m_gameObject) {
-		PUPlayLayer* l_playLayer = static_cast<PUPlayLayer*>(PlayLayer::get());
-		if (l_playLayer) l_objectIndex = l_playLayer->getGameObjectIndex(i_value.m_gameObject);
-	}
+	PUPlayLayer* l_playLayer = static_cast<PUPlayLayer*>(PlayLayer::get());
+	if (l_playLayer) l_objectIndex = l_playLayer->getGameObjectIndex(i_value.m_gameObject);
 	o_stream << l_objectIndex;
 	VEC_SEPARATOR_O
 	o_stream << i_value.m_unkVecInt;
@@ -50,10 +44,8 @@ inline void persistencyUtils::operator<<(OutputStream& o_stream, PUSpawnTriggerA
 void PUSpawnTriggerAction::describe() {
 	log::info("[PUSpawnTriggerAction - describe] pad_1: [{}]", hexStr(reinterpret_cast<unsigned char*>(this), 40));
 	int l_objectIndex = -1;
-	if (m_gameObject) {
-		PUPlayLayer* l_playLayer = static_cast<PUPlayLayer*>(PlayLayer::get());
-		if (l_playLayer) l_objectIndex = l_playLayer->getGameObjectIndex(m_gameObject);
-	}
+	PUPlayLayer* l_playLayer = static_cast<PUPlayLayer*>(PlayLayer::get());
+	if (l_playLayer) l_objectIndex = l_playLayer->getGameObjectIndex(m_gameObject);
 	log::info("[PUSpawnTriggerAction - describe] m_gameObject l_objectIndex: {}", l_objectIndex);
 	int l_size = m_unkVecInt.size();
 	log::info("[PUSpawnTriggerAction - describe] m_unkVecInt.size(): {}", l_size);

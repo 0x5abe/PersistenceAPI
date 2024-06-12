@@ -34,16 +34,12 @@ void PUCCArray::load<GradientTriggerObject>(InputStream& i_stream) {
 	removeAllObjects();
 	unsigned int l_size;
 	i_stream >> l_size;
-	PlayLayer* l_playLayer = PlayLayer::get();
+	PUPlayLayer* l_playLayer = static_cast<PUPlayLayer*>(PlayLayer::get());
 	//geode::log::info("CCARRAY GradientTriggerObject SIZE in: {}", l_size);
 	for (int i = 0; i < l_size; i++) {
 		int l_objectIndex;
 		i_stream >> l_objectIndex;
-		
-		if (l_playLayer && l_objectIndex != -1) {
-			//geode::log::info("CCARRAY GradientTriggerObject ObjectIndex in: {}", l_objectIndex);
-			addObject(PlayLayer::get()->m_objects->objectAtIndex(l_objectIndex));
-		}
+		if (l_playLayer) addObject(l_playLayer->getGameObject(l_objectIndex));
 	}
 }
 
@@ -52,15 +48,10 @@ void PUCCArray::save<GradientTriggerObject>(OutputStream& o_stream) {
 	unsigned int l_size = count();
 	o_stream << l_size;
 	//geode::log::info("CCARRAY GradientTriggerObject SIZE out: {}", l_size);
+	PUPlayLayer* l_playLayer = static_cast<PUPlayLayer*>(PlayLayer::get());
 	for (int i = 0; i < l_size; i++) {
 		int l_objectIndex = -1;
-		if (!objectAtIndex(i)) {
-			//log::info(" no game object?? @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-		} else {
-			PUPlayLayer* l_playLayer = static_cast<PUPlayLayer*>(PlayLayer::get());
-			if (l_playLayer) l_objectIndex = l_playLayer->getGameObjectIndex(static_cast<GameObject*>(objectAtIndex(i)));
-			//geode::log::info("CCARRAY GradientTriggerObject ObjectIndex out: {}", l_objectIndex);
-		}
+		if (l_playLayer) l_objectIndex = l_playLayer->getGameObjectIndex(static_cast<GameObject*>(objectAtIndex(i)));
 		o_stream << l_objectIndex;
 	}
 }

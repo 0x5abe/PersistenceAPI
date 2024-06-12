@@ -36,22 +36,14 @@ inline void persistencyUtils::operator>>(InputStream& i_stream, PUDynamicSaveObj
 
 	// get the pointer to the gameObject
 
-	PlayLayer* l_playLayer = PlayLayer::get();
-	if (l_playLayer && l_objectIndex != -1) {
-		o_value.m_gameObject = static_cast<GameObject*>(l_playLayer->m_objects->objectAtIndex(l_objectIndex));
-	} else {
-		o_value.m_gameObject = nullptr;
-	}
+	PUPlayLayer* l_playLayer = static_cast<PUPlayLayer*>(PlayLayer::get());
+	if (l_playLayer) o_value.m_gameObject = l_playLayer->getGameObject(l_objectIndex);
 }
 
 inline void persistencyUtils::operator<<(OutputStream& o_stream, PUDynamicSaveObject& i_value) {
 	int l_objectIndex = -1;
-	if (!i_value.m_gameObject) {
-		//log::info("no game object??");
-	} else {
-		PUPlayLayer* l_playLayer = static_cast<PUPlayLayer*>(PlayLayer::get());
-		if (l_playLayer) l_objectIndex = l_playLayer->getGameObjectIndex(i_value.m_gameObject);
-	}
+	PUPlayLayer* l_playLayer = static_cast<PUPlayLayer*>(PlayLayer::get());
+	if (l_playLayer) l_objectIndex = l_playLayer->getGameObjectIndex(i_value.m_gameObject);
 	o_stream << l_objectIndex;
 	SEPARATOR_O
 	o_stream << i_value.m_unkDouble1;
@@ -75,12 +67,8 @@ inline void persistencyUtils::operator<<(OutputStream& o_stream, PUDynamicSaveOb
 #if defined(PU_DEBUG) && defined(PU_DESCRIBE)
 void PUDynamicSaveObject::describe() {
 	int l_objectIndex = -1;
-	if (!m_gameObject) {
-		log::info("[PUDynamicSaveObject - describe] no game object?? @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-	} else {
-		PUPlayLayer* l_playLayer = static_cast<PUPlayLayer*>(PlayLayer::get());
-		if (l_playLayer) l_objectIndex = l_playLayer->getGameObjectIndex(m_gameObject);
-	}
+	PUPlayLayer* l_playLayer = static_cast<PUPlayLayer*>(PlayLayer::get());
+	if (l_playLayer) l_objectIndex = l_playLayer->getGameObjectIndex(m_gameObject);
 	
 	log::info("[PUDynamicSaveObject - describe] l_objectIndex: {}", l_objectIndex);
 	log::info("[PUDynamicSaveObject - describe] m_unkDouble1: {}", m_unkDouble1);

@@ -22,12 +22,8 @@ inline void persistencyUtils::operator>>(InputStream& i_stream, PUEnterEffectIns
 	SEPARATOR_I
 	int l_objectIndex;
 	i_stream >> l_objectIndex;
-	PlayLayer* l_playLayer = PlayLayer::get();
-	if (l_playLayer && l_objectIndex != -1) {
-		o_value.m_gameObject = static_cast<GameObject*>(l_playLayer->m_objects->objectAtIndex(l_objectIndex));
-	} else {
-		o_value.m_gameObject = nullptr;
-	}
+	PUPlayLayer* l_playLayer = static_cast<PUPlayLayer*>(PlayLayer::get());
+	if (l_playLayer) o_value.m_gameObject = l_playLayer->getGameObject(l_objectIndex);
 	SEPARATOR_I
 	i_stream.read(reinterpret_cast<char*>(&o_value) + offsetof(PUEnterEffectInstance,m_gameObject) + sizeof(GameObject*), 28);
 	VEC_SEPARATOR_I
@@ -44,10 +40,8 @@ inline void persistencyUtils::operator<<(OutputStream& o_stream, PUEnterEffectIn
 	o_stream.write(reinterpret_cast<char*>(&i_value) + offsetof(PUEnterEffectInstance,m_enterEffectAnimMap) + sizeof(gd::map<int,EnterEffectAnimValue>), 140);
 	SEPARATOR_O
 	int l_objectIndex = -1;
-	if (i_value.m_gameObject) {
-		PUPlayLayer* l_playLayer = static_cast<PUPlayLayer*>(PlayLayer::get());
-		if (l_playLayer) l_objectIndex = l_playLayer->getGameObjectIndex(i_value.m_gameObject);
-	}
+	PUPlayLayer* l_playLayer = static_cast<PUPlayLayer*>(PlayLayer::get());
+	if (l_playLayer) l_objectIndex = l_playLayer->getGameObjectIndex(i_value.m_gameObject);
 	o_stream << l_objectIndex;
 	SEPARATOR_O
 	o_stream.write(reinterpret_cast<char*>(&i_value) + offsetof(PUEnterEffectInstance,m_gameObject) + sizeof(GameObject*), 28);
@@ -68,10 +62,8 @@ void PUEnterEffectInstance::describe() {
 	}
 	log::info("[PUEnterEffectInstance - describe] pad_1: [{}]", hexStr(reinterpret_cast<unsigned char*>(this) + offsetof(PUEnterEffectInstance,m_enterEffectAnimMap) + sizeof(gd::map<int,EnterEffectAnimValue>), 140));
 	int l_objectIndex = -1;
-	if (m_gameObject) {
-		PUPlayLayer* l_playLayer = static_cast<PUPlayLayer*>(PlayLayer::get());
-		if (l_playLayer) l_objectIndex = l_playLayer->getGameObjectIndex(m_gameObject);
-	}
+	PUPlayLayer* l_playLayer = static_cast<PUPlayLayer*>(PlayLayer::get());
+	if (l_playLayer) l_objectIndex = l_playLayer->getGameObjectIndex(m_gameObject);
 	log::info("[PUEnterEffectInstance - describe] m_gameObject l_objectIndex: {}", l_objectIndex);
 	log::info("[PUEnterEffectInstance - describe] pad_2: [{}]", hexStr(reinterpret_cast<unsigned char*>(this) + offsetof(PUEnterEffectInstance,m_gameObject) + sizeof(GameObject*), 28));
 	int l_size = m_unkVecInt.size();
