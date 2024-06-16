@@ -3,7 +3,7 @@
 #include "hooks/PlayLayer.hpp"
 
 using namespace geode::prelude;
-using namespace persistencyUtils;
+using namespace persistenceUtils;
 
 template <class T>
 void PUCCArray::load(InputStream& i_stream) {

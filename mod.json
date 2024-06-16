@@ -1,13 +1,14 @@
 {
-	"geode": "3.0.0-alpha.2",
+	"geode": "3.0.0-beta.1",
 	"gd": {
 		"win": "2.206"
 	},
 	"version": "v0.0.1",
-	"id": "sabe.persistencyutils",
-	"name": "PersistencyUtils",
+	"id": "sabe.persistenceutils",
+	"name": "PersistenceUtils",
 	"developer": "sabe",
 	"description": "",
+	"early-load": true,
 	"api": {
 		"include": [
 			"include/*.hpp",

@@ -4,7 +4,7 @@
 #include "util/debug.hpp"
 
 using namespace geode::prelude;
-using namespace persistencyUtils;
+using namespace persistenceUtils;
 
 void PUDynamicObjectAction::load(InputStream& i_stream) {
 	i_stream >> *this;
@@ -14,7 +14,7 @@ void PUDynamicObjectAction::save(OutputStream& o_stream) {
 	o_stream << *this;
 }
 
-inline void persistencyUtils::operator>>(InputStream& i_stream, PUDynamicObjectAction& o_value) {
+inline void persistenceUtils::operator>>(InputStream& i_stream, PUDynamicObjectAction& o_value) {
 	int l_objectIndex;
 
 	PUPlayLayer* l_playLayer = static_cast<PUPlayLayer*>(PlayLayer::get());
@@ -48,7 +48,7 @@ inline void persistencyUtils::operator>>(InputStream& i_stream, PUDynamicObjectA
 	SEPARATOR_I	
 }
 
-inline void persistencyUtils::operator<<(OutputStream& o_stream, PUDynamicObjectAction& i_value) {
+inline void persistenceUtils::operator<<(OutputStream& o_stream, PUDynamicObjectAction& i_value) {
 	int l_objectIndex = -1;
 
 	PUPlayLayer* l_playLayer = static_cast<PUPlayLayer*>(PlayLayer::get());

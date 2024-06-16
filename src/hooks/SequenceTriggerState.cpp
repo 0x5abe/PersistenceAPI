@@ -3,7 +3,7 @@
 #include "util/debug.hpp"
 
 using namespace geode::prelude;
-using namespace persistencyUtils;
+using namespace persistenceUtils;
 
 void PUSequenceTriggerState::load(InputStream& i_stream) {
 	i_stream >> *this;
@@ -13,7 +13,7 @@ void PUSequenceTriggerState::save(OutputStream& o_stream) {
 	o_stream << *this;
 }
 
-inline void persistencyUtils::operator>>(InputStream& i_stream, PUSequenceTriggerState& o_value) {
+inline void persistenceUtils::operator>>(InputStream& i_stream, PUSequenceTriggerState& o_value) {
 	UMAP_SEPARATOR_I
 	i_stream >> o_value.m_unkUnorderedMap1;
 	UMAP_SEPARATOR_I
@@ -21,7 +21,7 @@ inline void persistencyUtils::operator>>(InputStream& i_stream, PUSequenceTrigge
 	UMAP_SEPARATOR_I
 }
 
-inline void persistencyUtils::operator<<(OutputStream& o_stream, PUSequenceTriggerState& i_value) {
+inline void persistenceUtils::operator<<(OutputStream& o_stream, PUSequenceTriggerState& i_value) {
 	UMAP_SEPARATOR_O
 	o_stream << i_value.m_unkUnorderedMap1;
 	UMAP_SEPARATOR_O

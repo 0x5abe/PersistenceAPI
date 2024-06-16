@@ -14,7 +14,7 @@
 
 #define PU_OPERATOR_WRITE(type) SABE_PU_DLL virtual void operator<<(type& i_value) { write(reinterpret_cast<char*>(&i_value), sizeof(type)); }
 
-namespace persistencyUtils {
+namespace persistenceUtils {
 	class OutputStream {
 	protected:
 		std::ofstream* m_stream;

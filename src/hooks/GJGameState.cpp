@@ -7,7 +7,7 @@
 #include "util/debug.hpp"
 
 using namespace geode::prelude;
-using namespace persistencyUtils;
+using namespace persistenceUtils;
 
 void PUGJGameState::load(InputStream& i_stream) {
 	i_stream >> *this;
@@ -17,7 +17,7 @@ void PUGJGameState::save(OutputStream& o_stream) {
 	o_stream << *this;
 }
 
-inline void persistencyUtils::operator>>(InputStream& i_stream, PUGJGameState& o_value) {
+inline void persistenceUtils::operator>>(InputStream& i_stream, PUGJGameState& o_value) {
 	i_stream >> o_value.m_cameraZoom;
 	SEPARATOR_I
 	i_stream >> o_value.m_targetCameraZoom;
@@ -206,7 +206,7 @@ inline void persistencyUtils::operator>>(InputStream& i_stream, PUGJGameState& o
 	SEPARATOR_I
 	i_stream >> o_value.m_unkBool10;
 	SEPARATOR_I
-	i_stream >> o_value.m_unkUint8;
+	i_stream >> o_value.m_levelFlipping;
 	SEPARATOR_I
 	i_stream >> o_value.m_unkBool11;
 	SEPARATOR_I
@@ -366,7 +366,7 @@ inline void persistencyUtils::operator>>(InputStream& i_stream, PUGJGameState& o
 	SEPARATOR_I
 }
 
-inline void persistencyUtils::operator<<(OutputStream& o_stream, PUGJGameState& i_value) {
+inline void persistenceUtils::operator<<(OutputStream& o_stream, PUGJGameState& i_value) {
 	o_stream << i_value.m_cameraZoom;
 	SEPARATOR_O
 	o_stream << i_value.m_targetCameraZoom;
@@ -556,7 +556,7 @@ inline void persistencyUtils::operator<<(OutputStream& o_stream, PUGJGameState& 
 	SEPARATOR_O
 	o_stream << i_value.m_unkBool10;
 	SEPARATOR_O
-	o_stream << i_value.m_unkUint8;
+	o_stream << i_value.m_levelFlipping;
 	SEPARATOR_O
 	o_stream << i_value.m_unkBool11;
 	SEPARATOR_O

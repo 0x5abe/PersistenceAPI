@@ -3,7 +3,7 @@
 #include "util/debug.hpp"
 
 using namespace geode::prelude;
-using namespace persistencyUtils;
+using namespace persistenceUtils;
 
 void PUPlayerCheckpoint::load(InputStream& i_stream) {
 	reinterpret_cast<PUCCNode*>(this)->load(i_stream);
@@ -15,7 +15,7 @@ void PUPlayerCheckpoint::save(OutputStream& o_stream) {
 	o_stream << *this;
 }
 
-inline void persistencyUtils::operator>>(InputStream& i_stream, PUPlayerCheckpoint& o_value) {
+inline void persistenceUtils::operator>>(InputStream& i_stream, PUPlayerCheckpoint& o_value) {
 	i_stream >> o_value.m_position;
 	SEPARATOR_I
 	i_stream >> o_value.m_lastPosition;
@@ -75,7 +75,7 @@ inline void persistencyUtils::operator>>(InputStream& i_stream, PUPlayerCheckpoi
 	SEPARATOR_I
 }
 
-inline void persistencyUtils::operator<<(OutputStream& o_stream, PUPlayerCheckpoint& i_value) {
+inline void persistenceUtils::operator<<(OutputStream& o_stream, PUPlayerCheckpoint& i_value) {
 	o_stream << i_value.m_position;
 	SEPARATOR_O
 	o_stream << i_value.m_lastPosition;

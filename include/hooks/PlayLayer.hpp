@@ -3,7 +3,7 @@
 #include "Geode/modify/PlayLayer.hpp"
 #include "import_export.hpp"
 
-namespace persistencyUtils {
+namespace persistenceUtils {
 	class $modify(PUPlayLayer, PlayLayer) {
 	public:
 		struct Fields {

@@ -3,7 +3,7 @@
 #include "util/debug.hpp"
 
 using namespace geode::prelude;
-using namespace persistencyUtils;
+using namespace persistenceUtils;
 
 void PUCCNode::load(InputStream& i_stream) {
 	reinterpret_cast<PUCCObject*>(this)->load(i_stream);
@@ -15,7 +15,7 @@ void PUCCNode::save(OutputStream& o_stream) {
 	o_stream << *this;
 }
 
-inline void persistencyUtils::operator>>(InputStream& i_stream, PUCCNode& o_value) {
+inline void persistenceUtils::operator>>(InputStream& i_stream, PUCCNode& o_value) {
 	i_stream >> o_value.m_fRotationX;
 	SEPARATOR_I
 	i_stream >> o_value.m_fRotationY;
@@ -64,7 +64,7 @@ inline void persistencyUtils::operator>>(InputStream& i_stream, PUCCNode& o_valu
 	SEPARATOR_I
 }
 
-inline void persistencyUtils::operator<<(OutputStream& o_stream, PUCCNode& i_value) {
+inline void persistenceUtils::operator<<(OutputStream& o_stream, PUCCNode& i_value) {
 	o_stream << i_value.m_fRotationX;
 	SEPARATOR_O
 	o_stream << i_value.m_fRotationY;

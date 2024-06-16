@@ -4,7 +4,7 @@
 #include "util/debug.hpp"
 
 using namespace geode::prelude;
-using namespace persistencyUtils;
+using namespace persistenceUtils;
 
 void PUActiveSaveObject1::load(InputStream& i_stream) {
 	i_stream >> *this;
@@ -14,7 +14,7 @@ void PUActiveSaveObject1::save(OutputStream& o_stream) {
 	o_stream << *this;
 }
 
-inline void persistencyUtils::operator>>(InputStream& i_stream, PUActiveSaveObject1& o_value) {
+inline void persistenceUtils::operator>>(InputStream& i_stream, PUActiveSaveObject1& o_value) {
 	int l_objectIndex;
 	i_stream >> l_objectIndex;
 	SEPARATOR_I
@@ -29,7 +29,7 @@ inline void persistencyUtils::operator>>(InputStream& i_stream, PUActiveSaveObje
 	if (l_playLayer) o_value.m_gameObject = l_playLayer->getGameObject(l_objectIndex);
 }
 
-inline void persistencyUtils::operator<<(OutputStream& o_stream, PUActiveSaveObject1& i_value) {
+inline void persistenceUtils::operator<<(OutputStream& o_stream, PUActiveSaveObject1& i_value) {
 	int l_objectIndex = -1;
 	PUPlayLayer* l_playLayer = static_cast<PUPlayLayer*>(PlayLayer::get());
 	if (l_playLayer) l_objectIndex = l_playLayer->getGameObjectIndex(i_value.m_gameObject);
@@ -49,7 +49,7 @@ void PUActiveSaveObject2::save(OutputStream& o_stream) {
 	o_stream << *this;
 }
 
-inline void persistencyUtils::operator>>(InputStream& i_stream, PUActiveSaveObject2& o_value) {
+inline void persistenceUtils::operator>>(InputStream& i_stream, PUActiveSaveObject2& o_value) {
 	int l_objectIndex;
 	i_stream >> l_objectIndex;
 	SEPARATOR_I
@@ -64,7 +64,7 @@ inline void persistencyUtils::operator>>(InputStream& i_stream, PUActiveSaveObje
 	if (l_playLayer) o_value.m_gameObject = l_playLayer->getGameObject(l_objectIndex);
 }
 
-inline void persistencyUtils::operator<<(OutputStream& o_stream, PUActiveSaveObject2& i_value) {
+inline void persistenceUtils::operator<<(OutputStream& o_stream, PUActiveSaveObject2& i_value) {
 	int l_objectIndex = -1;
 	PUPlayLayer* l_playLayer = static_cast<PUPlayLayer*>(PlayLayer::get());
 	if (l_playLayer) l_objectIndex = l_playLayer->getGameObjectIndex(i_value.m_gameObject);

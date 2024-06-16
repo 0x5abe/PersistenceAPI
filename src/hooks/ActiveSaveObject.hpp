@@ -6,15 +6,15 @@
 #include "util/OutputStream.hpp"
 #include "import_export.hpp"
 
-namespace persistencyUtils {
+namespace persistenceUtils {
 	class $modify(PUActiveSaveObject1, ActiveSaveObject1) {
 	public:
-		friend void operator>>(persistencyUtils::InputStream& i_stream, persistencyUtils::PUActiveSaveObject1& o_value);
-		friend void operator<<(persistencyUtils::OutputStream& o_stream, persistencyUtils::PUActiveSaveObject1& i_value);
+		friend void operator>>(persistenceUtils::InputStream& i_stream, persistenceUtils::PUActiveSaveObject1& o_value);
+		friend void operator<<(persistenceUtils::OutputStream& o_stream, persistenceUtils::PUActiveSaveObject1& i_value);
 
 	public:
-		SABE_PU_DLL void load(persistencyUtils::InputStream& i_stream);
-		SABE_PU_DLL void save(persistencyUtils::OutputStream& o_stream);
+		SABE_PU_DLL void load(persistenceUtils::InputStream& i_stream);
+		SABE_PU_DLL void save(persistenceUtils::OutputStream& o_stream);
 
 	#if defined(PU_DEBUG) && defined(PU_DESCRIBE)
 		SABE_PU_DLL void describe();
@@ -23,12 +23,12 @@ namespace persistencyUtils {
 
 	class $modify(PUActiveSaveObject2, ActiveSaveObject2) {
 	public:
-		friend void operator>>(persistencyUtils::InputStream& i_stream, persistencyUtils::PUActiveSaveObject2& o_value);
-		friend void operator<<(persistencyUtils::OutputStream& o_stream, persistencyUtils::PUActiveSaveObject2& i_value);
+		friend void operator>>(persistenceUtils::InputStream& i_stream, persistenceUtils::PUActiveSaveObject2& o_value);
+		friend void operator<<(persistenceUtils::OutputStream& o_stream, persistenceUtils::PUActiveSaveObject2& i_value);
 
 	public:
-		SABE_PU_DLL void load(persistencyUtils::InputStream& i_stream);
-		SABE_PU_DLL void save(persistencyUtils::OutputStream& o_stream);
+		SABE_PU_DLL void load(persistenceUtils::InputStream& i_stream);
+		SABE_PU_DLL void save(persistenceUtils::OutputStream& o_stream);
 
 	#if defined(PU_DEBUG) && defined(PU_DESCRIBE)
 		SABE_PU_DLL void describe();

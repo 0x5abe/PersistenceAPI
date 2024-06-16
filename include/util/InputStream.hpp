@@ -13,7 +13,7 @@
 
 #define PU_OPERATOR_READ(type) SABE_PU_DLL virtual void operator>>(type& o_value) { read(reinterpret_cast<char*>(&o_value), sizeof(type)); }
 
-namespace persistencyUtils {
+namespace persistenceUtils {
 	class InputStream {
 	protected:
 		std::ifstream* m_stream;

@@ -3,7 +3,7 @@
 #include "util/debug.hpp"
 
 using namespace geode::prelude;
-using namespace persistencyUtils;
+using namespace persistenceUtils;
 
 void PUCAState::load(InputStream& i_stream) {
 	i_stream >> *this;
@@ -13,12 +13,12 @@ void PUCAState::save(OutputStream& o_stream) {
 	o_stream << *this;
 }
 
-inline void persistencyUtils::operator>>(InputStream& i_stream, PUCAState& o_value) {
+inline void persistenceUtils::operator>>(InputStream& i_stream, PUCAState& o_value) {
 	i_stream.read(reinterpret_cast<char*>(&o_value), 68);
 	SEPARATOR_I;
 }
 
-inline void persistencyUtils::operator<<(OutputStream& o_stream, PUCAState& i_value) {
+inline void persistenceUtils::operator<<(OutputStream& o_stream, PUCAState& i_value) {
 	o_stream.write(reinterpret_cast<char*>(&i_value), 68);
 	SEPARATOR_O;
 }

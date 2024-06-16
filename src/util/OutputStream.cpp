@@ -24,7 +24,7 @@
 #include "hooks/SFXTriggerInstance.hpp"
 #include "hooks/DynamicObjectAction.hpp"
 
-using namespace persistencyUtils;
+using namespace persistenceUtils;
 
 // vector
 

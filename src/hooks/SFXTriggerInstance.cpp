@@ -6,7 +6,7 @@
 #include "util/debug.hpp"
 
 using namespace geode::prelude;
-using namespace persistencyUtils;
+using namespace persistenceUtils;
 
 void PUSFXTriggerInstance::load(InputStream& i_stream) {
 	i_stream >> *this;
@@ -16,7 +16,7 @@ void PUSFXTriggerInstance::save(OutputStream& o_stream) {
 	o_stream << *this;
 }
 
-inline void persistencyUtils::operator>>(InputStream& i_stream, PUSFXTriggerInstance& o_value) {
+inline void persistenceUtils::operator>>(InputStream& i_stream, PUSFXTriggerInstance& o_value) {
 	i_stream.read(reinterpret_cast<char*>(&o_value), 16);
 	SEPARATOR_I
 	int l_objectIndex;
@@ -26,7 +26,7 @@ inline void persistencyUtils::operator>>(InputStream& i_stream, PUSFXTriggerInst
 	SEPARATOR_I
 }
 
-inline void persistencyUtils::operator<<(OutputStream& o_stream, PUSFXTriggerInstance& i_value) {
+inline void persistenceUtils::operator<<(OutputStream& o_stream, PUSFXTriggerInstance& i_value) {
 	o_stream.write(reinterpret_cast<char*>(&i_value), 16);
 	SEPARATOR_O
 	int l_objectIndex = -1;

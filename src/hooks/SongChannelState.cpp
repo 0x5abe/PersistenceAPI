@@ -6,7 +6,7 @@
 #include "util/debug.hpp"
 
 using namespace geode::prelude;
-using namespace persistencyUtils;
+using namespace persistenceUtils;
 
 void PUSongChannelState::load(InputStream& i_stream) {
 	i_stream >> *this;
@@ -16,7 +16,7 @@ void PUSongChannelState::save(OutputStream& o_stream) {
 	o_stream << *this;
 }
 
-inline void persistencyUtils::operator>>(InputStream& i_stream, PUSongChannelState& o_value) {
+inline void persistenceUtils::operator>>(InputStream& i_stream, PUSongChannelState& o_value) {
 	int l_objectIndex;
 	i_stream >> l_objectIndex;
 	PUPlayLayer* l_playLayer = static_cast<PUPlayLayer*>(PlayLayer::get());
@@ -31,7 +31,7 @@ inline void persistencyUtils::operator>>(InputStream& i_stream, PUSongChannelSta
 	SEPARATOR_I
 }
 
-inline void persistencyUtils::operator<<(OutputStream& o_stream, PUSongChannelState& i_value) {
+inline void persistenceUtils::operator<<(OutputStream& o_stream, PUSongChannelState& i_value) {
 	int l_objectIndex = -1;
 	PUPlayLayer* l_playLayer = static_cast<PUPlayLayer*>(PlayLayer::get());
 	if (l_playLayer) l_objectIndex = l_playLayer->getGameObjectIndex(i_value.m_songTriggerGameObject1);

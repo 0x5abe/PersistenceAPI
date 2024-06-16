@@ -5,7 +5,7 @@
 #include "util/debug.hpp"
 
 using namespace geode::prelude;
-using namespace persistencyUtils;
+using namespace persistenceUtils;
 
 void PUGroupCommandObject2::load(InputStream& i_stream) {
 	i_stream >> *this;
@@ -15,7 +15,7 @@ void PUGroupCommandObject2::save(OutputStream& o_stream) {
 	o_stream << *this;
 }
 
-inline void persistencyUtils::operator>>(InputStream& i_stream, PUGroupCommandObject2& o_value) {
+inline void persistenceUtils::operator>>(InputStream& i_stream, PUGroupCommandObject2& o_value) {
 	i_stream.read(reinterpret_cast<char*>(&o_value), 440);
 	VEC_SEPARATOR_I
 	i_stream >> o_value.m_unkVecKeyframeObject;
@@ -28,7 +28,7 @@ inline void persistencyUtils::operator>>(InputStream& i_stream, PUGroupCommandOb
 	SEPARATOR_I
 }
 
-inline void persistencyUtils::operator<<(OutputStream& o_stream, PUGroupCommandObject2& i_value) {
+inline void persistenceUtils::operator<<(OutputStream& o_stream, PUGroupCommandObject2& i_value) {
 	o_stream.write(reinterpret_cast<char*>(&i_value), 440);
 	VEC_SEPARATOR_O
 	o_stream << i_value.m_unkVecKeyframeObject;

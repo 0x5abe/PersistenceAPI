@@ -4,11 +4,11 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_OSX_ARCHITECTURES "x86_64")
 set(CMAKE_CXX_VISIBILITY_PRESET hidden)
 
-project(PersistencyUtils VERSION 1.0.0)
+project(PersistenceUtils VERSION 1.0.0)
 
 # source files
 file(GLOB_RECURSE SOURCES
-	src/PersistencyUtils.cpp
+	src/PersistenceUtils.cpp
 	src/hooks/*.cpp
     src/hooks/cocos2d/*.cpp
     src/util/*.cpp
@@ -17,6 +17,8 @@ file(GLOB_RECURSE SOURCES
 )
 
 add_library(${PROJECT_NAME} SHARED ${SOURCES})
+
+target_compile_options(${PROJECT_NAME} PRIVATE "-Wno-invalid-offsetof")
 
 target_include_directories(${PROJECT_NAME} PUBLIC include)
 

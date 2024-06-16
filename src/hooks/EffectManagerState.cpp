@@ -17,7 +17,7 @@
 #include "util/debug.hpp"
 
 using namespace geode::prelude;
-using namespace persistencyUtils;
+using namespace persistenceUtils;
 
 void PUEffectManagerState::load(InputStream& i_stream) {
 	i_stream >> *this;
@@ -27,7 +27,7 @@ void PUEffectManagerState::save(OutputStream& o_stream) {
 	o_stream << *this;
 }
 
-inline void persistencyUtils::operator>>(InputStream& i_stream, PUEffectManagerState& o_value) {
+inline void persistenceUtils::operator>>(InputStream& i_stream, PUEffectManagerState& o_value) {
 	VEC_SEPARATOR_I
 	i_stream >> o_value.m_unkVecCAState;
 	VEC_SEPARATOR_I
@@ -77,7 +77,7 @@ inline void persistencyUtils::operator>>(InputStream& i_stream, PUEffectManagerS
 	UMAP_SEPARATOR_I
 }
 
-inline void persistencyUtils::operator<<(OutputStream& o_stream, PUEffectManagerState& i_value) {
+inline void persistenceUtils::operator<<(OutputStream& o_stream, PUEffectManagerState& i_value) {
 	VEC_SEPARATOR_O
 	o_stream << i_value.m_unkVecCAState;
 	VEC_SEPARATOR_O
