@@ -6,42 +6,42 @@
 #include "util/debug.hpp"
 
 using namespace geode::prelude;
-using namespace persistenceUtils;
+using namespace persistenceAPI;
 
-void PUSongTriggerState::load(InputStream& i_stream) {
+void PASongTriggerState::load(InputStream& i_stream) {
 	i_stream >> *this;
 }
 
-void PUSongTriggerState::save(OutputStream& o_stream) {
+void PASongTriggerState::save(OutputStream& o_stream) {
 	o_stream << *this;
 }
 
-inline void persistenceUtils::operator>>(InputStream& i_stream, PUSongTriggerState& o_value) {
+inline void persistenceAPI::operator>>(InputStream& i_stream, PASongTriggerState& o_value) {
 	int l_objectIndex;
 	i_stream >> l_objectIndex;
-	PUPlayLayer* l_playLayer = static_cast<PUPlayLayer*>(PlayLayer::get());
+	PAPlayLayer* l_playLayer = static_cast<PAPlayLayer*>(PlayLayer::get());
 	if (l_playLayer) o_value.m_songTriggerGameObject = static_cast<SongTriggerGameObject*>(l_playLayer->getGameObject(l_objectIndex));
 	SEPARATOR_I
-	i_stream.read(reinterpret_cast<char*>(&o_value) + offsetof(PUSongTriggerState,m_songTriggerGameObject) + sizeof(SongTriggerGameObject*), 8);
+	i_stream.read(reinterpret_cast<char*>(&o_value) + offsetof(PASongTriggerState,m_songTriggerGameObject) + sizeof(SongTriggerGameObject*), 8);
 	SEPARATOR_I
 }
 
-inline void persistenceUtils::operator<<(OutputStream& o_stream, PUSongTriggerState& i_value) {
+inline void persistenceAPI::operator<<(OutputStream& o_stream, PASongTriggerState& i_value) {
 	int l_objectIndex = -1;
-	PUPlayLayer* l_playLayer = static_cast<PUPlayLayer*>(PlayLayer::get());
+	PAPlayLayer* l_playLayer = static_cast<PAPlayLayer*>(PlayLayer::get());
 	if (l_playLayer) l_objectIndex = l_playLayer->getGameObjectIndex(i_value.m_songTriggerGameObject);
 	o_stream << l_objectIndex;
 	SEPARATOR_O
-	o_stream.write(reinterpret_cast<char*>(&i_value) + offsetof(PUSongTriggerState,m_songTriggerGameObject) + sizeof(SongTriggerGameObject*), 8);
+	o_stream.write(reinterpret_cast<char*>(&i_value) + offsetof(PASongTriggerState,m_songTriggerGameObject) + sizeof(SongTriggerGameObject*), 8);
 	SEPARATOR_O
 }
 
 #if defined(PU_DEBUG) && defined(PU_DESCRIBE)
-void PUSongTriggerState::describe() {
+void PASongTriggerState::describe() {
 	int l_objectIndex = -1;
-	PUPlayLayer* l_playLayer = static_cast<PUPlayLayer*>(PlayLayer::get());
+	PAPlayLayer* l_playLayer = static_cast<PAPlayLayer*>(PlayLayer::get());
 	if (l_playLayer) l_objectIndex = l_playLayer->getGameObjectIndex(m_songTriggerGameObject);
-	log::info("[PUSongTriggerState - describe] m_songTriggerGameObject l_objectIndex: {}", l_objectIndex);
-	log::info("[PUSongTriggerState - describe] pad_1: [{}]", hexStr(reinterpret_cast<unsigned char*>(this) + offsetof(PUSongTriggerState,m_songTriggerGameObject) + sizeof(SongTriggerGameObject*), 8));
+	log::info("[PASongTriggerState - describe] m_songTriggerGameObject l_objectIndex: {}", l_objectIndex);
+	log::info("[PASongTriggerState - describe] pad_1: [{}]", hexStr(reinterpret_cast<unsigned char*>(this) + offsetof(PASongTriggerState,m_songTriggerGameObject) + sizeof(SongTriggerGameObject*), 8));
 }
 #endif

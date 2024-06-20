@@ -3,17 +3,17 @@
 #include "util/debug.hpp"
 
 using namespace geode::prelude;
-using namespace persistenceUtils;
+using namespace persistenceAPI;
 
-void PUToggleTriggerAction::load(InputStream& i_stream) {
+void PAToggleTriggerAction::load(InputStream& i_stream) {
 	i_stream >> *this;
 }
 
-void PUToggleTriggerAction::save(OutputStream& o_stream) {
+void PAToggleTriggerAction::save(OutputStream& o_stream) {
 	o_stream << *this;
 }
 
-inline void persistenceUtils::operator>>(InputStream& i_stream, PUToggleTriggerAction& o_value) {
+inline void persistenceAPI::operator>>(InputStream& i_stream, PAToggleTriggerAction& o_value) {
 	i_stream.read(reinterpret_cast<char*>(&o_value), 20);
 	VEC_SEPARATOR_I
 	int l_size = o_value.m_unkVecInt.size();
@@ -21,7 +21,7 @@ inline void persistenceUtils::operator>>(InputStream& i_stream, PUToggleTriggerA
 	VEC_SEPARATOR_I
 }
 
-inline void persistenceUtils::operator<<(OutputStream& o_stream, PUToggleTriggerAction& i_value) {
+inline void persistenceAPI::operator<<(OutputStream& o_stream, PAToggleTriggerAction& i_value) {
 	o_stream.write(reinterpret_cast<char*>(&i_value), 20);
 	VEC_SEPARATOR_O
 	o_stream << i_value.m_unkVecInt;
@@ -29,12 +29,12 @@ inline void persistenceUtils::operator<<(OutputStream& o_stream, PUToggleTrigger
 }
 
 #if defined(PU_DEBUG) && defined(PU_DESCRIBE)
-void PUToggleTriggerAction::describe() {
-	log::info("[PUToggleTriggerAction - describe] pad_1: [{}]", hexStr(reinterpret_cast<unsigned char*>(this), 20));
+void PAToggleTriggerAction::describe() {
+	log::info("[PAToggleTriggerAction - describe] pad_1: [{}]", hexStr(reinterpret_cast<unsigned char*>(this), 20));
 	int l_size = m_unkVecInt.size();
-	log::info("[PUToggleTriggerAction - describe] m_unkVecInt.size(): {}", l_size);
+	log::info("[PAToggleTriggerAction - describe] m_unkVecInt.size(): {}", l_size);
 	for (int i = 0; i < l_size; i++) {
-		log::info("[PUToggleTriggerAction - describe] m_unkVecInt[{}]: {}", i, m_unkVecInt[i]);
+		log::info("[PAToggleTriggerAction - describe] m_unkVecInt[{}]: {}", i, m_unkVecInt[i]);
 	}
 }
 #endif

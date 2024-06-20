@@ -14,7 +14,7 @@
 
 #define PU_OPERATOR_WRITE(type) SABE_PU_DLL virtual void operator<<(type& i_value) { write(reinterpret_cast<char*>(&i_value), sizeof(type)); }
 
-namespace persistenceUtils {
+namespace persistenceAPI {
 	class OutputStream {
 	protected:
 		std::ofstream* m_stream;
@@ -39,6 +39,7 @@ namespace persistenceUtils {
 		PU_OPERATOR_WRITE(cocos2d::CCSize)
 		PU_OPERATOR_WRITE(cocos2d::CCAffineTransform)
 		PU_OPERATOR_WRITE(uint64_t)
+		PU_OPERATOR_WRITE(long long)
 
 		SABE_PU_DLL bool setFileToWrite(std::string i_filePath) {
 			if (m_stream) {

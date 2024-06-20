@@ -5,15 +5,15 @@
 #include "util/OutputStream.hpp"
 #include "import_export.hpp"
 
-namespace persistenceUtils {
-	class $modify(PUCAState, CAState) {
+namespace persistenceAPI {
+	class $modify(PACAState, CAState) {
 	protected:
-		friend void operator>>(persistenceUtils::InputStream& i_stream, PUCAState& o_value);
-		friend void operator<<(persistenceUtils::OutputStream& o_stream, PUCAState& i_value);
+		friend void operator>>(persistenceAPI::InputStream& i_stream, PACAState& o_value);
+		friend void operator<<(persistenceAPI::OutputStream& o_stream, PACAState& i_value);
 
 	public:
-		SABE_PU_DLL void load(persistenceUtils::InputStream& i_stream);
-		SABE_PU_DLL void save(persistenceUtils::OutputStream& o_stream);
+		SABE_PU_DLL void load(persistenceAPI::InputStream& i_stream);
+		SABE_PU_DLL void save(persistenceAPI::OutputStream& o_stream);
 
 	#if defined(PU_DEBUG) && defined(PU_DESCRIBE)
 		SABE_PU_DLL void describe();

@@ -5,15 +5,15 @@
 #include "util/OutputStream.hpp"
 #include "import_export.hpp"
 
-namespace persistenceUtils {
-	class $modify(PUEffectManagerState, EffectManagerState) {
+namespace persistenceAPI {
+	class $modify(PAEffectManagerState, EffectManagerState) {
 	protected:
-		friend void operator>>(persistenceUtils::InputStream& i_stream, PUEffectManagerState& o_value);
-		friend void operator<<(persistenceUtils::OutputStream& o_stream, PUEffectManagerState& i_value);
+		friend void operator>>(persistenceAPI::InputStream& i_stream, PAEffectManagerState& o_value);
+		friend void operator<<(persistenceAPI::OutputStream& o_stream, PAEffectManagerState& i_value);
 
 	public:
-		SABE_PU_DLL void load(persistenceUtils::InputStream& i_stream);
-		SABE_PU_DLL void save(persistenceUtils::OutputStream& o_stream);
+		SABE_PU_DLL void load(persistenceAPI::InputStream& i_stream);
+		SABE_PU_DLL void save(persistenceAPI::OutputStream& o_stream);
 
 		SABE_PU_DLL void clean();
 

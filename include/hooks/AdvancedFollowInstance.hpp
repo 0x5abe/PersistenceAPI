@@ -5,15 +5,15 @@
 #include "util/OutputStream.hpp"
 #include "import_export.hpp"
 
-namespace persistenceUtils {
-	class $modify(PUAdvancedFollowInstance, AdvancedFollowInstance) {
+namespace persistenceAPI {
+	class $modify(PAAdvancedFollowInstance, AdvancedFollowInstance) {
 	protected:
-		friend void operator>>(persistenceUtils::InputStream& i_stream, PUAdvancedFollowInstance& o_value);
-		friend void operator<<(persistenceUtils::OutputStream& o_stream, PUAdvancedFollowInstance& i_value);
+		friend void operator>>(persistenceAPI::InputStream& i_stream, PAAdvancedFollowInstance& o_value);
+		friend void operator<<(persistenceAPI::OutputStream& o_stream, PAAdvancedFollowInstance& i_value);
 
 	public:
-		SABE_PU_DLL void load(persistenceUtils::InputStream& i_stream);
-		SABE_PU_DLL void save(persistenceUtils::OutputStream& o_stream);
+		SABE_PU_DLL void load(persistenceAPI::InputStream& i_stream);
+		SABE_PU_DLL void save(persistenceAPI::OutputStream& o_stream);
 		
 	#if defined(PU_DEBUG) && defined(PU_DESCRIBE)
 		SABE_PU_DLL void describe();

@@ -2,17 +2,17 @@
 #include "util/debug.hpp"
 
 using namespace geode::prelude;
-using namespace persistenceUtils;
+using namespace persistenceAPI;
 
-void PUCCObject::load(InputStream& i_stream) {
+void PACCObject::load(InputStream& i_stream) {
 	i_stream >> *this;
 }
 
-void PUCCObject::save(OutputStream& o_stream) {
+void PACCObject::save(OutputStream& o_stream) {
 	o_stream << *this;
 }
 
-inline void persistenceUtils::operator>>(InputStream& i_stream, PUCCObject& o_value) {
+inline void persistenceAPI::operator>>(InputStream& i_stream, PACCObject& o_value) {
 	i_stream >> (int&)(o_value.m_eObjType);
 	SEPARATOR_I
 	i_stream >> o_value.m_nZOrder;
@@ -21,7 +21,7 @@ inline void persistenceUtils::operator>>(InputStream& i_stream, PUCCObject& o_va
 	SEPARATOR_I
 }
 
-inline void persistenceUtils::operator<<(OutputStream& o_stream, PUCCObject& i_value) {
+inline void persistenceAPI::operator<<(OutputStream& o_stream, PACCObject& i_value) {
 	o_stream << (int&)(i_value.m_eObjType);
 	SEPARATOR_O
 	o_stream << i_value.m_nZOrder;
@@ -31,9 +31,9 @@ inline void persistenceUtils::operator<<(OutputStream& o_stream, PUCCObject& i_v
 }
 
 #if defined(PU_DEBUG) && defined(PU_DESCRIBE)
-void PUCCObject::describe() {
-	log::info("[PUCCObject - describe] m_eObjType: {}", static_cast<int>(m_eObjType));
-	log::info("[PUCCObject - describe] m_nZOrder: {}", m_nZOrder);
-	log::info("[PUCCObject - describe] m_uOrderOfArrival: {}", m_uOrderOfArrival);
+void PACCObject::describe() {
+	log::info("[PACCObject - describe] m_eObjType: {}", static_cast<int>(m_eObjType));
+	log::info("[PACCObject - describe] m_nZOrder: {}", m_nZOrder);
+	log::info("[PACCObject - describe] m_uOrderOfArrival: {}", m_uOrderOfArrival);
 }
 #endif

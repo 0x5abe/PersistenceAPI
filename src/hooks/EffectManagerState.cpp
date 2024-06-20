@@ -17,17 +17,17 @@
 #include "util/debug.hpp"
 
 using namespace geode::prelude;
-using namespace persistenceUtils;
+using namespace persistenceAPI;
 
-void PUEffectManagerState::load(InputStream& i_stream) {
+void PAEffectManagerState::load(InputStream& i_stream) {
 	i_stream >> *this;
 }
 
-void PUEffectManagerState::save(OutputStream& o_stream) {
+void PAEffectManagerState::save(OutputStream& o_stream) {
 	o_stream << *this;
 }
 
-inline void persistenceUtils::operator>>(InputStream& i_stream, PUEffectManagerState& o_value) {
+inline void persistenceAPI::operator>>(InputStream& i_stream, PAEffectManagerState& o_value) {
 	VEC_SEPARATOR_I
 	i_stream >> o_value.m_unkVecCAState;
 	VEC_SEPARATOR_I
@@ -77,7 +77,7 @@ inline void persistenceUtils::operator>>(InputStream& i_stream, PUEffectManagerS
 	UMAP_SEPARATOR_I
 }
 
-inline void persistenceUtils::operator<<(OutputStream& o_stream, PUEffectManagerState& i_value) {
+inline void persistenceAPI::operator<<(OutputStream& o_stream, PAEffectManagerState& i_value) {
 	VEC_SEPARATOR_O
 	o_stream << i_value.m_unkVecCAState;
 	VEC_SEPARATOR_O
@@ -127,7 +127,7 @@ inline void persistenceUtils::operator<<(OutputStream& o_stream, PUEffectManager
 	UMAP_SEPARATOR_O
 }
 
-void PUEffectManagerState::clean() {
+void PAEffectManagerState::clean() {
 	m_unkVecCAState.clear();
 	gd::vector<CAState>().swap(m_unkVecCAState);
 
@@ -166,133 +166,133 @@ void PUEffectManagerState::clean() {
 }
 
 #if defined(PU_DEBUG) && defined(PU_DESCRIBE)
-void PUEffectManagerState::describe() {
+void PAEffectManagerState::describe() {
 	int l_size = m_unkVecCAState.size();
-	log::info("[PUEffectManagerState - describe] m_unkVecCAState.size(): {}", l_size);
+	log::info("[PAEffectManagerState - describe] m_unkVecCAState.size(): {}", l_size);
 	for (int i = 0; i < l_size; i++) {
-		log::info("[PUEffectManagerState - describe] m_unkVecCAState[{}]:", i);
-		reinterpret_cast<PUCAState*>(&m_unkVecCAState[i])->describe();
+		log::info("[PAEffectManagerState - describe] m_unkVecCAState[{}]:", i);
+		reinterpret_cast<PACAState*>(&m_unkVecCAState[i])->describe();
 	}
 	l_size = m_unkVecPulseEffectAction.size();
-	log::info("[PUEffectManagerState - describe] m_unkVecPulseEffectAction.size(): {}", l_size);
+	log::info("[PAEffectManagerState - describe] m_unkVecPulseEffectAction.size(): {}", l_size);
 	for (int i = 0; i < l_size; i++) {
-		log::info("[PUEffectManagerState - describe] m_unkVecPulseEffectAction[{}]: {}", i, hexStr(reinterpret_cast<uint8_t*>(&m_unkVecPulseEffectAction[i]), sizeof(PulseEffectAction)));
+		log::info("[PAEffectManagerState - describe] m_unkVecPulseEffectAction[{}]: {}", i, hexStr(reinterpret_cast<uint8_t*>(&m_unkVecPulseEffectAction[i]), sizeof(PulseEffectAction)));
 	}
 	l_size = m_unorderedMapInt_vectorPulseEffectAction.size();
-	log::info("[PUEffectManagerState - describe] m_unorderedMapInt_vectorPulseEffectAction.size(): {}", l_size);
+	log::info("[PAEffectManagerState - describe] m_unorderedMapInt_vectorPulseEffectAction.size(): {}", l_size);
 	int i = 0;
 	for (std::pair<int, gd::vector<PulseEffectAction>> l_pair : m_unorderedMapInt_vectorPulseEffectAction) {
-		log::info("[PUEffectManagerState - describe] m_unorderedMapInt_vectorPulseEffectAction element {} key: {}", i, l_pair.first);
-		log::info("[PUEffectManagerState - describe] m_unorderedMapInt_vectorPulseEffectAction element {} value:", i);
+		log::info("[PAEffectManagerState - describe] m_unorderedMapInt_vectorPulseEffectAction element {} key: {}", i, l_pair.first);
+		log::info("[PAEffectManagerState - describe] m_unorderedMapInt_vectorPulseEffectAction element {} value:", i);
 		l_size = l_pair.second.size();
-		log::info("[PUEffectManagerState - describe] m_unorderedMapInt_vectorPulseEffectAction element {} value.size(): {}", i, l_size);
+		log::info("[PAEffectManagerState - describe] m_unorderedMapInt_vectorPulseEffectAction element {} value.size(): {}", i, l_size);
 		for (int j = 0; j < l_size; j++) {
-			log::info("[PUEffectManagerState - describe] m_unorderedMapInt_vectorPulseEffectAction element {} value[{}]: {}", i, j, hexStr(reinterpret_cast<uint8_t*>(&l_pair.second[j]), sizeof(PulseEffectAction)));
+			log::info("[PAEffectManagerState - describe] m_unorderedMapInt_vectorPulseEffectAction element {} value[{}]: {}", i, j, hexStr(reinterpret_cast<uint8_t*>(&l_pair.second[j]), sizeof(PulseEffectAction)));
 		}
 		i++;
 	}
 	i = 0;
 	for (std::pair<int, gd::vector<CountTriggerAction>> l_pair : m_unorderedMapInt_vectorCountTriggerAction) {
-		log::info("[PUEffectManagerState - describe] m_unorderedMapInt_vectorCountTriggerAction element {} key: {}", i, l_pair.first);
-		log::info("[PUEffectManagerState - describe] m_unorderedMapInt_vectorCountTriggerAction element {} value:", i);
+		log::info("[PAEffectManagerState - describe] m_unorderedMapInt_vectorCountTriggerAction element {} key: {}", i, l_pair.first);
+		log::info("[PAEffectManagerState - describe] m_unorderedMapInt_vectorCountTriggerAction element {} value:", i);
 		l_size = l_pair.second.size();
-		log::info("[PUEffectManagerState - describe] m_unorderedMapInt_vectorCountTriggerAction element {} value.size(): {}", i, l_size);
+		log::info("[PAEffectManagerState - describe] m_unorderedMapInt_vectorCountTriggerAction element {} value.size(): {}", i, l_size);
 		for (int j = 0; j < l_size; j++) {
-			log::info("[PUEffectManagerState - describe] m_unorderedMapInt_vectorCountTriggerAction element {} value[{}]:", i, j);
-			reinterpret_cast<PUCountTriggerAction*>(&l_pair.second[j])->describe();
+			log::info("[PAEffectManagerState - describe] m_unorderedMapInt_vectorCountTriggerAction element {} value[{}]:", i, j);
+			reinterpret_cast<PACountTriggerAction*>(&l_pair.second[j])->describe();
 		}
 		i++;
 	}
 	i = 0;
 	for (int l_value : m_unorderedSet_int1) {
-		log::info("[PUEffectManagerState - describe] m_unorderedSet_int1 element {} value: {}", i, l_value);
+		log::info("[PAEffectManagerState - describe] m_unorderedSet_int1 element {} value: {}", i, l_value);
 		i++;
 	}
 	i = 0;
 	for (std::pair<int, int> l_pair : m_mapInt_Int) {
-		log::info("[PUEffectManagerState - describe] m_mapInt_Int element {} key: {}", i, l_pair.first);
-		log::info("[PUEffectManagerState - describe] m_mapInt_Int element {} value: {}", i, l_pair.second);
+		log::info("[PAEffectManagerState - describe] m_mapInt_Int element {} key: {}", i, l_pair.first);
+		log::info("[PAEffectManagerState - describe] m_mapInt_Int element {} value: {}", i, l_pair.second);
 		i++;
 	}
 	l_size = m_unorderedMapInt_OpacityEffectAction.size();
-	log::info("[PUEffectManagerState - describe] m_unorderedMapInt_OpacityEffectAction.size(): {}", l_size);
+	log::info("[PAEffectManagerState - describe] m_unorderedMapInt_OpacityEffectAction.size(): {}", l_size);
 	i = 0;
 	for (std::pair<int, OpacityEffectAction> l_pair : m_unorderedMapInt_OpacityEffectAction) {
-		log::info("[PUEffectManagerState - describe] m_unorderedMapInt_OpacityEffectAction element {} key: {}", i, l_pair.first);
-		log::info("[PUEffectManagerState - describe] m_unorderedMapInt_OpacityEffectAction element {} value: {}", i, hexStr(reinterpret_cast<uint8_t*>(&l_pair.second), sizeof(OpacityEffectAction)));
+		log::info("[PAEffectManagerState - describe] m_unorderedMapInt_OpacityEffectAction element {} key: {}", i, l_pair.first);
+		log::info("[PAEffectManagerState - describe] m_unorderedMapInt_OpacityEffectAction element {} value: {}", i, hexStr(reinterpret_cast<uint8_t*>(&l_pair.second), sizeof(OpacityEffectAction)));
 		i++;
 	}
 	l_size = m_vectorTouchToggleAction.size();
-	log::info("[PUEffectManagerState - describe] m_vectorTouchToggleAction.size(): {}", l_size);
+	log::info("[PAEffectManagerState - describe] m_vectorTouchToggleAction.size(): {}", l_size);
 	for (int i = 0; i < l_size; i++) {
-		log::info("[PUEffectManagerState - describe] m_vectorTouchToggleAction[{}]:", i);
-		reinterpret_cast<PUTouchToggleAction*>(&m_vectorTouchToggleAction[i])->describe();
+		log::info("[PAEffectManagerState - describe] m_vectorTouchToggleAction[{}]:", i);
+		reinterpret_cast<PATouchToggleAction*>(&m_vectorTouchToggleAction[i])->describe();
 	}
 	l_size = m_vectorCollisionTriggerAction.size();
-	log::info("[PUEffectManagerState - describe] m_vectorCollisionTriggerAction.size(): {}", l_size);
+	log::info("[PAEffectManagerState - describe] m_vectorCollisionTriggerAction.size(): {}", l_size);
 	for (int i = 0; i < l_size; i++) {
-		log::info("[PUEffectManagerState - describe] m_vectorCollisionTriggerAction[{}]:", i);
-		reinterpret_cast<PUCollisionTriggerAction*>(&m_vectorCollisionTriggerAction[i])->describe();
+		log::info("[PAEffectManagerState - describe] m_vectorCollisionTriggerAction[{}]:", i);
+		reinterpret_cast<PACollisionTriggerAction*>(&m_vectorCollisionTriggerAction[i])->describe();
 	}
 	l_size = m_vectorToggleTriggerAction.size();
-	log::info("[PUEffectManagerState - describe] m_vectorToggleTriggerAction.size(): {}", l_size);
+	log::info("[PAEffectManagerState - describe] m_vectorToggleTriggerAction.size(): {}", l_size);
 	for (int i = 0; i < l_size; i++) {
-		log::info("[PUEffectManagerState - describe] m_vectorToggleTriggerAction[{}]:", i);
-		reinterpret_cast<PUToggleTriggerAction*>(&m_vectorToggleTriggerAction[i])->describe();
+		log::info("[PAEffectManagerState - describe] m_vectorToggleTriggerAction[{}]:", i);
+		reinterpret_cast<PAToggleTriggerAction*>(&m_vectorToggleTriggerAction[i])->describe();
 	}
 	l_size = m_vectorSpawnTriggerAction.size();
-	log::info("[PUEffectManagerState - describe] m_vectorSpawnTriggerAction.size(): {}", l_size);
+	log::info("[PAEffectManagerState - describe] m_vectorSpawnTriggerAction.size(): {}", l_size);
 	for (int i = 0; i < l_size; i++) {
-		log::info("[PUEffectManagerState - describe] m_vectorSpawnTriggerAction[{}]:", i);
-		reinterpret_cast<PUSpawnTriggerAction*>(&m_vectorSpawnTriggerAction[i])->describe();
+		log::info("[PAEffectManagerState - describe] m_vectorSpawnTriggerAction[{}]:", i);
+		reinterpret_cast<PASpawnTriggerAction*>(&m_vectorSpawnTriggerAction[i])->describe();
 	}
 	i = 0;
 	for (std::pair<int, int> l_pair : m_unorderedMapInt_int) {
-		log::info("[PUEffectManagerState - describe] m_unorderedMapInt_int element {} key: {}", i, l_pair.first);
-		log::info("[PUEffectManagerState - describe] m_unorderedMapInt_int element {} value: {}", i, l_pair.second);
+		log::info("[PAEffectManagerState - describe] m_unorderedMapInt_int element {} key: {}", i, l_pair.first);
+		log::info("[PAEffectManagerState - describe] m_unorderedMapInt_int element {} value: {}", i, l_pair.second);
 		i++;
 	}
 	i = 0;
 	for (std::pair<int, bool> l_pair : m_unorderedMapInt_bool) {
-		log::info("[PUEffectManagerState - describe] m_unorderedMapInt_bool element {} key: {}", i, l_pair.first);
-		log::info("[PUEffectManagerState - describe] m_unorderedMapInt_bool element {} value: {}", i, l_pair.second);
+		log::info("[PAEffectManagerState - describe] m_unorderedMapInt_bool element {} key: {}", i, l_pair.first);
+		log::info("[PAEffectManagerState - describe] m_unorderedMapInt_bool element {} value: {}", i, l_pair.second);
 		i++;
 	}
 	l_size = m_vectorGroupCommandObject2.size();
-	log::info("[PUEffectManagerState - describe] m_vectorGroupCommandObject2.size(): {}", l_size);
+	log::info("[PAEffectManagerState - describe] m_vectorGroupCommandObject2.size(): {}", l_size);
 	for (int i = 0; i < l_size; i++) {
-		log::info("[PUEffectManagerState - describe] m_vectorGroupCommandObject2[{}]:", i);
-		reinterpret_cast<PUGroupCommandObject2*>(&m_vectorGroupCommandObject2[i])->describe();
+		log::info("[PAEffectManagerState - describe] m_vectorGroupCommandObject2[{}]:", i);
+		reinterpret_cast<PAGroupCommandObject2*>(&m_vectorGroupCommandObject2[i])->describe();
 	}
 	i = 0;
 	for (std::pair<int, std::pair<double,double>> l_pair : m_unorderedMapInt_pair_double_double) {
-		log::info("[PUEffectManagerState - describe] m_unorderedMapInt_pair_double_double element {} key: {}", i, l_pair.first);
-		log::info("[PUEffectManagerState - describe] m_unorderedMapInt_pair_double_double element {} value: {}", i, l_pair.second);
+		log::info("[PAEffectManagerState - describe] m_unorderedMapInt_pair_double_double element {} key: {}", i, l_pair.first);
+		log::info("[PAEffectManagerState - describe] m_unorderedMapInt_pair_double_double element {} value: {}", i, l_pair.second);
 		i++;
 	}
 	i = 0;
 	for (int l_value : m_unorderedSet_int2) {
-		log::info("[PUEffectManagerState - describe] m_unorderedSet_int2 element {} value: {}", i, l_value);
+		log::info("[PAEffectManagerState - describe] m_unorderedSet_int2 element {} value: {}", i, l_value);
 		i++;
 	}
 	l_size = m_unorderedMapInt_TimerItem.size();
-	log::info("[PUEffectManagerState - describe] m_unorderedMapInt_TimerItem.size(): {}", l_size);
+	log::info("[PAEffectManagerState - describe] m_unorderedMapInt_TimerItem.size(): {}", l_size);
 	i = 0;
 	for (std::pair<int, TimerItem> l_pair : m_unorderedMapInt_TimerItem) {
-		log::info("[PUEffectManagerState - describe] m_unorderedMapInt_TimerItem element {} key: {}", i, l_pair.first);
-		log::info("[PUEffectManagerState - describe] m_unorderedMapInt_TimerItem element {} value:", i);
-		reinterpret_cast<PUTimerItem*>(&l_pair.second)->describe();
+		log::info("[PAEffectManagerState - describe] m_unorderedMapInt_TimerItem element {} key: {}", i, l_pair.first);
+		log::info("[PAEffectManagerState - describe] m_unorderedMapInt_TimerItem element {} value:", i);
+		reinterpret_cast<PATimerItem*>(&l_pair.second)->describe();
 		i++;
 	}
 	i = 0;
 	for (std::pair<int, gd::vector<TimerTriggerAction>> l_pair : m_unorderedMapInt_vectorTimerTriggerAction) {
-		log::info("[PUEffectManagerState - describe] m_unorderedMapInt_vectorTimerTriggerAction element {} key: {}", i, l_pair.first);
-		log::info("[PUEffectManagerState - describe] m_unorderedMapInt_vectorTimerTriggerAction element {} value:", i);
+		log::info("[PAEffectManagerState - describe] m_unorderedMapInt_vectorTimerTriggerAction element {} key: {}", i, l_pair.first);
+		log::info("[PAEffectManagerState - describe] m_unorderedMapInt_vectorTimerTriggerAction element {} value:", i);
 		l_size = l_pair.second.size();
-		log::info("[PUEffectManagerState - describe] m_unorderedMapInt_vectorTimerTriggerAction element {} value.size(): {}", i, l_size);
+		log::info("[PAEffectManagerState - describe] m_unorderedMapInt_vectorTimerTriggerAction element {} value.size(): {}", i, l_size);
 		for (int j = 0; j < l_size; j++) {
-			log::info("[PUEffectManagerState - describe] m_unorderedMapInt_vectorTimerTriggerAction element {} value[{}]:", i, j);
-			reinterpret_cast<PUTimerTriggerAction*>(&l_pair.second[j])->describe();
+			log::info("[PAEffectManagerState - describe] m_unorderedMapInt_vectorTimerTriggerAction element {} value[{}]:", i, j);
+			reinterpret_cast<PATimerTriggerAction*>(&l_pair.second[j])->describe();
 		}
 		i++;
 	}

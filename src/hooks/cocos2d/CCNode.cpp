@@ -3,19 +3,19 @@
 #include "util/debug.hpp"
 
 using namespace geode::prelude;
-using namespace persistenceUtils;
+using namespace persistenceAPI;
 
-void PUCCNode::load(InputStream& i_stream) {
-	reinterpret_cast<PUCCObject*>(this)->load(i_stream);
+void PACCNode::load(InputStream& i_stream) {
+	reinterpret_cast<PACCObject*>(this)->load(i_stream);
 	i_stream >> *this;
 }
 
-void PUCCNode::save(OutputStream& o_stream) {
-	reinterpret_cast<PUCCObject*>(this)->save(o_stream);
+void PACCNode::save(OutputStream& o_stream) {
+	reinterpret_cast<PACCObject*>(this)->save(o_stream);
 	o_stream << *this;
 }
 
-inline void persistenceUtils::operator>>(InputStream& i_stream, PUCCNode& o_value) {
+inline void persistenceAPI::operator>>(InputStream& i_stream, PACCNode& o_value) {
 	i_stream >> o_value.m_fRotationX;
 	SEPARATOR_I
 	i_stream >> o_value.m_fRotationY;
@@ -64,7 +64,7 @@ inline void persistenceUtils::operator>>(InputStream& i_stream, PUCCNode& o_valu
 	SEPARATOR_I
 }
 
-inline void persistenceUtils::operator<<(OutputStream& o_stream, PUCCNode& i_value) {
+inline void persistenceAPI::operator<<(OutputStream& o_stream, PACCNode& i_value) {
 	o_stream << i_value.m_fRotationX;
 	SEPARATOR_O
 	o_stream << i_value.m_fRotationY;
@@ -114,44 +114,44 @@ inline void persistenceUtils::operator<<(OutputStream& o_stream, PUCCNode& i_val
 }
 
 #if defined(PU_DEBUG) && defined(PU_DESCRIBE)
-void PUCCNode::describe() {
-	log::info("[PUCCNode - describe] m_fRotationX: {}", m_fRotationX);
-	log::info("[PUCCNode - describe] m_fRotationY: {}", m_fRotationY);
-	log::info("[PUCCNode - describe] m_fScaleX: {}", m_fScaleX);
-	log::info("[PUCCNode - describe] m_fScaleY: {}", m_fScaleY);
-	log::info("[PUCCNode - describe] m_fVertexZ: {}", m_fVertexZ);
-	log::info("[PUCCNode - describe] m_obPosition: {}", m_obPosition);
-	log::info("[PUCCNode - describe] m_fSkewX: {}", m_fSkewX);
-	log::info("[PUCCNode - describe] m_fSkewY: {}", m_fSkewY);
-	log::info("[PUCCNode - describe] m_obAnchorPointInPoints: {}", m_obAnchorPointInPoints);
-	log::info("[PUCCNode - describe] m_obAnchorPoint: {}", m_obAnchorPoint);
-	log::info("[PUCCNode - describe] m_obContentSize: {}", m_obContentSize);
-	log::info("[PUCCNode - describe] m_sAdditionalTransform.A: {}", m_sAdditionalTransform.a);
-	log::info("[PUCCNode - describe] m_sAdditionalTransform.B: {}", m_sAdditionalTransform.b);
-	log::info("[PUCCNode - describe] m_sAdditionalTransform.C: {}", m_sAdditionalTransform.c);
-	log::info("[PUCCNode - describe] m_sAdditionalTransform.D: {}", m_sAdditionalTransform.d);
-	log::info("[PUCCNode - describe] m_sAdditionalTransform.TX: {}", m_sAdditionalTransform.tx);
-	log::info("[PUCCNode - describe] m_sAdditionalTransform.TY: {}", m_sAdditionalTransform.ty);
-	log::info("[PUCCNode - describe] m_sTransform.A: {}", m_sTransform.a);
-	log::info("[PUCCNode - describe] m_sTransform.B: {}", m_sTransform.b);
-	log::info("[PUCCNode - describe] m_sTransform.C: {}", m_sTransform.c);
-	log::info("[PUCCNode - describe] m_sTransform.D: {}", m_sTransform.d);
-	log::info("[PUCCNode - describe] m_sTransform.TX: {}", m_sTransform.tx);
-	log::info("[PUCCNode - describe] m_sTransform.TY: {}", m_sTransform.ty);
-	log::info("[PUCCNode - describe] m_sInverse.A: {}", m_sInverse.a);
-	log::info("[PUCCNode - describe] m_sInverse.B: {}", m_sInverse.b);
-	log::info("[PUCCNode - describe] m_sInverse.C: {}", m_sInverse.c);
-	log::info("[PUCCNode - describe] m_sInverse.D: {}", m_sInverse.d);
-	log::info("[PUCCNode - describe] m_sInverse.TX: {}", m_sInverse.tx);
-	log::info("[PUCCNode - describe] m_sInverse.TY: {}", m_sInverse.ty);
-	log::info("[PUCCNode - describe] m_bRunning: {}", m_bRunning);
-	log::info("[PUCCNode - describe] m_bTransformDirty: {}", m_bTransformDirty);
-	log::info("[PUCCNode - describe] m_bInverseDirty: {}", m_bInverseDirty);
-	log::info("[PUCCNode - describe] m_bAdditionalTransformDirty: {}", m_bAdditionalTransformDirty);
-	log::info("[PUCCNode - describe] m_bVisible: {}", m_bVisible);
-	log::info("[PUCCNode - describe] m_bIgnoreAnchorPointForPosition: {}", m_bIgnoreAnchorPointForPosition);
-	log::info("[PUCCNode - describe] m_bReorderChildDirty: {}", m_bReorderChildDirty);
-	log::info("[PUCCNode - describe] m_bUnkBool1: {}", m_bUnkBool1);
-	log::info("[PUCCNode - describe] m_bUnkBool2: {}", m_bUnkBool2);
+void PACCNode::describe() {
+	log::info("[PACCNode - describe] m_fRotationX: {}", m_fRotationX);
+	log::info("[PACCNode - describe] m_fRotationY: {}", m_fRotationY);
+	log::info("[PACCNode - describe] m_fScaleX: {}", m_fScaleX);
+	log::info("[PACCNode - describe] m_fScaleY: {}", m_fScaleY);
+	log::info("[PACCNode - describe] m_fVertexZ: {}", m_fVertexZ);
+	log::info("[PACCNode - describe] m_obPosition: {}", m_obPosition);
+	log::info("[PACCNode - describe] m_fSkewX: {}", m_fSkewX);
+	log::info("[PACCNode - describe] m_fSkewY: {}", m_fSkewY);
+	log::info("[PACCNode - describe] m_obAnchorPointInPoints: {}", m_obAnchorPointInPoints);
+	log::info("[PACCNode - describe] m_obAnchorPoint: {}", m_obAnchorPoint);
+	log::info("[PACCNode - describe] m_obContentSize: {}", m_obContentSize);
+	log::info("[PACCNode - describe] m_sAdditionalTransform.A: {}", m_sAdditionalTransform.a);
+	log::info("[PACCNode - describe] m_sAdditionalTransform.B: {}", m_sAdditionalTransform.b);
+	log::info("[PACCNode - describe] m_sAdditionalTransform.C: {}", m_sAdditionalTransform.c);
+	log::info("[PACCNode - describe] m_sAdditionalTransform.D: {}", m_sAdditionalTransform.d);
+	log::info("[PACCNode - describe] m_sAdditionalTransform.TX: {}", m_sAdditionalTransform.tx);
+	log::info("[PACCNode - describe] m_sAdditionalTransform.TY: {}", m_sAdditionalTransform.ty);
+	log::info("[PACCNode - describe] m_sTransform.A: {}", m_sTransform.a);
+	log::info("[PACCNode - describe] m_sTransform.B: {}", m_sTransform.b);
+	log::info("[PACCNode - describe] m_sTransform.C: {}", m_sTransform.c);
+	log::info("[PACCNode - describe] m_sTransform.D: {}", m_sTransform.d);
+	log::info("[PACCNode - describe] m_sTransform.TX: {}", m_sTransform.tx);
+	log::info("[PACCNode - describe] m_sTransform.TY: {}", m_sTransform.ty);
+	log::info("[PACCNode - describe] m_sInverse.A: {}", m_sInverse.a);
+	log::info("[PACCNode - describe] m_sInverse.B: {}", m_sInverse.b);
+	log::info("[PACCNode - describe] m_sInverse.C: {}", m_sInverse.c);
+	log::info("[PACCNode - describe] m_sInverse.D: {}", m_sInverse.d);
+	log::info("[PACCNode - describe] m_sInverse.TX: {}", m_sInverse.tx);
+	log::info("[PACCNode - describe] m_sInverse.TY: {}", m_sInverse.ty);
+	log::info("[PACCNode - describe] m_bRunning: {}", m_bRunning);
+	log::info("[PACCNode - describe] m_bTransformDirty: {}", m_bTransformDirty);
+	log::info("[PACCNode - describe] m_bInverseDirty: {}", m_bInverseDirty);
+	log::info("[PACCNode - describe] m_bAdditionalTransformDirty: {}", m_bAdditionalTransformDirty);
+	log::info("[PACCNode - describe] m_bVisible: {}", m_bVisible);
+	log::info("[PACCNode - describe] m_bIgnoreAnchorPointForPosition: {}", m_bIgnoreAnchorPointForPosition);
+	log::info("[PACCNode - describe] m_bReorderChildDirty: {}", m_bReorderChildDirty);
+	log::info("[PACCNode - describe] m_bUnkBool1: {}", m_bUnkBool1);
+	log::info("[PACCNode - describe] m_bUnkBool2: {}", m_bUnkBool2);
 }
 #endif

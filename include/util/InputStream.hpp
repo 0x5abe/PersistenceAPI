@@ -13,7 +13,7 @@
 
 #define PU_OPERATOR_READ(type) SABE_PU_DLL virtual void operator>>(type& o_value) { read(reinterpret_cast<char*>(&o_value), sizeof(type)); }
 
-namespace persistenceUtils {
+namespace persistenceAPI {
 	class InputStream {
 	protected:
 		std::ifstream* m_stream;
@@ -43,6 +43,7 @@ namespace persistenceUtils {
 		PU_OPERATOR_READ(cocos2d::CCSize)
 		PU_OPERATOR_READ(cocos2d::CCAffineTransform)
 		PU_OPERATOR_READ(uint64_t)
+		PU_OPERATOR_READ(long long)
 
 		SABE_PU_DLL bool setFileToRead(std::string i_filePath, unsigned int* i_bytesRead = nullptr) {
 			if (m_stream) {

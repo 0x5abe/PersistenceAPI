@@ -3,17 +3,17 @@
 #include "util/debug.hpp"
 
 using namespace geode::prelude;
-using namespace persistenceUtils;
+using namespace persistenceAPI;
 
-void PUDynamicSaveObject::load(InputStream& i_stream) {
+void PADynamicSaveObject::load(InputStream& i_stream) {
 	i_stream >> *this;
 }
 
-void PUDynamicSaveObject::save(OutputStream& o_stream) {
+void PADynamicSaveObject::save(OutputStream& o_stream) {
 	o_stream << *this;
 }
 
-inline void persistenceUtils::operator>>(InputStream& i_stream, PUDynamicSaveObject& o_value) {
+inline void persistenceAPI::operator>>(InputStream& i_stream, PADynamicSaveObject& o_value) {
 	int l_objectIndex;
 	i_stream >> l_objectIndex;
 	SEPARATOR_I
@@ -36,13 +36,13 @@ inline void persistenceUtils::operator>>(InputStream& i_stream, PUDynamicSaveObj
 
 	// get the pointer to the gameObject
 
-	PUPlayLayer* l_playLayer = static_cast<PUPlayLayer*>(PlayLayer::get());
+	PAPlayLayer* l_playLayer = static_cast<PAPlayLayer*>(PlayLayer::get());
 	if (l_playLayer) o_value.m_gameObject = l_playLayer->getGameObject(l_objectIndex);
 }
 
-inline void persistenceUtils::operator<<(OutputStream& o_stream, PUDynamicSaveObject& i_value) {
+inline void persistenceAPI::operator<<(OutputStream& o_stream, PADynamicSaveObject& i_value) {
 	int l_objectIndex = -1;
-	PUPlayLayer* l_playLayer = static_cast<PUPlayLayer*>(PlayLayer::get());
+	PAPlayLayer* l_playLayer = static_cast<PAPlayLayer*>(PlayLayer::get());
 	if (l_playLayer) l_objectIndex = l_playLayer->getGameObjectIndex(i_value.m_gameObject);
 	o_stream << l_objectIndex;
 	SEPARATOR_O
@@ -65,19 +65,19 @@ inline void persistenceUtils::operator<<(OutputStream& o_stream, PUDynamicSaveOb
 }
 
 #if defined(PU_DEBUG) && defined(PU_DESCRIBE)
-void PUDynamicSaveObject::describe() {
+void PADynamicSaveObject::describe() {
 	int l_objectIndex = -1;
-	PUPlayLayer* l_playLayer = static_cast<PUPlayLayer*>(PlayLayer::get());
+	PAPlayLayer* l_playLayer = static_cast<PAPlayLayer*>(PlayLayer::get());
 	if (l_playLayer) l_objectIndex = l_playLayer->getGameObjectIndex(m_gameObject);
 	
-	log::info("[PUDynamicSaveObject - describe] l_objectIndex: {}", l_objectIndex);
-	log::info("[PUDynamicSaveObject - describe] m_unkDouble1: {}", m_unkDouble1);
-	log::info("[PUDynamicSaveObject - describe] m_unkDouble2: {}", m_unkDouble2);
-	log::info("[PUDynamicSaveObject - describe] m_unkFloat1: {}", m_unkFloat1);
-	log::info("[PUDynamicSaveObject - describe] m_unkFloat2: {}", m_unkFloat2);
-	log::info("[PUDynamicSaveObject - describe] m_unkFloat3: {}", m_unkFloat3);
-	log::info("[PUDynamicSaveObject - describe] m_unkFloat4: {}", m_unkFloat4);
-	log::info("[PUDynamicSaveObject - describe] m_unkFloat5: {}", m_unkFloat5);
-	log::info("[PUDynamicSaveObject - describe] m_unkFloat6: {}", m_unkFloat6);
+	log::info("[PADynamicSaveObject - describe] l_objectIndex: {}", l_objectIndex);
+	log::info("[PADynamicSaveObject - describe] m_unkDouble1: {}", m_unkDouble1);
+	log::info("[PADynamicSaveObject - describe] m_unkDouble2: {}", m_unkDouble2);
+	log::info("[PADynamicSaveObject - describe] m_unkFloat1: {}", m_unkFloat1);
+	log::info("[PADynamicSaveObject - describe] m_unkFloat2: {}", m_unkFloat2);
+	log::info("[PADynamicSaveObject - describe] m_unkFloat3: {}", m_unkFloat3);
+	log::info("[PADynamicSaveObject - describe] m_unkFloat4: {}", m_unkFloat4);
+	log::info("[PADynamicSaveObject - describe] m_unkFloat5: {}", m_unkFloat5);
+	log::info("[PADynamicSaveObject - describe] m_unkFloat6: {}", m_unkFloat6);
 }
 #endif

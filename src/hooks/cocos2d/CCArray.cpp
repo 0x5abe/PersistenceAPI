@@ -3,10 +3,10 @@
 #include "hooks/PlayLayer.hpp"
 
 using namespace geode::prelude;
-using namespace persistenceUtils;
+using namespace persistenceAPI;
 
 template <class T>
-void PUCCArray::load(InputStream& i_stream) {
+void PACCArray::load(InputStream& i_stream) {
 	removeAllObjects();
 	unsigned int l_size;
 	i_stream >> l_size;
@@ -20,7 +20,7 @@ void PUCCArray::load(InputStream& i_stream) {
 }
 
 template <class T>
-void PUCCArray::save(OutputStream& o_stream) {
+void PACCArray::save(OutputStream& o_stream) {
 	unsigned int l_size = count();
 	o_stream << l_size;
 	//geode::log::info("CCARRAY SIZE out: {}", l_size);
@@ -30,11 +30,11 @@ void PUCCArray::save(OutputStream& o_stream) {
 }
 
 template <>
-void PUCCArray::load<GradientTriggerObject>(InputStream& i_stream) {
+void PACCArray::load<GradientTriggerObject>(InputStream& i_stream) {
 	removeAllObjects();
 	unsigned int l_size;
 	i_stream >> l_size;
-	PUPlayLayer* l_playLayer = static_cast<PUPlayLayer*>(PlayLayer::get());
+	PAPlayLayer* l_playLayer = static_cast<PAPlayLayer*>(PlayLayer::get());
 	//geode::log::info("CCARRAY GradientTriggerObject SIZE in: {}", l_size);
 	for (int i = 0; i < l_size; i++) {
 		int l_objectIndex;
@@ -44,11 +44,11 @@ void PUCCArray::load<GradientTriggerObject>(InputStream& i_stream) {
 }
 
 template <>
-void PUCCArray::save<GradientTriggerObject>(OutputStream& o_stream) {
+void PACCArray::save<GradientTriggerObject>(OutputStream& o_stream) {
 	unsigned int l_size = count();
 	o_stream << l_size;
 	//geode::log::info("CCARRAY GradientTriggerObject SIZE out: {}", l_size);
-	PUPlayLayer* l_playLayer = static_cast<PUPlayLayer*>(PlayLayer::get());
+	PAPlayLayer* l_playLayer = static_cast<PAPlayLayer*>(PlayLayer::get());
 	for (int i = 0; i < l_size; i++) {
 		int l_objectIndex = -1;
 		if (l_playLayer) l_objectIndex = l_playLayer->getGameObjectIndex(static_cast<GameObject*>(objectAtIndex(i)));
@@ -57,37 +57,37 @@ void PUCCArray::save<GradientTriggerObject>(OutputStream& o_stream) {
 }
 
 template <class T>
-void PUCCArray::loadOne(InputStream& i_stream) {
+void PACCArray::loadOne(InputStream& i_stream) {
 	T* l_object = reinterpret_cast<T*>(malloc(sizeof(T)));
 	reinterpret_cast<T*>(l_object)->load(i_stream); 
 	addObject(l_object);
 }
 
 template <class T>
-void PUCCArray::saveOne(OutputStream& o_stream, unsigned int i_index) {
+void PACCArray::saveOne(OutputStream& o_stream, unsigned int i_index) {
 	reinterpret_cast<T*>(objectAtIndex(i_index))->save(o_stream); 
 }
 
 #if defined(PU_DEBUG) && defined(PU_DESCRIBE)
 // template <>
-// void PUCCArray::describe<PUCheckpointObject>() {
+// void PACCArray::describe<PUCheckpointObject>() {
 // 	int l_size = this->count();
-// 	log::info("[PUCCArray CheckpointObject - describe] count(): {}", l_size);
+// 	log::info("[PACCArray CheckpointObject - describe] count(): {}", l_size);
 // 	for (int i = 0; i < l_size; i++) {
-// 		log::info("[PUCCArray CheckpointObject - describe] this[{}]:", i);
+// 		log::info("[PACCArray CheckpointObject - describe] this[{}]:", i);
 // 		reinterpret_cast<PUCheckpointObject*>(objectAtIndex(i))->describe();
 // 	}
 // } 
 
 template <>
-void PUCCArray::describe<GradientTriggerObject>() {
+void PACCArray::describe<GradientTriggerObject>() {
 	int l_size = this->count();
-	log::info("[PUCCArray GradientTriggerObject - describe] count(): {}", l_size);
+	log::info("[PACCArray GradientTriggerObject - describe] count(): {}", l_size);
 	for (int i = 0; i < l_size; i++) {
 		int l_objectIndex = -1;
-		PUPlayLayer* l_playLayer = static_cast<PUPlayLayer*>(PlayLayer::get());
+		PAPlayLayer* l_playLayer = static_cast<PAPlayLayer*>(PlayLayer::get());
 		if (l_playLayer) l_objectIndex = l_playLayer->getGameObjectIndex(static_cast<GameObject*>(objectAtIndex(i)));
-		log::info("[PUCCArray GradientTriggerObject - describe] l_objectIndex[{}]: {}", i, l_objectIndex);
+		log::info("[PACCArray GradientTriggerObject - describe] l_objectIndex[{}]: {}", i, l_objectIndex);
 	}
 }
 #endif

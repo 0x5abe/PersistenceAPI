@@ -3,17 +3,17 @@
 #include "util/debug.hpp"
 
 using namespace geode::prelude;
-using namespace persistenceUtils;
+using namespace persistenceAPI;
 
-void PUCountTriggerAction::load(InputStream& i_stream) {
+void PACountTriggerAction::load(InputStream& i_stream) {
 	i_stream >> *this;
 }
 
-void PUCountTriggerAction::save(OutputStream& o_stream) {
+void PACountTriggerAction::save(OutputStream& o_stream) {
 	o_stream << *this;
 }
 
-inline void persistenceUtils::operator>>(InputStream& i_stream, PUCountTriggerAction& o_value) {
+inline void persistenceAPI::operator>>(InputStream& i_stream, PACountTriggerAction& o_value) {
 	i_stream.read(reinterpret_cast<char*>(&o_value), 36);
 	VEC_SEPARATOR_I
 	int l_size = o_value.m_unkVecInt.size();
@@ -21,7 +21,7 @@ inline void persistenceUtils::operator>>(InputStream& i_stream, PUCountTriggerAc
 	VEC_SEPARATOR_I
 }
 
-inline void persistenceUtils::operator<<(OutputStream& o_stream, PUCountTriggerAction& i_value) {
+inline void persistenceAPI::operator<<(OutputStream& o_stream, PACountTriggerAction& i_value) {
 	o_stream.write(reinterpret_cast<char*>(&i_value), 36);
 	VEC_SEPARATOR_O
 	o_stream << i_value.m_unkVecInt;
@@ -29,12 +29,12 @@ inline void persistenceUtils::operator<<(OutputStream& o_stream, PUCountTriggerA
 }
 
 #if defined(PU_DEBUG) && defined(PU_DESCRIBE)
-void PUCountTriggerAction::describe() {
-	log::info("[PUCountTriggerAction - describe] pad_1: [{}]", hexStr(reinterpret_cast<unsigned char*>(this), 36));
+void PACountTriggerAction::describe() {
+	log::info("[PACountTriggerAction - describe] pad_1: [{}]", hexStr(reinterpret_cast<unsigned char*>(this), 36));
 	int l_size = m_unkVecInt.size();
-	log::info("[PUCountTriggerAction - describe] m_unkVecInt.size(): {}", l_size);
+	log::info("[PACountTriggerAction - describe] m_unkVecInt.size(): {}", l_size);
 	for (int i = 0; i < l_size; i++) {
-		log::info("[PUCountTriggerAction - describe] m_unkVecInt[{}]: {}", i, m_unkVecInt[i]);
+		log::info("[PACountTriggerAction - describe] m_unkVecInt[{}]: {}", i, m_unkVecInt[i]);
 	}
 }   
 #endif

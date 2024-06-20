@@ -5,7 +5,7 @@
 #include "string"
 #endif
 
-namespace persistenceUtils {
+namespace persistenceAPI {
 	#if defined(PU_DEBUG) && defined(PU_DESCRIBE)
 	inline std::string hexStr(const uint8_t *data, int len)
 	{
@@ -31,8 +31,8 @@ namespace persistenceUtils {
 	static char l_uSetSeparator[] = { 'S', 'E', 'T', 'U' };
 	static char l_setSeparator[] = { 'S', 'E', 'T', 'O' };
 
-	void writeSeparator(std::string i_string, persistenceUtils::OutputStream& o_stream);
-	void readSeparator(std::string o_string, persistenceUtils::InputStream& i_stream);
+	void writeSeparator(std::string i_string, persistenceAPI::OutputStream& o_stream);
+	void readSeparator(std::string o_string, persistenceAPI::InputStream& i_stream);
 
 	#define SEPARATOR_O o_stream.write(l_testSeparator, 4);
 	#define SEPARATOR_O_C(s) writeSeparator(#s, o_stream);

@@ -5,15 +5,15 @@
 #include "util/OutputStream.hpp"
 #include "import_export.hpp"
 
-namespace persistenceUtils {
-	class $modify(PUSFXTriggerState, SFXTriggerState) {
+namespace persistenceAPI {
+	class $modify(PASFXTriggerState, SFXTriggerState) {
 	protected:
-		friend void operator>>(persistenceUtils::InputStream& i_stream, PUSFXTriggerState& o_value);
-		friend void operator<<(persistenceUtils::OutputStream& o_stream, PUSFXTriggerState& i_value);
+		friend void operator>>(persistenceAPI::InputStream& i_stream, PASFXTriggerState& o_value);
+		friend void operator<<(persistenceAPI::OutputStream& o_stream, PASFXTriggerState& i_value);
 
 	public:
-		SABE_PU_DLL void load(persistenceUtils::InputStream& i_stream);
-		SABE_PU_DLL void save(persistenceUtils::OutputStream& o_stream);
+		SABE_PU_DLL void load(persistenceAPI::InputStream& i_stream);
+		SABE_PU_DLL void save(persistenceAPI::OutputStream& o_stream);
 
 	#if defined(PU_DEBUG) && defined(PU_DESCRIBE)
 		SABE_PU_DLL void describe();

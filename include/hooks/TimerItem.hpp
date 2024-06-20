@@ -5,15 +5,15 @@
 #include "util/OutputStream.hpp"
 #include "import_export.hpp"
 
-namespace persistenceUtils {
-	class $modify(PUTimerItem, TimerItem) {
+namespace persistenceAPI {
+	class $modify(PATimerItem, TimerItem) {
 	protected:
-		friend void operator>>(persistenceUtils::InputStream& i_stream, PUTimerItem& o_value);
-		friend void operator<<(persistenceUtils::OutputStream& o_stream, PUTimerItem& i_value);
+		friend void operator>>(persistenceAPI::InputStream& i_stream, PATimerItem& o_value);
+		friend void operator<<(persistenceAPI::OutputStream& o_stream, PATimerItem& i_value);
 
 	public:
-		SABE_PU_DLL void load(persistenceUtils::InputStream& i_stream);
-		SABE_PU_DLL void save(persistenceUtils::OutputStream& o_stream);
+		SABE_PU_DLL void load(persistenceAPI::InputStream& i_stream);
+		SABE_PU_DLL void save(persistenceAPI::OutputStream& o_stream);
 		
 	#if defined(PU_DEBUG) && defined(PU_DESCRIBE)
 		SABE_PU_DLL void describe();

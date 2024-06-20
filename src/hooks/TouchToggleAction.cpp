@@ -4,24 +4,24 @@
 #include "util/debug.hpp"
 
 using namespace geode::prelude;
-using namespace persistenceUtils;
+using namespace persistenceAPI;
 
-void PUTouchToggleAction::load(InputStream& i_stream) {
+void PATouchToggleAction::load(InputStream& i_stream) {
 	i_stream >> *this;
 }
 
-void PUTouchToggleAction::save(OutputStream& o_stream) {
+void PATouchToggleAction::save(OutputStream& o_stream) {
 	o_stream << *this;
 }
 
-inline void persistenceUtils::operator>>(InputStream& i_stream, PUTouchToggleAction& o_value) {
+inline void persistenceAPI::operator>>(InputStream& i_stream, PATouchToggleAction& o_value) {
 	i_stream.read(reinterpret_cast<char*>(&o_value), 32);
 	VEC_SEPARATOR_I
 	i_stream >> o_value.m_unkVecInt;
 	VEC_SEPARATOR_I
 }
 
-inline void persistenceUtils::operator<<(OutputStream& o_stream, PUTouchToggleAction& i_value) {
+inline void persistenceAPI::operator<<(OutputStream& o_stream, PATouchToggleAction& i_value) {
 	o_stream.write(reinterpret_cast<char*>(&i_value), 32);
 	VEC_SEPARATOR_O
 	o_stream << i_value.m_unkVecInt;
@@ -29,12 +29,12 @@ inline void persistenceUtils::operator<<(OutputStream& o_stream, PUTouchToggleAc
 }
 
 #if defined(PU_DEBUG) && defined(PU_DESCRIBE)
-void PUTouchToggleAction::describe() {
-	log::info("[PUTouchToggleAction - describe] pad_1: [{}]", hexStr(reinterpret_cast<unsigned char*>(this), 32));
+void PATouchToggleAction::describe() {
+	log::info("[PATouchToggleAction - describe] pad_1: [{}]", hexStr(reinterpret_cast<unsigned char*>(this), 32));
 	int l_size = m_unkVecInt.size();
-	log::info("[PUTouchToggleAction - describe] m_unkVecInt.size(): {}", l_size);
+	log::info("[PATouchToggleAction - describe] m_unkVecInt.size(): {}", l_size);
 	for (int i = 0; i < l_size; i++) {
-		log::info("[PUTouchToggleAction - describe] m_unkVecInt[{}]: {}", i, m_unkVecInt[i]);
+		log::info("[PATouchToggleAction - describe] m_unkVecInt[{}]: {}", i, m_unkVecInt[i]);
 	}
 }
 #endif

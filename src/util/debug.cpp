@@ -1,7 +1,7 @@
 #if defined(PU_DEBUG)
 #include "util/debug.hpp"
 
-using namespace persistenceUtils;
+using namespace persistenceAPI;
 
 #if defined(PU_SEPARATORS)
 void writeSeparator(std::string i_string, OutputStream& o_stream) {

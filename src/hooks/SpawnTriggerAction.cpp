@@ -5,22 +5,22 @@
 #include "util/debug.hpp"
 
 using namespace geode::prelude;
-using namespace persistenceUtils;
+using namespace persistenceAPI;
 
-void PUSpawnTriggerAction::load(InputStream& i_stream) {
+void PASpawnTriggerAction::load(InputStream& i_stream) {
 	i_stream >> *this;
 }
 
-void PUSpawnTriggerAction::save(OutputStream& o_stream) {
+void PASpawnTriggerAction::save(OutputStream& o_stream) {
 	o_stream << *this;
 }
 
-inline void persistenceUtils::operator>>(InputStream& i_stream, PUSpawnTriggerAction& o_value) {
+inline void persistenceAPI::operator>>(InputStream& i_stream, PASpawnTriggerAction& o_value) {
 	i_stream.read(reinterpret_cast<char*>(&o_value), 40);
 	SEPARATOR_I
 	int l_objectIndex;
 	i_stream >> l_objectIndex;
-	PUPlayLayer* l_playLayer = static_cast<PUPlayLayer*>(PlayLayer::get());
+	PAPlayLayer* l_playLayer = static_cast<PAPlayLayer*>(PlayLayer::get());
 	if (l_playLayer) o_value.m_gameObject = l_playLayer->getGameObject(l_objectIndex);
 	VEC_SEPARATOR_I
 	int l_size = o_value.m_unkVecInt.size();
@@ -28,11 +28,11 @@ inline void persistenceUtils::operator>>(InputStream& i_stream, PUSpawnTriggerAc
 	VEC_SEPARATOR_I
 }
 
-inline void persistenceUtils::operator<<(OutputStream& o_stream, PUSpawnTriggerAction& i_value) {
+inline void persistenceAPI::operator<<(OutputStream& o_stream, PASpawnTriggerAction& i_value) {
 	o_stream.write(reinterpret_cast<char*>(&i_value), 40);
 	SEPARATOR_O
 	int l_objectIndex = -1;
-	PUPlayLayer* l_playLayer = static_cast<PUPlayLayer*>(PlayLayer::get());
+	PAPlayLayer* l_playLayer = static_cast<PAPlayLayer*>(PlayLayer::get());
 	if (l_playLayer) l_objectIndex = l_playLayer->getGameObjectIndex(i_value.m_gameObject);
 	o_stream << l_objectIndex;
 	VEC_SEPARATOR_O
@@ -41,16 +41,16 @@ inline void persistenceUtils::operator<<(OutputStream& o_stream, PUSpawnTriggerA
 }
 
 #if defined(PU_DEBUG) && defined(PU_DESCRIBE)
-void PUSpawnTriggerAction::describe() {
-	log::info("[PUSpawnTriggerAction - describe] pad_1: [{}]", hexStr(reinterpret_cast<unsigned char*>(this), 40));
+void PASpawnTriggerAction::describe() {
+	log::info("[PASpawnTriggerAction - describe] pad_1: [{}]", hexStr(reinterpret_cast<unsigned char*>(this), 40));
 	int l_objectIndex = -1;
-	PUPlayLayer* l_playLayer = static_cast<PUPlayLayer*>(PlayLayer::get());
+	PAPlayLayer* l_playLayer = static_cast<PAPlayLayer*>(PlayLayer::get());
 	if (l_playLayer) l_objectIndex = l_playLayer->getGameObjectIndex(m_gameObject);
-	log::info("[PUSpawnTriggerAction - describe] m_gameObject l_objectIndex: {}", l_objectIndex);
+	log::info("[PASpawnTriggerAction - describe] m_gameObject l_objectIndex: {}", l_objectIndex);
 	int l_size = m_unkVecInt.size();
-	log::info("[PUSpawnTriggerAction - describe] m_unkVecInt.size(): {}", l_size);
+	log::info("[PASpawnTriggerAction - describe] m_unkVecInt.size(): {}", l_size);
 	for (int i = 0; i < l_size; i++) {
-		log::info("[PUSpawnTriggerAction - describe] m_unkVecInt[{}]: {}", i, m_unkVecInt[i]);
+		log::info("[PASpawnTriggerAction - describe] m_unkVecInt[{}]: {}", i, m_unkVecInt[i]);
 	}
 }
 #endif

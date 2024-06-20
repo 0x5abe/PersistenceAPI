@@ -23,7 +23,7 @@
 #include "hooks/SFXTriggerInstance.hpp"
 #include "hooks/DynamicObjectAction.hpp"
 
-using namespace persistenceUtils;
+using namespace persistenceAPI;
 
 // vector
 
@@ -44,92 +44,92 @@ inline void readGenericVector(InputStream* i_stream, gd::vector<T>& o_value) {
 
 template <>
 void InputStream::operator>><DynamicSaveObject>(gd::vector<DynamicSaveObject>& o_value) {
-	readGenericVector<DynamicSaveObject, PUDynamicSaveObject>(this, o_value);
+	readGenericVector<DynamicSaveObject, PADynamicSaveObject>(this, o_value);
 }
 
 template <>
 void InputStream::operator>><ActiveSaveObject1>(gd::vector<ActiveSaveObject1>& o_value) {
-	readGenericVector<ActiveSaveObject1, PUActiveSaveObject1>(this, o_value);
+	readGenericVector<ActiveSaveObject1, PAActiveSaveObject1>(this, o_value);
 }
 
 template <>
 void InputStream::operator>><ActiveSaveObject2>(gd::vector<ActiveSaveObject2>& o_value) {
-	readGenericVector<ActiveSaveObject2, PUActiveSaveObject2>(this, o_value);
+	readGenericVector<ActiveSaveObject2, PAActiveSaveObject2>(this, o_value);
 }
 
 template <>
 void InputStream::operator>><CountTriggerAction>(gd::vector<CountTriggerAction>& o_value) {
-	readGenericVector<CountTriggerAction, PUCountTriggerAction>(this, o_value);
+	readGenericVector<CountTriggerAction, PACountTriggerAction>(this, o_value);
 }
 
 template <>
 void InputStream::operator>><TouchToggleAction>(gd::vector<TouchToggleAction>& o_value) {
-	readGenericVector<TouchToggleAction, PUTouchToggleAction>(this, o_value);
+	readGenericVector<TouchToggleAction, PATouchToggleAction>(this, o_value);
 }
 
 template <>
 void InputStream::operator>><CollisionTriggerAction>(gd::vector<CollisionTriggerAction>& o_value) {
-	readGenericVector<CollisionTriggerAction, PUCollisionTriggerAction>(this, o_value);
+	readGenericVector<CollisionTriggerAction, PACollisionTriggerAction>(this, o_value);
 }
 
 template <>
 void InputStream::operator>><ToggleTriggerAction>(gd::vector<ToggleTriggerAction>& o_value) {
-	readGenericVector<ToggleTriggerAction, PUToggleTriggerAction>(this, o_value);
+	readGenericVector<ToggleTriggerAction, PAToggleTriggerAction>(this, o_value);
 }
 
 template <>
 void InputStream::operator>><SpawnTriggerAction>(gd::vector<SpawnTriggerAction>& o_value) {
-	readGenericVector<SpawnTriggerAction, PUSpawnTriggerAction>(this, o_value);
+	readGenericVector<SpawnTriggerAction, PASpawnTriggerAction>(this, o_value);
 }
 
 template <>
 void InputStream::operator>><GroupCommandObject2>(gd::vector<GroupCommandObject2>& o_value) {
-	readGenericVector<GroupCommandObject2, PUGroupCommandObject2>(this, o_value);
+	readGenericVector<GroupCommandObject2, PAGroupCommandObject2>(this, o_value);
 }
 
 template <>
 void InputStream::operator>><KeyframeObject>(gd::vector<KeyframeObject>& o_value) {
-	readGenericVector<KeyframeObject, PUKeyframeObject>(this, o_value);
+	readGenericVector<KeyframeObject, PAKeyframeObject>(this, o_value);
 }
 
 template <>
 void InputStream::operator>><TimerTriggerAction>(gd::vector<TimerTriggerAction>& o_value) {
-	readGenericVector<TimerTriggerAction, PUTimerTriggerAction>(this, o_value);
+	readGenericVector<TimerTriggerAction, PATimerTriggerAction>(this, o_value);
 }
 
 template <>
 void InputStream::operator>><EventTriggerInstance>(gd::vector<EventTriggerInstance>& o_value) {
-	readGenericVector<EventTriggerInstance, PUEventTriggerInstance>(this, o_value);
+	readGenericVector<EventTriggerInstance, PAEventTriggerInstance>(this, o_value);
 }
 
 template <>
 void InputStream::operator>><EnterEffectInstance>(gd::vector<EnterEffectInstance>& o_value) {
-	readGenericVector<EnterEffectInstance, PUEnterEffectInstance>(this, o_value);
+	readGenericVector<EnterEffectInstance, PAEnterEffectInstance>(this, o_value);
 }
 
 template <>
 void InputStream::operator>><AdvancedFollowInstance>(gd::vector<AdvancedFollowInstance>& o_value) {
-	readGenericVector<AdvancedFollowInstance, PUAdvancedFollowInstance>(this, o_value);
+	readGenericVector<AdvancedFollowInstance, PAAdvancedFollowInstance>(this, o_value);
 }
 
 template <>
 void InputStream::operator>><CAState>(gd::vector<CAState>& o_value) {
-	readGenericVector<CAState, PUCAState>(this, o_value);
+	readGenericVector<CAState, PACAState>(this, o_value);
 }
 
 template <>
 void InputStream::operator>><SongTriggerState>(gd::vector<SongTriggerState>& o_value) {
-	readGenericVector<SongTriggerState, PUSongTriggerState>(this, o_value);
+	readGenericVector<SongTriggerState, PASongTriggerState>(this, o_value);
 }
 
 template <>
 void InputStream::operator>><SFXTriggerState>(gd::vector<SFXTriggerState>& o_value) {
-	readGenericVector<SFXTriggerState, PUSFXTriggerState>(this, o_value);
+	readGenericVector<SFXTriggerState, PASFXTriggerState>(this, o_value);
 }
 
 template <>
 void InputStream::operator>><DynamicObjectAction>(gd::vector<DynamicObjectAction>& o_value) {
-	readGenericVector<DynamicObjectAction, PUDynamicObjectAction>(this, o_value);
+	readGenericVector<DynamicObjectAction, PADynamicObjectAction>(this, o_value);
 }
 
 // unordered_map
@@ -152,27 +152,27 @@ inline void readGenericUnorderedMap(InputStream* i_stream, gd::unordered_map<K,V
 
 template <>
 void InputStream::operator>><int, SequenceTriggerState>(gd::unordered_map<int, SequenceTriggerState>& o_value) {
-	readGenericUnorderedMap<int, SequenceTriggerState, PUSequenceTriggerState>(this, o_value);
+	readGenericUnorderedMap<int, SequenceTriggerState, PASequenceTriggerState>(this, o_value);
 }
 
 template <>
 void InputStream::operator>><int, FMODQueuedMusic>(gd::unordered_map<int, FMODQueuedMusic>& o_value) {
-	readGenericUnorderedMap<int, FMODQueuedMusic, PUFMODQueuedMusic>(this, o_value);
+	readGenericUnorderedMap<int, FMODQueuedMusic, PAFMODQueuedMusic>(this, o_value);
 }
 
 template <>
 void InputStream::operator>><int, FMODSoundState>(gd::unordered_map<int, FMODSoundState>& o_value) {
-	readGenericUnorderedMap<int, FMODSoundState, PUFMODSoundState>(this, o_value);
+	readGenericUnorderedMap<int, FMODSoundState, PAFMODSoundState>(this, o_value);
 }
 
 template <>
 void InputStream::operator>><int, TimerItem>(gd::unordered_map<int, TimerItem>& o_value) {
-	readGenericUnorderedMap<int, TimerItem, PUTimerItem>(this, o_value);
+	readGenericUnorderedMap<int, TimerItem, PATimerItem>(this, o_value);
 }
 
 template <>
 void InputStream::operator>><int, SongChannelState>(gd::unordered_map<int, SongChannelState>& o_value) {
-	readGenericUnorderedMap<int, SongChannelState, PUSongChannelState>(this, o_value);
+	readGenericUnorderedMap<int, SongChannelState, PASongChannelState>(this, o_value);
 }
 
 template <>
@@ -216,5 +216,5 @@ inline void readGenericMap(InputStream* i_stream, gd::map<K,V>& o_value) {
 template <>
 void InputStream::operator>><std::pair<int,int>, SFXTriggerInstance>(gd::map<std::pair<int,int>, SFXTriggerInstance>& o_value) {
 	geode::log::info("jjjjjjjjjjjjjjjjjjjjj Map CustomRead SFXTriggerInstance");
-	readGenericMap<std::pair<int,int>, SFXTriggerInstance, PUSFXTriggerInstance>(this, o_value);
+	readGenericMap<std::pair<int,int>, SFXTriggerInstance, PASFXTriggerInstance>(this, o_value);
 }

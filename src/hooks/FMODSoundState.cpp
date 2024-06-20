@@ -3,35 +3,35 @@
 #include "util/debug.hpp"
 
 using namespace geode::prelude;
-using namespace persistenceUtils;
+using namespace persistenceAPI;
 
-void PUFMODSoundState::load(InputStream& i_stream) {
+void PAFMODSoundState::load(InputStream& i_stream) {
 	i_stream >> *this;
 }
 
-void PUFMODSoundState::save(OutputStream& o_stream) {
+void PAFMODSoundState::save(OutputStream& o_stream) {
 	o_stream << *this;
 }
 
-inline void persistenceUtils::operator>>(InputStream& i_stream, PUFMODSoundState& o_value) {
+inline void persistenceAPI::operator>>(InputStream& i_stream, PAFMODSoundState& o_value) {
 	STR_SEPARATOR_I
 	i_stream >> o_value.m_unkString;
 	STR_SEPARATOR_I
-	i_stream.read(reinterpret_cast<char*>(&o_value) + offsetof(PUFMODSoundState,m_unkString) + sizeof(gd::string), 156);
+	i_stream.read(reinterpret_cast<char*>(&o_value) + offsetof(PAFMODSoundState,m_unkString) + sizeof(gd::string), 156);
 	SEPARATOR_I
 }
 
-inline void persistenceUtils::operator<<(OutputStream& o_stream, PUFMODSoundState& i_value) {
+inline void persistenceAPI::operator<<(OutputStream& o_stream, PAFMODSoundState& i_value) {
 	STR_SEPARATOR_O
 	o_stream << i_value.m_unkString;
 	STR_SEPARATOR_O
-	o_stream.write(reinterpret_cast<char*>(&i_value) + offsetof(PUFMODSoundState,m_unkString) + sizeof(gd::string), 156);
+	o_stream.write(reinterpret_cast<char*>(&i_value) + offsetof(PAFMODSoundState,m_unkString) + sizeof(gd::string), 156);
 	SEPARATOR_O
 }
 
 #if defined(PU_DEBUG) && defined(PU_DESCRIBE)
-void PUFMODSoundState::describe() {
-	log::info("[PUFMODSoundState - describe] m_unkString: {}", m_unkString);
-	log::info("[PUFMODSoundState - describe] pad_2: [{}]", hexStr(reinterpret_cast<unsigned char*>(this) + offsetof(PUFMODSoundState,m_unkString) + sizeof(gd::string), 156));
+void PAFMODSoundState::describe() {
+	log::info("[PAFMODSoundState - describe] m_unkString: {}", m_unkString);
+	log::info("[PAFMODSoundState - describe] pad_2: [{}]", hexStr(reinterpret_cast<unsigned char*>(this) + offsetof(PAFMODSoundState,m_unkString) + sizeof(gd::string), 156));
 }
 #endif

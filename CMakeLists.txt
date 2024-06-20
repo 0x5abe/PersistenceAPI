@@ -4,11 +4,11 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_OSX_ARCHITECTURES "x86_64")
 set(CMAKE_CXX_VISIBILITY_PRESET hidden)
 
-project(PersistenceUtils VERSION 1.0.0)
+project(PersistenceAPI VERSION 1.0.0)
 
 # source files
 file(GLOB_RECURSE SOURCES
-	src/PersistenceUtils.cpp
+	src/PersistenceAPI.cpp
 	src/hooks/*.cpp
     src/hooks/cocos2d/*.cpp
     src/util/*.cpp

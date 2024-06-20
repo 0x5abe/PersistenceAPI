@@ -4,17 +4,17 @@
 #include "util/debug.hpp"
 
 using namespace geode::prelude;
-using namespace persistenceUtils;
+using namespace persistenceAPI;
 
-void PUActiveSaveObject1::load(InputStream& i_stream) {
+void PAActiveSaveObject1::load(InputStream& i_stream) {
 	i_stream >> *this;
 }
 
-void PUActiveSaveObject1::save(OutputStream& o_stream) {
+void PAActiveSaveObject1::save(OutputStream& o_stream) {
 	o_stream << *this;
 }
 
-inline void persistenceUtils::operator>>(InputStream& i_stream, PUActiveSaveObject1& o_value) {
+inline void persistenceAPI::operator>>(InputStream& i_stream, PAActiveSaveObject1& o_value) {
 	int l_objectIndex;
 	i_stream >> l_objectIndex;
 	SEPARATOR_I
@@ -25,13 +25,13 @@ inline void persistenceUtils::operator>>(InputStream& i_stream, PUActiveSaveObje
 
 	// get the pointer to the gameObject
 
-	PUPlayLayer* l_playLayer = static_cast<PUPlayLayer*>(PlayLayer::get());
+	PAPlayLayer* l_playLayer = static_cast<PAPlayLayer*>(PlayLayer::get());
 	if (l_playLayer) o_value.m_gameObject = l_playLayer->getGameObject(l_objectIndex);
 }
 
-inline void persistenceUtils::operator<<(OutputStream& o_stream, PUActiveSaveObject1& i_value) {
+inline void persistenceAPI::operator<<(OutputStream& o_stream, PAActiveSaveObject1& i_value) {
 	int l_objectIndex = -1;
-	PUPlayLayer* l_playLayer = static_cast<PUPlayLayer*>(PlayLayer::get());
+	PAPlayLayer* l_playLayer = static_cast<PAPlayLayer*>(PlayLayer::get());
 	if (l_playLayer) l_objectIndex = l_playLayer->getGameObjectIndex(i_value.m_gameObject);
 	o_stream << l_objectIndex;
 	SEPARATOR_O
@@ -41,15 +41,15 @@ inline void persistenceUtils::operator<<(OutputStream& o_stream, PUActiveSaveObj
 	SEPARATOR_O_END
 }
 
-void PUActiveSaveObject2::load(InputStream& i_stream) {
+void PAActiveSaveObject2::load(InputStream& i_stream) {
 	i_stream >> *this;
 }
 
-void PUActiveSaveObject2::save(OutputStream& o_stream) {
+void PAActiveSaveObject2::save(OutputStream& o_stream) {
 	o_stream << *this;
 }
 
-inline void persistenceUtils::operator>>(InputStream& i_stream, PUActiveSaveObject2& o_value) {
+inline void persistenceAPI::operator>>(InputStream& i_stream, PAActiveSaveObject2& o_value) {
 	int l_objectIndex;
 	i_stream >> l_objectIndex;
 	SEPARATOR_I
@@ -60,13 +60,13 @@ inline void persistenceUtils::operator>>(InputStream& i_stream, PUActiveSaveObje
 
 	// get the pointer to the gameObject
 
-	PUPlayLayer* l_playLayer = static_cast<PUPlayLayer*>(PlayLayer::get());
+	PAPlayLayer* l_playLayer = static_cast<PAPlayLayer*>(PlayLayer::get());
 	if (l_playLayer) o_value.m_gameObject = l_playLayer->getGameObject(l_objectIndex);
 }
 
-inline void persistenceUtils::operator<<(OutputStream& o_stream, PUActiveSaveObject2& i_value) {
+inline void persistenceAPI::operator<<(OutputStream& o_stream, PAActiveSaveObject2& i_value) {
 	int l_objectIndex = -1;
-	PUPlayLayer* l_playLayer = static_cast<PUPlayLayer*>(PlayLayer::get());
+	PAPlayLayer* l_playLayer = static_cast<PAPlayLayer*>(PlayLayer::get());
 	if (l_playLayer) l_objectIndex = l_playLayer->getGameObjectIndex(i_value.m_gameObject);
 	o_stream << l_objectIndex;
 	SEPARATOR_O
@@ -76,20 +76,20 @@ inline void persistenceUtils::operator<<(OutputStream& o_stream, PUActiveSaveObj
 }
 
 #if defined(PU_DEBUG) && defined(PU_DESCRIBE)
-void PUActiveSaveObject1::describe() {
+void PAActiveSaveObject1::describe() {
 	int l_objectIndex = -1;
-	PUPlayLayer* l_playLayer = static_cast<PUPlayLayer*>(PlayLayer::get());
+	PAPlayLayer* l_playLayer = static_cast<PAPlayLayer*>(PlayLayer::get());
 	if (l_playLayer) l_objectIndex = l_playLayer->getGameObjectIndex(m_gameObject);
-	log::info("[PUActiveSaveObject1 - describe] l_objectIndex: {}", l_objectIndex);
-	log::info("[PUActiveSaveObject1 - describe] m_unkBool1: {}", m_unkBool1);
-	log::info("[PUActiveSaveObject1 - describe] m_unkBool2: {}", m_unkBool2);
+	log::info("[PAActiveSaveObject1 - describe] l_objectIndex: {}", l_objectIndex);
+	log::info("[PAActiveSaveObject1 - describe] m_unkBool1: {}", m_unkBool1);
+	log::info("[PAActiveSaveObject1 - describe] m_unkBool2: {}", m_unkBool2);
 }
 
-void PUActiveSaveObject2::describe() {
+void PAActiveSaveObject2::describe() {
 	int l_objectIndex = -1;
-	PUPlayLayer* l_playLayer = static_cast<PUPlayLayer*>(PlayLayer::get());
+	PAPlayLayer* l_playLayer = static_cast<PAPlayLayer*>(PlayLayer::get());
 	if (l_playLayer) l_objectIndex = l_playLayer->getGameObjectIndex(m_gameObject);
-	log::info("[PUActiveSaveObject2 - describe] l_objectIndex: {}", l_objectIndex);
-	log::info("[PUActiveSaveObject2 - describe] m_easingType: {}", static_cast<unsigned int>(m_easingType));
+	log::info("[PAActiveSaveObject2 - describe] l_objectIndex: {}", l_objectIndex);
+	log::info("[PAActiveSaveObject2 - describe] m_easingType: {}", static_cast<unsigned int>(m_easingType));
 }
 #endif

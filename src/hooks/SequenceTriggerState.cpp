@@ -3,17 +3,17 @@
 #include "util/debug.hpp"
 
 using namespace geode::prelude;
-using namespace persistenceUtils;
+using namespace persistenceAPI;
 
-void PUSequenceTriggerState::load(InputStream& i_stream) {
+void PASequenceTriggerState::load(InputStream& i_stream) {
 	i_stream >> *this;
 }
 
-void PUSequenceTriggerState::save(OutputStream& o_stream) {
+void PASequenceTriggerState::save(OutputStream& o_stream) {
 	o_stream << *this;
 }
 
-inline void persistenceUtils::operator>>(InputStream& i_stream, PUSequenceTriggerState& o_value) {
+inline void persistenceAPI::operator>>(InputStream& i_stream, PASequenceTriggerState& o_value) {
 	UMAP_SEPARATOR_I
 	i_stream >> o_value.m_unkUnorderedMap1;
 	UMAP_SEPARATOR_I
@@ -21,7 +21,7 @@ inline void persistenceUtils::operator>>(InputStream& i_stream, PUSequenceTrigge
 	UMAP_SEPARATOR_I
 }
 
-inline void persistenceUtils::operator<<(OutputStream& o_stream, PUSequenceTriggerState& i_value) {
+inline void persistenceAPI::operator<<(OutputStream& o_stream, PASequenceTriggerState& i_value) {
 	UMAP_SEPARATOR_O
 	o_stream << i_value.m_unkUnorderedMap1;
 	UMAP_SEPARATOR_O
@@ -30,21 +30,21 @@ inline void persistenceUtils::operator<<(OutputStream& o_stream, PUSequenceTrigg
 }
 
 #if defined(PU_DEBUG) && defined(PU_DESCRIBE)
-void PUSequenceTriggerState::describe() {
+void PASequenceTriggerState::describe() {
 	int l_size = m_unkUnorderedMap1.size();
-	log::info("[PUSequenceTriggerState - describe] m_unkUnorderedMap1.size(): {}", l_size);
+	log::info("[PASequenceTriggerState - describe] m_unkUnorderedMap1.size(): {}", l_size);
 	int i = 0;
 	for (std::pair<int,float> l_pair : m_unkUnorderedMap1) {
-		log::info("[PUSequenceTriggerState - describe] m_unkUnorderedMap1 element {} key: {}", i, l_pair.first);
-		log::info("[PUSequenceTriggerState - describe] m_unkUnorderedMap1 element {} value: {}", i, l_pair.second);
+		log::info("[PASequenceTriggerState - describe] m_unkUnorderedMap1 element {} key: {}", i, l_pair.first);
+		log::info("[PASequenceTriggerState - describe] m_unkUnorderedMap1 element {} value: {}", i, l_pair.second);
 		i++;
 	}
 	l_size = m_unkUnorderedMap2.size();
-	log::info("[PUSequenceTriggerState - describe] m_unkUnorderedMap2.size(): {}", l_size);
+	log::info("[PASequenceTriggerState - describe] m_unkUnorderedMap2.size(): {}", l_size);
 	i = 0;
 	for (std::pair<int,int> l_pair : m_unkUnorderedMap2) {
-		log::info("[PUSequenceTriggerState - describe] m_unkUnorderedMap2 element {} key: {}", i, l_pair.first);
-		log::info("[PUSequenceTriggerState - describe] m_unkUnorderedMap2 element {} value: {}", i, l_pair.second);
+		log::info("[PASequenceTriggerState - describe] m_unkUnorderedMap2 element {} key: {}", i, l_pair.first);
+		log::info("[PASequenceTriggerState - describe] m_unkUnorderedMap2 element {} value: {}", i, l_pair.second);
 		i++;
 	}
 }

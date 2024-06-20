@@ -1,11 +1,11 @@
 {
-	"geode": "3.0.0-beta.1",
+	"geode": "3.0.0-beta.2",
 	"gd": {
 		"win": "2.206"
 	},
 	"version": "v0.0.1",
-	"id": "sabe.persistenceutils",
-	"name": "PersistenceUtils",
+	"id": "sabe.persistenceapi",
+	"name": "PersistenceAPI",
 	"developer": "sabe",
 	"description": "",
 	"early-load": true,

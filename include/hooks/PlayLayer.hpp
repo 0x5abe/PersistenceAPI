@@ -3,8 +3,8 @@
 #include "Geode/modify/PlayLayer.hpp"
 #include "import_export.hpp"
 
-namespace persistenceUtils {
-	class $modify(PUPlayLayer, PlayLayer) {
+namespace persistenceAPI {
+	class $modify(PAPlayLayer, PlayLayer) {
 	public:
 		struct Fields {
 			int m_uniqueIdBase = 12;

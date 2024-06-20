@@ -5,26 +5,26 @@
 #include "util/OutputStream.hpp"
 #include "import_export.hpp"
 
-namespace persistenceUtils {
-	class $modify(PUCCArray, cocos2d::CCArray) {
+namespace persistenceAPI {
+	class $modify(PACCArray, cocos2d::CCArray) {
 	public:
 		template <typename T>
-		SABE_PU_DLL void load(persistenceUtils::InputStream& i_stream);
+		SABE_PU_DLL void load(persistenceAPI::InputStream& i_stream);
 
 		template <typename T>
-		SABE_PU_DLL void save(persistenceUtils::OutputStream& o_stream);
+		SABE_PU_DLL void save(persistenceAPI::OutputStream& o_stream);
 
 		template <typename T>
-		void loadOne(persistenceUtils::InputStream& o_stream);
+		void loadOne(persistenceAPI::InputStream& o_stream);
 
 		template <typename T>
-		void saveOne(persistenceUtils::OutputStream& o_stream, unsigned int i_index);
+		void saveOne(persistenceAPI::OutputStream& o_stream, unsigned int i_index);
 
 		template <>
-		SABE_PU_DLL void load<GradientTriggerObject>(persistenceUtils::InputStream& i_stream);
+		SABE_PU_DLL void load<GradientTriggerObject>(persistenceAPI::InputStream& i_stream);
 
 		template <>
-		SABE_PU_DLL void save<GradientTriggerObject>(persistenceUtils::OutputStream& o_stream);
+		SABE_PU_DLL void save<GradientTriggerObject>(persistenceAPI::OutputStream& o_stream);
 
 	#if defined(PU_DEBUG) && defined(PU_DESCRIBE)
 		template <class T>
