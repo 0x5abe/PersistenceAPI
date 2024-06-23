@@ -1,3 +1,3 @@
-# Template Mod
+# PersistenceAPI
 
-Edit about.md to change this
+API mod for serialization/deserialization of GD classes
