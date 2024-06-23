@@ -91,7 +91,7 @@ inline void persistenceAPI::operator<<(OutputStream& o_stream, PADynamicObjectAc
 	SEPARATOR_O
 }
 
-#if defined(PU_DEBUG) && defined(PU_DESCRIBE)
+#if defined(PA_DEBUG) && defined(PA_DESCRIBE)
 void PADynamicObjectAction::describe() {
 	int l_object1Index = -1;
 	if (!m_gameObject1) {

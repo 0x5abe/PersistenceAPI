@@ -68,17 +68,7 @@ void PACCArray::saveOne(OutputStream& o_stream, unsigned int i_index) {
 	reinterpret_cast<T*>(objectAtIndex(i_index))->save(o_stream); 
 }
 
-#if defined(PU_DEBUG) && defined(PU_DESCRIBE)
-// template <>
-// void PACCArray::describe<PUCheckpointObject>() {
-// 	int l_size = this->count();
-// 	log::info("[PACCArray CheckpointObject - describe] count(): {}", l_size);
-// 	for (int i = 0; i < l_size; i++) {
-// 		log::info("[PACCArray CheckpointObject - describe] this[{}]:", i);
-// 		reinterpret_cast<PUCheckpointObject*>(objectAtIndex(i))->describe();
-// 	}
-// } 
-
+#if defined(PA_DEBUG) && defined(PA_DESCRIBE)
 template <>
 void PACCArray::describe<GradientTriggerObject>() {
 	int l_size = this->count();

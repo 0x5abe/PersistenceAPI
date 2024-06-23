@@ -28,7 +28,7 @@ inline void persistenceAPI::operator<<(OutputStream& o_stream, PATouchToggleActi
 	VEC_SEPARATOR_O
 }
 
-#if defined(PU_DEBUG) && defined(PU_DESCRIBE)
+#if defined(PA_DEBUG) && defined(PA_DESCRIBE)
 void PATouchToggleAction::describe() {
 	log::info("[PATouchToggleAction - describe] pad_1: [{}]", hexStr(reinterpret_cast<unsigned char*>(this), 32));
 	int l_size = m_unkVecInt.size();

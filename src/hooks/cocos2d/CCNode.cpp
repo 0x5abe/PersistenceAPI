@@ -113,7 +113,7 @@ inline void persistenceAPI::operator<<(OutputStream& o_stream, PACCNode& i_value
 	SEPARATOR_O
 }
 
-#if defined(PU_DEBUG) && defined(PU_DESCRIBE)
+#if defined(PA_DEBUG) && defined(PA_DESCRIBE)
 void PACCNode::describe() {
 	log::info("[PACCNode - describe] m_fRotationX: {}", m_fRotationX);
 	log::info("[PACCNode - describe] m_fRotationY: {}", m_fRotationY);

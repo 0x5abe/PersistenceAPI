@@ -9,10 +9,10 @@ namespace persistenceAPI {
 	class $modify(PACCArray, cocos2d::CCArray) {
 	public:
 		template <typename T>
-		SABE_PU_DLL void load(persistenceAPI::InputStream& i_stream);
+		SABE_PA_DLL void load(persistenceAPI::InputStream& i_stream);
 
 		template <typename T>
-		SABE_PU_DLL void save(persistenceAPI::OutputStream& o_stream);
+		SABE_PA_DLL void save(persistenceAPI::OutputStream& o_stream);
 
 		template <typename T>
 		void loadOne(persistenceAPI::InputStream& o_stream);
@@ -26,13 +26,10 @@ namespace persistenceAPI {
 		template <>
 		void save<GradientTriggerObject>(persistenceAPI::OutputStream& o_stream);
 
-	#if defined(PU_DEBUG) && defined(PU_DESCRIBE)
+	#if defined(PA_DEBUG) && defined(PA_DESCRIBE)
 		template <class T>
-		SABE_PU_DLL void describe();
-
-		// template <>
-		// void describe<PUCheckpointObject>();
-
+		SABE_PA_DLL void describe();
+		
 		template <>
 		void describe<GradientTriggerObject>();
 	#endif

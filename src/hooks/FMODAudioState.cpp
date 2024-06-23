@@ -104,7 +104,7 @@ inline void persistenceAPI::operator<<(OutputStream& o_stream, PAFMODAudioState&
 	SEPARATOR_O
 }
 
-#if defined(PU_DEBUG) && defined(PU_DESCRIBE)
+#if defined(PA_DEBUG) && defined(PA_DESCRIBE)
 void PAFMODAudioState::describe() {
 	log::info("[PAFMODAudioState - describe] m_unkFloat1", m_unkFloat1);
 	log::info("[PAFMODAudioState - describe] m_unkFloat2", m_unkFloat2);

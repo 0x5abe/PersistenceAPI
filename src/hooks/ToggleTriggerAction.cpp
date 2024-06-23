@@ -28,7 +28,7 @@ inline void persistenceAPI::operator<<(OutputStream& o_stream, PAToggleTriggerAc
 	VEC_SEPARATOR_O
 }
 
-#if defined(PU_DEBUG) && defined(PU_DESCRIBE)
+#if defined(PA_DEBUG) && defined(PA_DESCRIBE)
 void PAToggleTriggerAction::describe() {
 	log::info("[PAToggleTriggerAction - describe] pad_1: [{}]", hexStr(reinterpret_cast<unsigned char*>(this), 20));
 	int l_size = m_unkVecInt.size();

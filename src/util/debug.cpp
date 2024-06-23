@@ -1,9 +1,9 @@
-#if defined(PU_DEBUG)
+#if defined(PA_DEBUG)
 #include "util/debug.hpp"
 
 using namespace persistenceAPI;
 
-#if defined(PU_SEPARATORS)
+#if defined(PA_SEPARATORS)
 void writeSeparator(std::string i_string, OutputStream& o_stream) {
 	o_stream.write(i_string.data(),i_string.length());
 }

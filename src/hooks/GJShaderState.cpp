@@ -34,7 +34,7 @@ inline void persistenceAPI::operator<<(OutputStream& o_stream, PAGJShaderState& 
 	SEPARATOR_O
 }
 
-#if defined(PU_DEBUG) && defined(PU_DESCRIBE)
+#if defined(PA_DEBUG) && defined(PA_DESCRIBE)
 void PAGJShaderState::describe() {
 	int l_size = m_someIntToValueTweenMap.size();
 	log::info("[PAGJShaderState - describe] m_someIntToValueTweenMap.size(): {}", l_size);

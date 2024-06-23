@@ -75,7 +75,7 @@ inline void persistenceAPI::operator<<(OutputStream& o_stream, PAActiveSaveObjec
 	SEPARATOR_O_END
 }
 
-#if defined(PU_DEBUG) && defined(PU_DESCRIBE)
+#if defined(PA_DEBUG) && defined(PA_DESCRIBE)
 void PAActiveSaveObject1::describe() {
 	int l_objectIndex = -1;
 	PAPlayLayer* l_playLayer = static_cast<PAPlayLayer*>(PlayLayer::get());

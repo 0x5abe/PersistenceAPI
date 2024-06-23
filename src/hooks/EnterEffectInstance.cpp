@@ -52,7 +52,7 @@ inline void persistenceAPI::operator<<(OutputStream& o_stream, PAEnterEffectInst
 	SEPARATOR_O
 }
 
-#if defined(PU_DEBUG) && defined(PU_DESCRIBE)
+#if defined(PA_DEBUG) && defined(PA_DESCRIBE)
 void PAEnterEffectInstance::describe() {
 	int i = 0;
 	for (std::pair<int, EnterEffectAnimValue> l_pair : m_enterEffectAnimMap) {

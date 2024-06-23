@@ -747,7 +747,7 @@ void PAGJGameState::clean() {
 }
 
 // TODO FIX DESCRIBE
-#if defined(PU_DEBUG) && defined(PU_DESCRIBE)
+#if defined(PA_DEBUG) && defined(PA_DESCRIBE)
 void PAGJGameState::describe() {
 	log::info("[PAGJGameState - describe] m_cameraZoom: {}", m_cameraZoom);
 	log::info("[PAGJGameState - describe] m_targetCameraZoom: {}", m_targetCameraZoom);

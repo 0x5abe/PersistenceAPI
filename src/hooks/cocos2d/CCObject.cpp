@@ -30,7 +30,7 @@ inline void persistenceAPI::operator<<(OutputStream& o_stream, PACCObject& i_val
 	SEPARATOR_O
 }
 
-#if defined(PU_DEBUG) && defined(PU_DESCRIBE)
+#if defined(PA_DEBUG) && defined(PA_DESCRIBE)
 void PACCObject::describe() {
 	log::info("[PACCObject - describe] m_eObjType: {}", static_cast<int>(m_eObjType));
 	log::info("[PACCObject - describe] m_nZOrder: {}", m_nZOrder);

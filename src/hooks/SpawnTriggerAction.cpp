@@ -40,7 +40,7 @@ inline void persistenceAPI::operator<<(OutputStream& o_stream, PASpawnTriggerAct
 	VEC_SEPARATOR_O
 }
 
-#if defined(PU_DEBUG) && defined(PU_DESCRIBE)
+#if defined(PA_DEBUG) && defined(PA_DESCRIBE)
 void PASpawnTriggerAction::describe() {
 	log::info("[PASpawnTriggerAction - describe] pad_1: [{}]", hexStr(reinterpret_cast<unsigned char*>(this), 40));
 	int l_objectIndex = -1;

@@ -29,7 +29,7 @@ inline void persistenceAPI::operator<<(OutputStream& o_stream, PASequenceTrigger
 	UMAP_SEPARATOR_O
 }
 
-#if defined(PU_DEBUG) && defined(PU_DESCRIBE)
+#if defined(PA_DEBUG) && defined(PA_DESCRIBE)
 void PASequenceTriggerState::describe() {
 	int l_size = m_unkUnorderedMap1.size();
 	log::info("[PASequenceTriggerState - describe] m_unkUnorderedMap1.size(): {}", l_size);

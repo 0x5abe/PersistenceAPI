@@ -134,7 +134,7 @@ inline void persistenceAPI::operator<<(OutputStream& o_stream, PAPlayerCheckpoin
 	SEPARATOR_O
 }
 
-#if defined(PU_DEBUG) && defined(PU_DESCRIBE)
+#if defined(PA_DEBUG) && defined(PA_DESCRIBE)
 void PAPlayerCheckpoint::describe() {
 	log::info("[PAPlayerCheckpoint - describe] m_position: {}", m_position);
 	log::info("[PAPlayerCheckpoint - describe] m_lastPosition: {}", m_lastPosition);

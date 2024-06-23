@@ -165,7 +165,7 @@ void PAEffectManagerState::clean() {
 	}
 }
 
-#if defined(PU_DEBUG) && defined(PU_DESCRIBE)
+#if defined(PA_DEBUG) && defined(PA_DESCRIBE)
 void PAEffectManagerState::describe() {
 	int l_size = m_unkVecCAState.size();
 	log::info("[PAEffectManagerState - describe] m_unkVecCAState.size(): {}", l_size);

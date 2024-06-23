@@ -1,12 +1,12 @@
 #pragma once
-#if defined(PU_DEBUG) && (defined(PU_DESCRIBE) || defined(PU_SEPARATORS))
+#if defined(PA_DEBUG) && (defined(PA_DESCRIBE) || defined(PA_SEPARATORS))
 #include "iomanip"
 #include "sstream"
 #include "string"
 #endif
 
 namespace persistenceAPI {
-	#if defined(PU_DEBUG) && defined(PU_DESCRIBE)
+	#if defined(PA_DEBUG) && defined(PA_DESCRIBE)
 	inline std::string hexStr(const uint8_t *data, int len)
 	{
 		std::stringstream ss;
@@ -17,7 +17,7 @@ namespace persistenceAPI {
 	}
 	#endif
 
-	#if defined(PU_DEBUG) && defined(PU_SEPARATORS)
+	#if defined(PA_DEBUG) && defined(PA_SEPARATORS)
 	#include "util/InputStream.hpp"
 	#include "util/OutputStream.hpp"
 

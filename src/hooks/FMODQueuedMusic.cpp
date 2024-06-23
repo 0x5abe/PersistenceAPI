@@ -29,7 +29,7 @@ inline void persistenceAPI::operator<<(OutputStream& o_stream, PAFMODQueuedMusic
 	SEPARATOR_O
 }
 
-#if defined(PU_DEBUG) && defined(PU_DESCRIBE)
+#if defined(PA_DEBUG) && defined(PA_DESCRIBE)
 void PAFMODQueuedMusic::describe() {
 	log::info("[PAFMODQueuedMusic - describe] m_unkString: {}", m_unkString);
 	log::info("[PAFMODQueuedMusic - describe] pad_1: [{}]", hexStr(reinterpret_cast<unsigned char*>(this) + offsetof(PAFMODQueuedMusic,m_unkString) + sizeof(gd::string), 56));

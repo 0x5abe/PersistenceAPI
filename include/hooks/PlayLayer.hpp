@@ -13,11 +13,11 @@ namespace persistenceAPI {
 		// overrides
 
 		$override
-		SABE_PU_DLL bool init(GJGameLevel* i_level, bool i_useReplay, bool i_dontCreateObjects);
+		SABE_PA_DLL bool init(GJGameLevel* i_level, bool i_useReplay, bool i_dontCreateObjects);
 		
 		// custom methods
 
-		SABE_PU_DLL inline int getGameObjectIndex(GameObject* i_object) {
+		SABE_PA_DLL inline int getGameObjectIndex(GameObject* i_object) {
 			if (i_object == nullptr) return -1;
 
 			int l_index = i_object->m_uniqueID-m_fields->m_uniqueIdBase;
@@ -38,7 +38,7 @@ namespace persistenceAPI {
 			return -404;
 		}
 
-		SABE_PU_DLL GameObject* getGameObject(int i_index) {
+		SABE_PA_DLL GameObject* getGameObject(int i_index) {
 			if (i_index > -1) {
 				return static_cast<GameObject*>(m_objects->objectAtIndex(i_index));
 			}

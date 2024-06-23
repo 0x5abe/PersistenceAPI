@@ -25,7 +25,7 @@ target_include_directories(${PROJECT_NAME} PUBLIC include)
 target_include_directories(${PROJECT_NAME} PRIVATE src/)
 
 if (PROJECT_IS_TOP_LEVEL)
-    target_compile_definitions(${PROJECT_NAME} PRIVATE SABE_PU_EXPORTING)
+    target_compile_definitions(${PROJECT_NAME} PRIVATE SABE_PA_EXPORTING)
 endif()
 
 if (NOT DEFINED ENV{GEODE_SDK})

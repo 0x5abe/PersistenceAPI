@@ -41,7 +41,7 @@ inline void persistenceAPI::operator<<(OutputStream& o_stream, PAGroupCommandObj
 	SEPARATOR_O
 }
 
-#if defined(PU_DEBUG) && defined(PU_DESCRIBE)
+#if defined(PA_DEBUG) && defined(PA_DESCRIBE)
 void PAGroupCommandObject2::describe() {
 	log::info("[PAGroupCommandObject2 - describe] pad_1: [{}]", hexStr(reinterpret_cast<unsigned char*>(this), 440));
 	int l_size = m_unkVecKeyframeObject.size();

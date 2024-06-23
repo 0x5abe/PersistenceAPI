@@ -23,7 +23,7 @@ inline void persistenceAPI::operator<<(OutputStream& o_stream, PACAState& i_valu
 	SEPARATOR_O;
 }
 
-#if defined(PU_DEBUG) && defined(PU_DESCRIBE)
+#if defined(PA_DEBUG) && defined(PA_DESCRIBE)
 void PACAState::describe() {
 }
 #endif

@@ -36,7 +36,7 @@ inline void persistenceAPI::operator<<(OutputStream& o_stream, PASongTriggerStat
 	SEPARATOR_O
 }
 
-#if defined(PU_DEBUG) && defined(PU_DESCRIBE)
+#if defined(PA_DEBUG) && defined(PA_DESCRIBE)
 void PASongTriggerState::describe() {
 	int l_objectIndex = -1;
 	PAPlayLayer* l_playLayer = static_cast<PAPlayLayer*>(PlayLayer::get());

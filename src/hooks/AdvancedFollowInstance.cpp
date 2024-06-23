@@ -35,7 +35,7 @@ inline void persistenceAPI::operator<<(OutputStream& o_stream, PAAdvancedFollowI
 	SEPARATOR_O
 }
 
-#if defined(PU_DEBUG) && defined(PU_DESCRIBE)
+#if defined(PA_DEBUG) && defined(PA_DESCRIBE)
 void PAAdvancedFollowInstance::describe() {
 	log::info("[PAAdvancedFollowInstance - describe] pad_1: [{}]", hexStr(reinterpret_cast<unsigned char*>(this) + offsetof(PAAdvancedFollowInstance,m_gameObject) + sizeof(GameObject*), 24));
 	int l_objectIndex = -1;
