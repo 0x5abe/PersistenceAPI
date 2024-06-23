@@ -1,13 +1,18 @@
 {
-	"geode": "3.0.0-beta.2",
+	"geode": "3.0.0",
 	"gd": {
 		"win": "2.206"
 	},
 	"version": "v0.0.1",
 	"id": "sabe.persistenceapi",
 	"name": "PersistenceAPI",
-	"developer": "sabe",
-	"description": "",
+	"developer": "Sabe",
+	"description": "API for serialization/deserialization of GD classes",
+	"repository": "https://github.com/0x5abe/PersistenceAPI",
+	"tags": [
+		"utility",
+		"developer"
+	],
 	"early-load": true,
 	"api": {
 		"include": [
