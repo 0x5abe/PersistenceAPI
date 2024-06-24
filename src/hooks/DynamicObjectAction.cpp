@@ -54,36 +54,27 @@ inline void persistenceAPI::operator<<(OutputStream& o_stream, PADynamicObjectAc
 	PAPlayLayer* l_playLayer = static_cast<PAPlayLayer*>(PlayLayer::get());
 	if (l_playLayer) {
 		l_objectIndex = l_playLayer->getGameObjectIndex(i_value.m_gameObject1);
-		log::info("object1Index: {}", l_objectIndex);
 		o_stream << l_objectIndex;
 		SEPARATOR_O
 		l_objectIndex = l_playLayer->getGameObjectIndex(i_value.m_gameObject2);
-		log::info("object2Index: {}", l_objectIndex);
 		o_stream << l_objectIndex;
 		SEPARATOR_O
 	 	l_objectIndex = l_playLayer->getGameObjectIndex(i_value.m_gameObject3);
-		log::info("object3 uniqueId: {}", i_value.m_gameObject3->m_uniqueID);
-		log::info("object3Index: {}", l_objectIndex);
 		o_stream << l_objectIndex;
 		SEPARATOR_O
 		l_objectIndex = l_playLayer->getGameObjectIndex(i_value.m_gameObject4);
-		log::info("object4Index: {}", l_objectIndex);
 		o_stream << l_objectIndex;
 		SEPARATOR_O
 		l_objectIndex = l_playLayer->getGameObjectIndex(i_value.m_gameObject5);
-		log::info("object5Index: {}", l_objectIndex);
 		o_stream << l_objectIndex;
 		SEPARATOR_O
 		l_objectIndex = l_playLayer->getGameObjectIndex(i_value.m_gameObject6);
-		log::info("object6Index: {}", l_objectIndex);
 		o_stream << l_objectIndex;
 		SEPARATOR_O
 		l_objectIndex = l_playLayer->getGameObjectIndex(i_value.m_gameObject7);
-		log::info("object7Index: {}", l_objectIndex);
 		o_stream << l_objectIndex;
 		SEPARATOR_O
 		l_objectIndex = l_playLayer->getGameObjectIndex(i_value.m_gameObject8);
-		log::info("object8Index: {}", l_objectIndex);
 		o_stream << l_objectIndex;
 		SEPARATOR_O
 	}
@@ -151,6 +142,6 @@ void PADynamicObjectAction::describe() {
 	log::info("[PADynamicObjectAction - describe] l_object6Index: {}", l_object6Index);
 	log::info("[PADynamicObjectAction - describe] l_object7Index: {}", l_object7Index);
 	log::info("[PADynamicObjectAction - describe] l_object8Index: {}", l_object8Index);
-	log::info("[PAEnterEffectInstance - describe] pad_1: [{}]", hexStr(reinterpret_cast<unsigned char*>(this) + offsetof(PADynamicObjectAction,m_gameObject8) + sizeof(GameObject*), 32));
+	log::info("[PADynamicObjectAction - describe] pad_1: [{}]", hexStr(reinterpret_cast<unsigned char*>(this) + offsetof(PADynamicObjectAction,m_gameObject8) + sizeof(GameObject*), 32));
 }
 #endif

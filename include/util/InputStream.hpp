@@ -51,7 +51,8 @@ namespace persistenceAPI {
 			}
 			m_stream = new std::ifstream(i_filePath, std::ios_base::binary);
 			if (!m_stream->good()) {
-				geode::log::info("!!!!!!!!!!!!!!! Failed to open file path: {} !!!!!!!!!!!!!!!!", i_filePath);
+				//geode::log::info("!!!!!!!!!!!!!!! Failed to open file path: {} !!!!!!!!!!!!!!!!", i_filePath);
+				return false;
 			}
 			m_bytesRead = i_bytesRead;
 			return true;
@@ -68,6 +69,14 @@ namespace persistenceAPI {
 		SABE_PA_DLL void ignore(int i_size) {
 			m_stream->ignore(i_size);
 			if (m_bytesRead) *m_bytesRead += i_size;
+		}
+
+		SABE_PA_DLL void end() {
+			if (m_stream) {
+				m_stream->close();
+				delete m_stream;
+			}
+			m_stream = nullptr;
 		}
 
 		// custom operators

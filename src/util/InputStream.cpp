@@ -215,6 +215,6 @@ inline void readGenericMap(InputStream* i_stream, gd::map<K,V>& o_value) {
 
 template <>
 void InputStream::operator>><std::pair<int,int>, SFXTriggerInstance>(gd::map<std::pair<int,int>, SFXTriggerInstance>& o_value) {
-	geode::log::info("jjjjjjjjjjjjjjjjjjjjj Map CustomRead SFXTriggerInstance");
+	//geode::log::info("jjjjjjjjjjjjjjjjjjjjj Map CustomRead SFXTriggerInstance");
 	readGenericMap<std::pair<int,int>, SFXTriggerInstance, PASFXTriggerInstance>(this, o_value);
 }

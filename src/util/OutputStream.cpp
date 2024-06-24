@@ -217,6 +217,6 @@ inline void writeGenericMap(OutputStream* o_stream, gd::map<K,V>& i_value) {
 
 template <>
 void OutputStream::operator<<<std::pair<int,int>, SFXTriggerInstance>(gd::map<std::pair<int,int>, SFXTriggerInstance>& i_value) {
-	geode::log::info("jjjjjjjjjjjjjjjjjjjjj Map CustomWrite SFXTriggerInstance");
+	//geode::log::info("jjjjjjjjjjjjjjjjjjjjj Map CustomWrite SFXTriggerInstance");
 	writeGenericMap<std::pair<int,int>, SFXTriggerInstance, PASFXTriggerInstance>(this, i_value);
 }

@@ -14,7 +14,6 @@ void PAKeyframeObject::save(OutputStream& o_stream) {
 }
 
 inline void persistenceAPI::operator>>(InputStream& i_stream, PAKeyframeObject& o_value) {
-	//log::info("INSIDE KeyframeObject save");
 	i_stream.read(reinterpret_cast<char*>(&o_value), 32);
 	VEC_SEPARATOR_I
 	i_stream >> o_value.m_unkVecDouble1;

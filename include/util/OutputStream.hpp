@@ -47,7 +47,7 @@ namespace persistenceAPI {
 			}
 			m_stream = new std::ofstream(i_filePath, std::ios_base::binary);
 			if (!m_stream->good()) {
-				geode::log::info("Failed to open file path: {}", i_filePath);
+				//geode::log::info("Failed to open file path: {}", i_filePath);
 				return false;
 			}
 			return true;
