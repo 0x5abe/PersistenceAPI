@@ -2,6 +2,7 @@
 #include "Geode/binding/KeyframeObject.hpp"
 #include "hooks/KeyframeObject.hpp"
 #include "hooks/cocos2d/CCNode.hpp"
+#include "hooks/PlayLayer.hpp"
 #include "util/debug.hpp"
 
 using namespace geode::prelude;
@@ -20,7 +21,15 @@ inline void persistenceAPI::operator>>(InputStream& i_stream, PAGroupCommandObje
 	VEC_SEPARATOR_I
 	i_stream >> o_value.m_unkVecKeyframeObject;
 	VEC_SEPARATOR_I
-	i_stream.read(reinterpret_cast<char*>(&o_value) + offsetof(PAGroupCommandObject2,m_unkVecKeyframeObject) + sizeof(gd::vector<KeyframeObject>), 24);
+	i_stream.read(reinterpret_cast<char*>(&o_value) + offsetof(PAGroupCommandObject2,m_unkVecKeyframeObject) + sizeof(gd::vector<KeyframeObject>), 8);
+	SEPARATOR_I
+	int l_objectIndex;
+	i_stream >> l_objectIndex;
+	i_stream.ignore(4); // pad to keep same size for compatibility with older versions
+	PAPlayLayer* l_playLayer = static_cast<PAPlayLayer*>(PlayLayer::get());
+	if (l_playLayer) o_value.m_gameObject = static_cast<GameObject*>(l_playLayer->getGameObject(l_objectIndex));
+	SEPARATOR_I
+	i_stream.read(reinterpret_cast<char*>(&o_value) + offsetof(PAGroupCommandObject2,m_gameObject) + sizeof(GameObject*), 8);
 	VEC_SEPARATOR_I
 	i_stream >> o_value.m_unkVecInt;
 	VEC_SEPARATOR_I
@@ -33,7 +42,15 @@ inline void persistenceAPI::operator<<(OutputStream& o_stream, PAGroupCommandObj
 	VEC_SEPARATOR_O
 	o_stream << i_value.m_unkVecKeyframeObject;
 	VEC_SEPARATOR_O
-	o_stream.write(reinterpret_cast<char*>(&i_value) + offsetof(PAGroupCommandObject2,m_unkVecKeyframeObject) + sizeof(gd::vector<KeyframeObject>), 24);
+	o_stream.write(reinterpret_cast<char*>(&i_value) + offsetof(PAGroupCommandObject2,m_unkVecKeyframeObject) + sizeof(gd::vector<KeyframeObject>), 8);
+	SEPARATOR_O
+	int l_objectIndex = -1;
+	PAPlayLayer* l_playLayer = static_cast<PAPlayLayer*>(PlayLayer::get());
+	if (l_playLayer) l_objectIndex = l_playLayer->getGameObjectIndex(i_value.m_gameObject);
+	o_stream << l_objectIndex;
+	o_stream.writeZero(4); // pad to keep same size for compatibility with older versions
+	SEPARATOR_O
+	o_stream.write(reinterpret_cast<char*>(&i_value) + offsetof(PAGroupCommandObject2,m_gameObject) + sizeof(GameObject*), 8);
 	VEC_SEPARATOR_O
 	o_stream << i_value.m_unkVecInt;
 	VEC_SEPARATOR_O
@@ -50,12 +67,17 @@ void PAGroupCommandObject2::describe() {
 		log::info("[PAGroupCommandObject2 - describe] m_unkVecKeyframeObject[{}]:", i);
 		reinterpret_cast<PAKeyframeObject*>(&m_unkVecKeyframeObject[i])->describe();
 	}
-	log::info("[PAGroupCommandObject2 - describe] pad_2: [{}]", hexStr(reinterpret_cast<unsigned char*>(this) + offsetof(PAGroupCommandObject2,m_unkVecKeyframeObject) + sizeof(gd::vector<KeyframeObject>), 24));
+	log::info("[PAGroupCommandObject2 - describe] pad_2: [{}]", hexStr(reinterpret_cast<unsigned char*>(this) + offsetof(PAGroupCommandObject2,m_unkVecKeyframeObject) + sizeof(gd::vector<KeyframeObject>), 8));
+	int l_objectIndex = -1;
+	PAPlayLayer* l_playLayer = static_cast<PAPlayLayer*>(PlayLayer::get());
+	if (l_playLayer) l_objectIndex = l_playLayer->getGameObjectIndex(m_gameObject);
+	log::info("[PAGroupCommandObject2 - describe] m_gameObject l_objectIndex: {}", l_objectIndex);
+	log::info("[PAGroupCommandObject2 - describe] pad_3: [{}]", hexStr(reinterpret_cast<unsigned char*>(this) + offsetof(PAGroupCommandObject2,m_gameObject) + sizeof(GameObject*), 8));
 	l_size = m_unkVecInt.size();
 	log::info("[PAGroupCommandObject2 - describe] m_unkVecInt.size(): {}", l_size);
 	for (int i = 0; i < l_size; i++) {
 		log::info("[PAGroupCommandObject2 - describe] m_unkVecInt[{}]: {}", i, m_unkVecInt[i]);
 	}
-	log::info("[PAGroupCommandObject2 - describe] pad_3: [{}]", hexStr(reinterpret_cast<unsigned char*>(this) + offsetof(PAGroupCommandObject2,m_unkVecInt) + sizeof(gd::vector<int>), 8));
+	log::info("[PAGroupCommandObject2 - describe] pad_4: [{}]", hexStr(reinterpret_cast<unsigned char*>(this) + offsetof(PAGroupCommandObject2,m_unkVecInt) + sizeof(gd::vector<int>), 8));
 }
 #endif
