@@ -18,14 +18,11 @@ void PASongChannelState::save(OutputStream& o_stream) {
 
 inline void persistenceAPI::operator>>(InputStream& i_stream, PASongChannelState& o_value) {
 	int l_objectIndex;
-	i_stream >> l_objectIndex;
-	PAPlayLayer* l_playLayer = static_cast<PAPlayLayer*>(PlayLayer::get());
-	if (l_playLayer) o_value.m_songTriggerGameObject1 = static_cast<SongTriggerGameObject*>(l_playLayer->getGameObject(l_objectIndex));
+	i_stream >> o_value.m_songTriggerGameObject1;
 	SEPARATOR_I
 	i_stream.read(reinterpret_cast<char*>(&o_value) + offsetof(PASongChannelState,m_songTriggerGameObject1) + sizeof(SongTriggerGameObject*), 8);
 	SEPARATOR_I
-	i_stream >> l_objectIndex;
-	if (l_playLayer) o_value.m_songTriggerGameObject2 = static_cast<SongTriggerGameObject*>(l_playLayer->getGameObject(l_objectIndex));
+	i_stream >> o_value.m_songTriggerGameObject2;
 	SEPARATOR_I
 	i_stream.read(reinterpret_cast<char*>(&o_value) + offsetof(PASongChannelState,m_songTriggerGameObject2) + sizeof(SongTriggerGameObject*), 8);
 	SEPARATOR_I
@@ -33,15 +30,11 @@ inline void persistenceAPI::operator>>(InputStream& i_stream, PASongChannelState
 
 inline void persistenceAPI::operator<<(OutputStream& o_stream, PASongChannelState& i_value) {
 	int l_objectIndex = -1;
-	PAPlayLayer* l_playLayer = static_cast<PAPlayLayer*>(PlayLayer::get());
-	if (l_playLayer) l_objectIndex = l_playLayer->getGameObjectIndex(i_value.m_songTriggerGameObject1);
-	o_stream << l_objectIndex;
+	o_stream << i_value.m_songTriggerGameObject1;
 	SEPARATOR_O
 	o_stream.write(reinterpret_cast<char*>(&i_value) + offsetof(PASongChannelState,m_songTriggerGameObject1) + sizeof(SongTriggerGameObject*), 8);
 	SEPARATOR_O
-	l_objectIndex = -1;
-	if (l_playLayer) l_objectIndex = l_playLayer->getGameObjectIndex(i_value.m_songTriggerGameObject2);
-	o_stream << l_objectIndex;
+	o_stream << i_value.m_songTriggerGameObject2;
 	SEPARATOR_O
 	o_stream.write(reinterpret_cast<char*>(&i_value) + offsetof(PASongChannelState,m_songTriggerGameObject2) + sizeof(SongTriggerGameObject*), 8);
 	SEPARATOR_O

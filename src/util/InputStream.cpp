@@ -22,8 +22,32 @@
 #include "hooks/SFXTriggerState.hpp"
 #include "hooks/SFXTriggerInstance.hpp"
 #include "hooks/DynamicObjectAction.hpp"
+#include "hooks/PlayLayer.hpp"
 
 using namespace persistenceAPI;
+
+// GameObject*
+
+template<class T>
+inline void readGenericGameObjectPtr(InputStream* i_stream, T** o_value) {
+	//geode::log::info(" @@@@@@@@@@ Custom GameObject* operator>> GETS CALLED @@@@@@@@@@@@@@");
+	int l_objectIndex;
+	i_stream->read(reinterpret_cast<char*>(&l_objectIndex), 4);
+	PAPlayLayer* l_playLayer = static_cast<PAPlayLayer*>(PlayLayer::get());
+	if (l_playLayer) *o_value = static_cast<T*>(l_playLayer->getGameObject(l_objectIndex));
+}
+
+void InputStream::operator>>(GameObject*& o_value) {
+	readGenericGameObjectPtr<GameObject>(this, &o_value);
+}
+
+void InputStream::operator>>(SFXTriggerGameObject*& o_value) {
+	readGenericGameObjectPtr<SFXTriggerGameObject>(this, &o_value);
+}
+
+void InputStream::operator>>(SongTriggerGameObject*& o_value) {
+	readGenericGameObjectPtr<SongTriggerGameObject>(this, &o_value);
+}
 
 // vector
 

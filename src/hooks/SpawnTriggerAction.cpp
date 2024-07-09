@@ -18,10 +18,7 @@ void PASpawnTriggerAction::save(OutputStream& o_stream) {
 inline void persistenceAPI::operator>>(InputStream& i_stream, PASpawnTriggerAction& o_value) {
 	i_stream.read(reinterpret_cast<char*>(&o_value), 40);
 	SEPARATOR_I
-	int l_objectIndex;
-	i_stream >> l_objectIndex;
-	PAPlayLayer* l_playLayer = static_cast<PAPlayLayer*>(PlayLayer::get());
-	if (l_playLayer) o_value.m_gameObject = l_playLayer->getGameObject(l_objectIndex);
+	i_stream >> o_value.m_gameObject;
 	VEC_SEPARATOR_I
 	int l_size = o_value.m_unkVecInt.size();
 	i_stream >> o_value.m_unkVecInt;
@@ -31,10 +28,7 @@ inline void persistenceAPI::operator>>(InputStream& i_stream, PASpawnTriggerActi
 inline void persistenceAPI::operator<<(OutputStream& o_stream, PASpawnTriggerAction& i_value) {
 	o_stream.write(reinterpret_cast<char*>(&i_value), 40);
 	SEPARATOR_O
-	int l_objectIndex = -1;
-	PAPlayLayer* l_playLayer = static_cast<PAPlayLayer*>(PlayLayer::get());
-	if (l_playLayer) l_objectIndex = l_playLayer->getGameObjectIndex(i_value.m_gameObject);
-	o_stream << l_objectIndex;
+	o_stream << i_value.m_gameObject;
 	VEC_SEPARATOR_O
 	o_stream << i_value.m_unkVecInt;
 	VEC_SEPARATOR_O

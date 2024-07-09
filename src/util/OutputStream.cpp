@@ -1,4 +1,5 @@
 #include "util/OutputStream.hpp"
+#include "Geode/binding/GameObject.hpp"
 #include "hooks/DynamicSaveObject.hpp"
 #include "hooks/ActiveSaveObject.hpp"
 #include "hooks/SequenceTriggerState.hpp"
@@ -25,6 +26,28 @@
 #include "hooks/DynamicObjectAction.hpp"
 
 using namespace persistenceAPI;
+
+// GameObject*
+
+template<class T>
+inline void writeGenericGameObjectPtr(OutputStream* o_stream, T** i_value) {
+	int l_objectIndex = -1;
+	PAPlayLayer* l_playLayer = static_cast<PAPlayLayer*>(PlayLayer::get());
+	if (l_playLayer) l_objectIndex = l_playLayer->getGameObjectIndex(static_cast<GameObject*>(*i_value));
+	o_stream->write(reinterpret_cast<char*>(&l_objectIndex), 4);
+}
+
+void OutputStream::operator<<(GameObject*& i_value) {
+	writeGenericGameObjectPtr<GameObject>(this, &i_value);
+}
+
+void OutputStream::operator<<(SFXTriggerGameObject*& i_value) {
+	writeGenericGameObjectPtr<SFXTriggerGameObject>(this, &i_value);
+}
+
+void OutputStream::operator<<(SongTriggerGameObject*& i_value) {
+	writeGenericGameObjectPtr<SongTriggerGameObject>(this, &i_value);
+}
 
 // vector
 

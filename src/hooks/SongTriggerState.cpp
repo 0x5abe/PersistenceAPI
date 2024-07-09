@@ -17,20 +17,14 @@ void PASongTriggerState::save(OutputStream& o_stream) {
 }
 
 inline void persistenceAPI::operator>>(InputStream& i_stream, PASongTriggerState& o_value) {
-	int l_objectIndex;
-	i_stream >> l_objectIndex;
-	PAPlayLayer* l_playLayer = static_cast<PAPlayLayer*>(PlayLayer::get());
-	if (l_playLayer) o_value.m_songTriggerGameObject = static_cast<SongTriggerGameObject*>(l_playLayer->getGameObject(l_objectIndex));
+	i_stream >> o_value.m_songTriggerGameObject;
 	SEPARATOR_I
 	i_stream.read(reinterpret_cast<char*>(&o_value) + offsetof(PASongTriggerState,m_songTriggerGameObject) + sizeof(SongTriggerGameObject*), 8);
 	SEPARATOR_I
 }
 
 inline void persistenceAPI::operator<<(OutputStream& o_stream, PASongTriggerState& i_value) {
-	int l_objectIndex = -1;
-	PAPlayLayer* l_playLayer = static_cast<PAPlayLayer*>(PlayLayer::get());
-	if (l_playLayer) l_objectIndex = l_playLayer->getGameObjectIndex(i_value.m_songTriggerGameObject);
-	o_stream << l_objectIndex;
+	o_stream << i_value.m_songTriggerGameObject;
 	SEPARATOR_O
 	o_stream.write(reinterpret_cast<char*>(&i_value) + offsetof(PASongTriggerState,m_songTriggerGameObject) + sizeof(SongTriggerGameObject*), 8);
 	SEPARATOR_O

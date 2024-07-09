@@ -71,6 +71,14 @@ namespace persistenceAPI {
 
 		// custom operators
 
+		// GameObject*
+
+		SABE_PA_DLL void operator<<(GameObject*& i_value);
+
+		SABE_PA_DLL void operator<<(SFXTriggerGameObject*& i_value);
+
+		SABE_PA_DLL void operator<<(SongTriggerGameObject*& i_value);
+
 		// vector
 
 		template <class T>
