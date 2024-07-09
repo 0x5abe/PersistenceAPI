@@ -174,9 +174,9 @@ inline void persistenceAPI::operator>>(InputStream& i_stream, PAGJGameState& o_v
 	i_stream >> o_value.m_spawnChannelRelated1;
 	UMAP_SEPARATOR_I
 	SEPARATOR_I
-	i_stream >> o_value.m_unkDouble1;
+	i_stream >> o_value.m_totalTime;
 	SEPARATOR_I
-	i_stream >> o_value.m_unkDouble2;
+	i_stream >> o_value.m_levelTime;
 	SEPARATOR_I
 	i_stream >> o_value.m_unkDouble3;
 	SEPARATOR_I
@@ -523,9 +523,9 @@ inline void persistenceAPI::operator<<(OutputStream& o_stream, PAGJGameState& i_
 	o_stream << i_value.m_spawnChannelRelated1;
 	UMAP_SEPARATOR_O
 	SEPARATOR_O
-	o_stream << i_value.m_unkDouble1;
+	o_stream << i_value.m_totalTime;
 	SEPARATOR_O
-	o_stream << i_value.m_unkDouble2;
+	o_stream << i_value.m_levelTime;
 	SEPARATOR_O
 	o_stream << i_value.m_unkDouble3;
 	SEPARATOR_O
@@ -835,8 +835,8 @@ void PAGJGameState::describe() {
 		log::info("[PAGJGameState - describe] m_spawnChannelRelated1 element {} value: {}", i, l_pair.second);
 		i++;
 	}
-	log::info("[PAGJGameState - describe] m_unkDouble1: {}", m_unkDouble1);
-	log::info("[PAGJGameState - describe] m_unkDouble2: {}", m_unkDouble2);
+	log::info("[PAGJGameState - describe] m_totalTime: {}", m_totalTime);
+	log::info("[PAGJGameState - describe] m_levelTime: {}", m_levelTime);
 	log::info("[PAGJGameState - describe] m_unkDouble3: {}", m_unkDouble3);
 	log::info("[PAGJGameState - describe] m_unkUint2: {}", m_unkUint2);
 	log::info("[PAGJGameState - describe] m_unkUint3: {}", m_unkUint3);
