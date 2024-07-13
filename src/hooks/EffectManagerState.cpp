@@ -57,7 +57,7 @@ inline void persistenceAPI::operator>>(InputStream& i_stream, PAEffectManagerSta
 	i_stream >> o_value.m_vectorSpawnTriggerAction;
 	VEC_SEPARATOR_I
 	UMAP_SEPARATOR_I
-	i_stream >> o_value.m_unorderedMapInt_int;
+	i_stream >> o_value.m_itemCountMap;
 	UMAP_SEPARATOR_I
 	i_stream >> o_value.m_unorderedMapInt_bool;
 	UMAP_SEPARATOR_I
@@ -71,7 +71,7 @@ inline void persistenceAPI::operator>>(InputStream& i_stream, PAEffectManagerSta
 	i_stream >> o_value.m_unorderedSet_int2;
 	USET_SEPARATOR_I
 	UMAP_SEPARATOR_I
-	i_stream >> o_value.m_unorderedMapInt_TimerItem;
+	i_stream >> o_value.m_timerItemMap;
 	UMAP_SEPARATOR_I
 	i_stream >> o_value.m_unorderedMapInt_vectorTimerTriggerAction;
 	UMAP_SEPARATOR_I
@@ -107,7 +107,7 @@ inline void persistenceAPI::operator<<(OutputStream& o_stream, PAEffectManagerSt
 	o_stream << i_value.m_vectorSpawnTriggerAction;
 	VEC_SEPARATOR_O
 	UMAP_SEPARATOR_O
-	o_stream << i_value.m_unorderedMapInt_int;
+	o_stream << i_value.m_itemCountMap;
 	UMAP_SEPARATOR_O
 	o_stream << i_value.m_unorderedMapInt_bool;
 	UMAP_SEPARATOR_O
@@ -121,7 +121,7 @@ inline void persistenceAPI::operator<<(OutputStream& o_stream, PAEffectManagerSt
 	o_stream << i_value.m_unorderedSet_int2;
 	USET_SEPARATOR_O
 	UMAP_SEPARATOR_O
-	o_stream << i_value.m_unorderedMapInt_TimerItem;
+	o_stream << i_value.m_timerItemMap;
 	UMAP_SEPARATOR_O
 	o_stream << i_value.m_unorderedMapInt_vectorTimerTriggerAction;
 	UMAP_SEPARATOR_O
@@ -247,9 +247,9 @@ void PAEffectManagerState::describe() {
 		reinterpret_cast<PASpawnTriggerAction*>(&m_vectorSpawnTriggerAction[i])->describe();
 	}
 	i = 0;
-	for (std::pair<int, int> l_pair : m_unorderedMapInt_int) {
-		log::info("[PAEffectManagerState - describe] m_unorderedMapInt_int element {} key: {}", i, l_pair.first);
-		log::info("[PAEffectManagerState - describe] m_unorderedMapInt_int element {} value: {}", i, l_pair.second);
+	for (std::pair<int, int> l_pair : m_itemCountMap) {
+		log::info("[PAEffectManagerState - describe] m_itemCountMap element {} key: {}", i, l_pair.first);
+		log::info("[PAEffectManagerState - describe] m_itemCountMap element {} value: {}", i, l_pair.second);
 		i++;
 	}
 	i = 0;
@@ -275,12 +275,12 @@ void PAEffectManagerState::describe() {
 		log::info("[PAEffectManagerState - describe] m_unorderedSet_int2 element {} value: {}", i, l_value);
 		i++;
 	}
-	l_size = m_unorderedMapInt_TimerItem.size();
-	log::info("[PAEffectManagerState - describe] m_unorderedMapInt_TimerItem.size(): {}", l_size);
+	l_size = m_timerItemMap.size();
+	log::info("[PAEffectManagerState - describe] m_timerItemMap.size(): {}", l_size);
 	i = 0;
-	for (std::pair<int, TimerItem> l_pair : m_unorderedMapInt_TimerItem) {
-		log::info("[PAEffectManagerState - describe] m_unorderedMapInt_TimerItem element {} key: {}", i, l_pair.first);
-		log::info("[PAEffectManagerState - describe] m_unorderedMapInt_TimerItem element {} value:", i);
+	for (std::pair<int, TimerItem> l_pair : m_timerItemMap) {
+		log::info("[PAEffectManagerState - describe] m_timerItemMap element {} key: {}", i, l_pair.first);
+		log::info("[PAEffectManagerState - describe] m_timerItemMap element {} value:", i);
 		reinterpret_cast<PATimerItem*>(&l_pair.second)->describe();
 		i++;
 	}
