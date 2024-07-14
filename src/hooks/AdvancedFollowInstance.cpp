@@ -16,20 +16,14 @@ void PAAdvancedFollowInstance::save(OutputStream& o_stream) {
 }
 
 inline void persistenceAPI::operator>>(InputStream& i_stream, PAAdvancedFollowInstance& o_value) {
-	int l_objectIndex;
-	i_stream >> l_objectIndex;
-	PAPlayLayer* l_playLayer = static_cast<PAPlayLayer*>(PlayLayer::get());
-	if (l_playLayer) o_value.m_gameObject = l_playLayer->getGameObject(l_objectIndex);
+	i_stream >> o_value.m_gameObject;
 	SEPARATOR_I
 	i_stream.read(reinterpret_cast<char*>(&o_value) + offsetof(PAAdvancedFollowInstance,m_gameObject) + sizeof(GameObject*), 24);
 	SEPARATOR_I
 }
 
 inline void persistenceAPI::operator<<(OutputStream& o_stream, PAAdvancedFollowInstance& i_value) {
-	int l_objectIndex = -1;
-	PAPlayLayer* l_playLayer = static_cast<PAPlayLayer*>(PlayLayer::get());
-	if (l_playLayer) l_objectIndex = l_playLayer->getGameObjectIndex(i_value.m_gameObject);
-	o_stream << l_objectIndex;
+	o_stream << i_value.m_gameObject;
 	SEPARATOR_O
 	o_stream.write(reinterpret_cast<char*>(&i_value) + offsetof(PAAdvancedFollowInstance,m_gameObject) + sizeof(GameObject*), 24);
 	SEPARATOR_O

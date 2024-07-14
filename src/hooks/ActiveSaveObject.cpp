@@ -15,25 +15,16 @@ void PAActiveSaveObject1::save(OutputStream& o_stream) {
 }
 
 inline void persistenceAPI::operator>>(InputStream& i_stream, PAActiveSaveObject1& o_value) {
-	int l_objectIndex;
-	i_stream >> l_objectIndex;
+	i_stream >> o_value.m_gameObject;
 	SEPARATOR_I
 	i_stream >> o_value.m_unkBool1;
 	SEPARATOR_I
 	i_stream >> o_value.m_unkBool2;
 	SEPARATOR_I_END
-
-	// get the pointer to the gameObject
-
-	PAPlayLayer* l_playLayer = static_cast<PAPlayLayer*>(PlayLayer::get());
-	if (l_playLayer) o_value.m_gameObject = l_playLayer->getGameObject(l_objectIndex);
 }
 
 inline void persistenceAPI::operator<<(OutputStream& o_stream, PAActiveSaveObject1& i_value) {
-	int l_objectIndex = -1;
-	PAPlayLayer* l_playLayer = static_cast<PAPlayLayer*>(PlayLayer::get());
-	if (l_playLayer) l_objectIndex = l_playLayer->getGameObjectIndex(i_value.m_gameObject);
-	o_stream << l_objectIndex;
+	o_stream << i_value.m_gameObject;
 	SEPARATOR_O
 	o_stream << i_value.m_unkBool1;
 	SEPARATOR_O
@@ -50,25 +41,16 @@ void PAActiveSaveObject2::save(OutputStream& o_stream) {
 }
 
 inline void persistenceAPI::operator>>(InputStream& i_stream, PAActiveSaveObject2& o_value) {
-	int l_objectIndex;
-	i_stream >> l_objectIndex;
+	i_stream >> o_value.m_gameObject;
 	SEPARATOR_I
 	unsigned int l_easingType;
 	i_stream >> l_easingType;
 	o_value.m_easingType = static_cast<EasingType>(l_easingType);
 	SEPARATOR_I_END
-
-	// get the pointer to the gameObject
-
-	PAPlayLayer* l_playLayer = static_cast<PAPlayLayer*>(PlayLayer::get());
-	if (l_playLayer) o_value.m_gameObject = l_playLayer->getGameObject(l_objectIndex);
 }
 
 inline void persistenceAPI::operator<<(OutputStream& o_stream, PAActiveSaveObject2& i_value) {
-	int l_objectIndex = -1;
-	PAPlayLayer* l_playLayer = static_cast<PAPlayLayer*>(PlayLayer::get());
-	if (l_playLayer) l_objectIndex = l_playLayer->getGameObjectIndex(i_value.m_gameObject);
-	o_stream << l_objectIndex;
+	o_stream << i_value.m_gameObject;
 	SEPARATOR_O
 	unsigned int l_easingType = static_cast<unsigned int>(i_value.m_easingType);
 	o_stream << l_easingType;

@@ -194,13 +194,9 @@ inline void persistenceAPI::operator>>(InputStream& i_stream, PAGJGameState& o_v
 	SEPARATOR_I
 	i_stream >> o_value.m_unkUint7;
 	SEPARATOR_I
-	int l_objectIndex;
-	PAPlayLayer* l_playLayer = static_cast<PAPlayLayer*>(PlayLayer::get());
-	i_stream >> l_objectIndex;
-	if (l_playLayer) o_value.m_unkGameObjPtr1 = l_playLayer->getGameObject(l_objectIndex);
+	i_stream >> o_value.m_unkGameObjPtr1;
 	SEPARATOR_I
-	i_stream >> l_objectIndex;
-	if (l_playLayer) o_value.m_unkGameObjPtr2 = l_playLayer->getGameObject(l_objectIndex);
+	i_stream >> o_value.m_unkGameObjPtr2;
 	SEPARATOR_I
 	i_stream >> o_value.m_cameraPosition;
 	SEPARATOR_I
@@ -543,14 +539,9 @@ inline void persistenceAPI::operator<<(OutputStream& o_stream, PAGJGameState& i_
 	SEPARATOR_O
 	o_stream << i_value.m_unkUint7;
 	SEPARATOR_O
-	int l_objectIndex = -1;
-	PAPlayLayer* l_playLayer = static_cast<PAPlayLayer*>(PlayLayer::get());
-	if (l_playLayer) l_objectIndex = l_playLayer->getGameObjectIndex(i_value.m_unkGameObjPtr1);
-	o_stream << l_objectIndex;
+	o_stream << i_value.m_unkGameObjPtr1;
 	SEPARATOR_O
-	l_objectIndex = -1;
-	if (l_playLayer) l_objectIndex = l_playLayer->getGameObjectIndex(i_value.m_unkGameObjPtr2);
-	o_stream << l_objectIndex;
+	o_stream << i_value.m_unkGameObjPtr2;
 	SEPARATOR_O
 	o_stream << i_value.m_cameraPosition;
 	SEPARATOR_O

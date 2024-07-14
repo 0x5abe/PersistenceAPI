@@ -23,11 +23,8 @@ inline void persistenceAPI::operator>>(InputStream& i_stream, PAGroupCommandObje
 	VEC_SEPARATOR_I
 	i_stream.read(reinterpret_cast<char*>(&o_value) + offsetof(PAGroupCommandObject2,m_unkVecKeyframeObject) + sizeof(gd::vector<KeyframeObject>), 8);
 	SEPARATOR_I
-	int l_objectIndex;
-	i_stream >> l_objectIndex;
+	i_stream >> o_value.m_gameObject;
 	i_stream.ignore(4); // pad to keep same size for compatibility with older versions
-	PAPlayLayer* l_playLayer = static_cast<PAPlayLayer*>(PlayLayer::get());
-	if (l_playLayer) o_value.m_gameObject = static_cast<GameObject*>(l_playLayer->getGameObject(l_objectIndex));
 	SEPARATOR_I
 	i_stream.read(reinterpret_cast<char*>(&o_value) + offsetof(PAGroupCommandObject2,m_gameObject) + sizeof(GameObject*), 8);
 	VEC_SEPARATOR_I
@@ -44,10 +41,7 @@ inline void persistenceAPI::operator<<(OutputStream& o_stream, PAGroupCommandObj
 	VEC_SEPARATOR_O
 	o_stream.write(reinterpret_cast<char*>(&i_value) + offsetof(PAGroupCommandObject2,m_unkVecKeyframeObject) + sizeof(gd::vector<KeyframeObject>), 8);
 	SEPARATOR_O
-	int l_objectIndex = -1;
-	PAPlayLayer* l_playLayer = static_cast<PAPlayLayer*>(PlayLayer::get());
-	if (l_playLayer) l_objectIndex = l_playLayer->getGameObjectIndex(i_value.m_gameObject);
-	o_stream << l_objectIndex;
+	o_stream << i_value.m_gameObject;
 	o_stream.writeZero(4); // pad to keep same size for compatibility with older versions
 	SEPARATOR_O
 	o_stream.write(reinterpret_cast<char*>(&i_value) + offsetof(PAGroupCommandObject2,m_gameObject) + sizeof(GameObject*), 8);

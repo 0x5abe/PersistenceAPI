@@ -14,8 +14,7 @@ void PADynamicSaveObject::save(OutputStream& o_stream) {
 }
 
 inline void persistenceAPI::operator>>(InputStream& i_stream, PADynamicSaveObject& o_value) {
-	int l_objectIndex;
-	i_stream >> l_objectIndex;
+	i_stream >> o_value.m_gameObject;
 	SEPARATOR_I
 	i_stream >> o_value.m_unkDouble1;
 	SEPARATOR_I
@@ -33,18 +32,10 @@ inline void persistenceAPI::operator>>(InputStream& i_stream, PADynamicSaveObjec
 	SEPARATOR_I
 	i_stream >> o_value.m_unkFloat6;
 	SEPARATOR_I_END
-
-	// get the pointer to the gameObject
-
-	PAPlayLayer* l_playLayer = static_cast<PAPlayLayer*>(PlayLayer::get());
-	if (l_playLayer) o_value.m_gameObject = l_playLayer->getGameObject(l_objectIndex);
 }
 
 inline void persistenceAPI::operator<<(OutputStream& o_stream, PADynamicSaveObject& i_value) {
-	int l_objectIndex = -1;
-	PAPlayLayer* l_playLayer = static_cast<PAPlayLayer*>(PlayLayer::get());
-	if (l_playLayer) l_objectIndex = l_playLayer->getGameObjectIndex(i_value.m_gameObject);
-	o_stream << l_objectIndex;
+	o_stream << i_value.m_gameObject;
 	SEPARATOR_O
 	o_stream << i_value.m_unkDouble1;
 	SEPARATOR_O

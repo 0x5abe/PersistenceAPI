@@ -15,69 +15,43 @@ void PADynamicObjectAction::save(OutputStream& o_stream) {
 }
 
 inline void persistenceAPI::operator>>(InputStream& i_stream, PADynamicObjectAction& o_value) {
-	int l_objectIndex;
-
-	PAPlayLayer* l_playLayer = static_cast<PAPlayLayer*>(PlayLayer::get());
-	if (l_playLayer) {
-		i_stream >> l_objectIndex;
-		o_value.m_gameObject1 = l_playLayer->getGameObject(l_objectIndex);
-		SEPARATOR_I
-		i_stream >> l_objectIndex;
-		o_value.m_gameObject2 = l_playLayer->getGameObject(l_objectIndex);
-		SEPARATOR_I
-		i_stream >> l_objectIndex;
-		o_value.m_gameObject3 = l_playLayer->getGameObject(l_objectIndex);
-		SEPARATOR_I
-		i_stream >> l_objectIndex;
-		o_value.m_gameObject4 = l_playLayer->getGameObject(l_objectIndex);
-		SEPARATOR_I
-		i_stream >> l_objectIndex;
-		o_value.m_gameObject5 = l_playLayer->getGameObject(l_objectIndex);
-		SEPARATOR_I
-		i_stream >> l_objectIndex;
-		o_value.m_gameObject6 = l_playLayer->getGameObject(l_objectIndex);
-		SEPARATOR_I
-		i_stream >> l_objectIndex;
-		o_value.m_gameObject7 = l_playLayer->getGameObject(l_objectIndex);
-		SEPARATOR_I
-		i_stream >> l_objectIndex;
-		o_value.m_gameObject8 = l_playLayer->getGameObject(l_objectIndex);
-		SEPARATOR_I
-	}
+	i_stream >> o_value.m_gameObject1;
+	SEPARATOR_I
+	i_stream >> o_value.m_gameObject2;
+	SEPARATOR_I
+	i_stream >> o_value.m_gameObject3;
+	SEPARATOR_I
+	i_stream >> o_value.m_gameObject4;
+	SEPARATOR_I
+	i_stream >> o_value.m_gameObject5;
+	SEPARATOR_I
+	i_stream >> o_value.m_gameObject6;
+	SEPARATOR_I
+	i_stream >> o_value.m_gameObject7;
+	SEPARATOR_I
+	i_stream >> o_value.m_gameObject8;
+	SEPARATOR_I
 	i_stream.read(reinterpret_cast<char*>(&o_value) + offsetof(PADynamicObjectAction,m_gameObject8) + sizeof(GameObject*), 32);
 	SEPARATOR_I	
 }
 
 inline void persistenceAPI::operator<<(OutputStream& o_stream, PADynamicObjectAction& i_value) {
-	int l_objectIndex = -1;
-
-	PAPlayLayer* l_playLayer = static_cast<PAPlayLayer*>(PlayLayer::get());
-	if (l_playLayer) {
-		l_objectIndex = l_playLayer->getGameObjectIndex(i_value.m_gameObject1);
-		o_stream << l_objectIndex;
-		SEPARATOR_O
-		l_objectIndex = l_playLayer->getGameObjectIndex(i_value.m_gameObject2);
-		o_stream << l_objectIndex;
-		SEPARATOR_O
-	 	l_objectIndex = l_playLayer->getGameObjectIndex(i_value.m_gameObject3);
-		o_stream << l_objectIndex;
-		SEPARATOR_O
-		l_objectIndex = l_playLayer->getGameObjectIndex(i_value.m_gameObject4);
-		o_stream << l_objectIndex;
-		SEPARATOR_O
-		l_objectIndex = l_playLayer->getGameObjectIndex(i_value.m_gameObject5);
-		o_stream << l_objectIndex;
-		SEPARATOR_O
-		l_objectIndex = l_playLayer->getGameObjectIndex(i_value.m_gameObject6);
-		o_stream << l_objectIndex;
-		SEPARATOR_O
-		l_objectIndex = l_playLayer->getGameObjectIndex(i_value.m_gameObject7);
-		o_stream << l_objectIndex;
-		SEPARATOR_O
-		l_objectIndex = l_playLayer->getGameObjectIndex(i_value.m_gameObject8);
-		o_stream << l_objectIndex;
-		SEPARATOR_O
-	}
+	o_stream << i_value.m_gameObject1;
+	SEPARATOR_O
+	o_stream << i_value.m_gameObject2;
+	SEPARATOR_O
+	o_stream << i_value.m_gameObject3;
+	SEPARATOR_O
+	o_stream << i_value.m_gameObject4;
+	SEPARATOR_O
+	o_stream << i_value.m_gameObject5;
+	SEPARATOR_O
+	o_stream << i_value.m_gameObject6;
+	SEPARATOR_O
+	o_stream << i_value.m_gameObject7;
+	SEPARATOR_O
+	o_stream << i_value.m_gameObject8;
+	SEPARATOR_O
 	o_stream.write(reinterpret_cast<char*>(&i_value) + offsetof(PADynamicObjectAction,m_gameObject8) + sizeof(GameObject*), 32);
 	SEPARATOR_O
 }
