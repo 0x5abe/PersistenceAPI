@@ -6,15 +6,15 @@
 using namespace geode::prelude;
 using namespace persistenceAPI;
 
-void PADynamicObjectAction::load(InputStream& i_stream) {
+void PADynamicObjectAction::load(Stream& i_stream) {
 	i_stream >> *this;
 }
 
-void PADynamicObjectAction::save(OutputStream& o_stream) {
+void PADynamicObjectAction::save(Stream& o_stream) {
 	o_stream << *this;
 }
 
-inline void persistenceAPI::operator>>(InputStream& i_stream, PADynamicObjectAction& o_value) {
+inline void persistenceAPI::operator>>(Stream& i_stream, PADynamicObjectAction& o_value) {
 	i_stream >> o_value.m_gameObject1;
 	SEPARATOR_I
 	i_stream >> o_value.m_gameObject2;
@@ -35,7 +35,7 @@ inline void persistenceAPI::operator>>(InputStream& i_stream, PADynamicObjectAct
 	SEPARATOR_I	
 }
 
-inline void persistenceAPI::operator<<(OutputStream& o_stream, PADynamicObjectAction& i_value) {
+inline void persistenceAPI::operator<<(Stream& o_stream, PADynamicObjectAction& i_value) {
 	o_stream << i_value.m_gameObject1;
 	SEPARATOR_O
 	o_stream << i_value.m_gameObject2;

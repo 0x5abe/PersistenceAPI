@@ -9,15 +9,15 @@
 using namespace geode::prelude;
 using namespace persistenceAPI;
 
-void PAGJGameState::load(InputStream& i_stream) {
+void PAGJGameState::load(Stream& i_stream) {
 	i_stream >> *this;
 }
 
-void PAGJGameState::save(OutputStream& o_stream) {
+void PAGJGameState::save(Stream& o_stream) {
 	o_stream << *this;
 }
 
-inline void persistenceAPI::operator>>(InputStream& i_stream, PAGJGameState& o_value) {
+inline void persistenceAPI::operator>>(Stream& i_stream, PAGJGameState& o_value) {
 	i_stream >> o_value.m_cameraZoom;
 	SEPARATOR_I
 	i_stream >> o_value.m_targetCameraZoom;
@@ -362,7 +362,7 @@ inline void persistenceAPI::operator>>(InputStream& i_stream, PAGJGameState& o_v
 	SEPARATOR_I
 }
 
-inline void persistenceAPI::operator<<(OutputStream& o_stream, PAGJGameState& i_value) {
+inline void persistenceAPI::operator<<(Stream& o_stream, PAGJGameState& i_value) {
 	o_stream << i_value.m_cameraZoom;
 	SEPARATOR_O
 	o_stream << i_value.m_targetCameraZoom;

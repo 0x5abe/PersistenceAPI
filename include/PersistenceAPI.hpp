@@ -32,5 +32,4 @@
 #include "hooks/TouchToggleAction.hpp"
 #include "hooks/PlayLayer.hpp"
 #include "util/debug.hpp"
-#include "util/InputStream.hpp"
-#include "util/OutputStream.hpp"
+#include "util/Stream.hpp"

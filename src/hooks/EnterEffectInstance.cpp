@@ -6,15 +6,15 @@
 using namespace geode::prelude;
 using namespace persistenceAPI;
 
-void PAEnterEffectInstance::load(InputStream& i_stream) {
+void PAEnterEffectInstance::load(Stream& i_stream) {
 	i_stream >> *this;
 }
 
-void PAEnterEffectInstance::save(OutputStream& o_stream) {
+void PAEnterEffectInstance::save(Stream& o_stream) {
 	o_stream << *this;
 }
 
-inline void persistenceAPI::operator>>(InputStream& i_stream, PAEnterEffectInstance& o_value) {
+inline void persistenceAPI::operator>>(Stream& i_stream, PAEnterEffectInstance& o_value) {
 	MAP_SEPARATOR_I
 	i_stream >> o_value.m_enterEffectAnimMap;
 	MAP_SEPARATOR_I
@@ -30,7 +30,7 @@ inline void persistenceAPI::operator>>(InputStream& i_stream, PAEnterEffectInsta
 	SEPARATOR_I
 }
 
-inline void persistenceAPI::operator<<(OutputStream& o_stream, PAEnterEffectInstance& i_value) {
+inline void persistenceAPI::operator<<(Stream& o_stream, PAEnterEffectInstance& i_value) {
 	MAP_SEPARATOR_O
 	o_stream << i_value.m_enterEffectAnimMap;
 	MAP_SEPARATOR_O

@@ -6,15 +6,15 @@
 using namespace geode::prelude;
 using namespace persistenceAPI;
 
-void PAActiveSaveObject1::load(InputStream& i_stream) {
+void PAActiveSaveObject1::load(Stream& i_stream) {
 	i_stream >> *this;
 }
 
-void PAActiveSaveObject1::save(OutputStream& o_stream) {
+void PAActiveSaveObject1::save(Stream& o_stream) {
 	o_stream << *this;
 }
 
-inline void persistenceAPI::operator>>(InputStream& i_stream, PAActiveSaveObject1& o_value) {
+inline void persistenceAPI::operator>>(Stream& i_stream, PAActiveSaveObject1& o_value) {
 	i_stream >> o_value.m_gameObject;
 	SEPARATOR_I
 	i_stream >> o_value.m_unkBool1;
@@ -23,7 +23,7 @@ inline void persistenceAPI::operator>>(InputStream& i_stream, PAActiveSaveObject
 	SEPARATOR_I_END
 }
 
-inline void persistenceAPI::operator<<(OutputStream& o_stream, PAActiveSaveObject1& i_value) {
+inline void persistenceAPI::operator<<(Stream& o_stream, PAActiveSaveObject1& i_value) {
 	o_stream << i_value.m_gameObject;
 	SEPARATOR_O
 	o_stream << i_value.m_unkBool1;
@@ -32,15 +32,15 @@ inline void persistenceAPI::operator<<(OutputStream& o_stream, PAActiveSaveObjec
 	SEPARATOR_O_END
 }
 
-void PAActiveSaveObject2::load(InputStream& i_stream) {
+void PAActiveSaveObject2::load(Stream& i_stream) {
 	i_stream >> *this;
 }
 
-void PAActiveSaveObject2::save(OutputStream& o_stream) {
+void PAActiveSaveObject2::save(Stream& o_stream) {
 	o_stream << *this;
 }
 
-inline void persistenceAPI::operator>>(InputStream& i_stream, PAActiveSaveObject2& o_value) {
+inline void persistenceAPI::operator>>(Stream& i_stream, PAActiveSaveObject2& o_value) {
 	i_stream >> o_value.m_gameObject;
 	SEPARATOR_I
 	unsigned int l_easingType;
@@ -49,7 +49,7 @@ inline void persistenceAPI::operator>>(InputStream& i_stream, PAActiveSaveObject
 	SEPARATOR_I_END
 }
 
-inline void persistenceAPI::operator<<(OutputStream& o_stream, PAActiveSaveObject2& i_value) {
+inline void persistenceAPI::operator<<(Stream& o_stream, PAActiveSaveObject2& i_value) {
 	o_stream << i_value.m_gameObject;
 	SEPARATOR_O
 	unsigned int l_easingType = static_cast<unsigned int>(i_value.m_easingType);

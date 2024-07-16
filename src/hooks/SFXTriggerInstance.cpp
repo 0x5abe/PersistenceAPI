@@ -8,22 +8,22 @@
 using namespace geode::prelude;
 using namespace persistenceAPI;
 
-void PASFXTriggerInstance::load(InputStream& i_stream) {
+void PASFXTriggerInstance::load(Stream& i_stream) {
 	i_stream >> *this;
 }
 
-void PASFXTriggerInstance::save(OutputStream& o_stream) {
+void PASFXTriggerInstance::save(Stream& o_stream) {
 	o_stream << *this;
 }
 
-inline void persistenceAPI::operator>>(InputStream& i_stream, PASFXTriggerInstance& o_value) {
+inline void persistenceAPI::operator>>(Stream& i_stream, PASFXTriggerInstance& o_value) {
 	i_stream.read(reinterpret_cast<char*>(&o_value), 16);
 	SEPARATOR_I
 	i_stream >> o_value.m_sfxTriggerGameObject;
 	SEPARATOR_I
 }
 
-inline void persistenceAPI::operator<<(OutputStream& o_stream, PASFXTriggerInstance& i_value) {
+inline void persistenceAPI::operator<<(Stream& o_stream, PASFXTriggerInstance& i_value) {
 	o_stream.write(reinterpret_cast<char*>(&i_value), 16);
 	SEPARATOR_O
 	o_stream << i_value.m_sfxTriggerGameObject;

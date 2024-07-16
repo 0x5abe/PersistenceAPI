@@ -19,15 +19,15 @@
 using namespace geode::prelude;
 using namespace persistenceAPI;
 
-void PAEffectManagerState::load(InputStream& i_stream) {
+void PAEffectManagerState::load(Stream& i_stream) {
 	i_stream >> *this;
 }
 
-void PAEffectManagerState::save(OutputStream& o_stream) {
+void PAEffectManagerState::save(Stream& o_stream) {
 	o_stream << *this;
 }
 
-inline void persistenceAPI::operator>>(InputStream& i_stream, PAEffectManagerState& o_value) {
+inline void persistenceAPI::operator>>(Stream& i_stream, PAEffectManagerState& o_value) {
 	VEC_SEPARATOR_I
 	i_stream >> o_value.m_unkVecCAState;
 	VEC_SEPARATOR_I
@@ -77,7 +77,7 @@ inline void persistenceAPI::operator>>(InputStream& i_stream, PAEffectManagerSta
 	UMAP_SEPARATOR_I
 }
 
-inline void persistenceAPI::operator<<(OutputStream& o_stream, PAEffectManagerState& i_value) {
+inline void persistenceAPI::operator<<(Stream& o_stream, PAEffectManagerState& i_value) {
 	VEC_SEPARATOR_O
 	o_stream << i_value.m_unkVecCAState;
 	VEC_SEPARATOR_O

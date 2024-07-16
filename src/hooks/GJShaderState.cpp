@@ -6,15 +6,15 @@
 using namespace geode::prelude;
 using namespace persistenceAPI;
 
-void PAGJShaderState::load(InputStream& i_stream) {
+void PAGJShaderState::load(Stream& i_stream) {
 	i_stream >> *this;
 }
 
-void PAGJShaderState::save(OutputStream& o_stream) {
+void PAGJShaderState::save(Stream& o_stream) {
 	o_stream << *this;
 }
 
-inline void persistenceAPI::operator>>(InputStream& i_stream, PAGJShaderState& o_value) {
+inline void persistenceAPI::operator>>(Stream& i_stream, PAGJShaderState& o_value) {
 	UMAP_SEPARATOR_I
 	i_stream >> o_value.m_someIntToValueTweenMap;
 	UMAP_SEPARATOR_I
@@ -24,7 +24,7 @@ inline void persistenceAPI::operator>>(InputStream& i_stream, PAGJShaderState& o
 	SEPARATOR_I
 }
 
-inline void persistenceAPI::operator<<(OutputStream& o_stream, PAGJShaderState& i_value) {
+inline void persistenceAPI::operator<<(Stream& o_stream, PAGJShaderState& i_value) {
 	UMAP_SEPARATOR_O
 	o_stream << i_value.m_someIntToValueTweenMap;
 	UMAP_SEPARATOR_O

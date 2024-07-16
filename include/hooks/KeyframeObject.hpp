@@ -1,19 +1,18 @@
 #pragma once
 #include "Geode/Geode.hpp"
 #include "Geode/modify/KeyframeObject.hpp"
-#include "util/InputStream.hpp"
-#include "util/OutputStream.hpp"
+#include "util/Stream.hpp"
 #include "import_export.hpp"
 
 namespace persistenceAPI {
 	class $modify(PAKeyframeObject, KeyframeObject) {
 	protected:
-		friend void operator>>(persistenceAPI::InputStream& i_stream, PAKeyframeObject& o_value);
-		friend void operator<<(persistenceAPI::OutputStream& o_stream, PAKeyframeObject& i_value);
+		friend void operator>>(persistenceAPI::Stream& i_stream, PAKeyframeObject& o_value);
+		friend void operator<<(persistenceAPI::Stream& o_stream, PAKeyframeObject& i_value);
 
 	public:
-		SABE_PA_DLL void load(persistenceAPI::InputStream& i_stream);
-		SABE_PA_DLL void save(persistenceAPI::OutputStream& o_stream);
+		SABE_PA_DLL void load(persistenceAPI::Stream& i_stream);
+		SABE_PA_DLL void save(persistenceAPI::Stream& o_stream);
 
 	#if defined(PA_DEBUG) && defined(PA_DESCRIBE)
 		SABE_PA_DLL void describe();

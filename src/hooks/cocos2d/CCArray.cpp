@@ -6,7 +6,7 @@ using namespace geode::prelude;
 using namespace persistenceAPI;
 
 template <class T>
-void PACCArray::load(InputStream& i_stream) {
+void PACCArray::load(Stream& i_stream) {
 	removeAllObjects();
 	unsigned int l_size;
 	i_stream >> l_size;
@@ -20,7 +20,7 @@ void PACCArray::load(InputStream& i_stream) {
 }
 
 template <class T>
-void PACCArray::save(OutputStream& o_stream) {
+void PACCArray::save(Stream& o_stream) {
 	unsigned int l_size = count();
 	o_stream << l_size;
 	//geode::log::info("CCARRAY SIZE out: {}", l_size);
@@ -30,7 +30,7 @@ void PACCArray::save(OutputStream& o_stream) {
 }
 
 template <>
-void PACCArray::load<GradientTriggerObject>(InputStream& i_stream) {
+void PACCArray::load<GradientTriggerObject>(Stream& i_stream) {
 	removeAllObjects();
 	unsigned int l_size;
 	i_stream >> l_size;
@@ -44,7 +44,7 @@ void PACCArray::load<GradientTriggerObject>(InputStream& i_stream) {
 }
 
 template <>
-void PACCArray::save<GradientTriggerObject>(OutputStream& o_stream) {
+void PACCArray::save<GradientTriggerObject>(Stream& o_stream) {
 	unsigned int l_size = count();
 	o_stream << l_size;
 	//geode::log::info("CCARRAY GradientTriggerObject SIZE out: {}", l_size);
@@ -57,14 +57,14 @@ void PACCArray::save<GradientTriggerObject>(OutputStream& o_stream) {
 }
 
 template <class T>
-void PACCArray::loadOne(InputStream& i_stream) {
+void PACCArray::loadOne(Stream& i_stream) {
 	T* l_object = reinterpret_cast<T*>(malloc(sizeof(T)));
 	reinterpret_cast<T*>(l_object)->load(i_stream); 
 	addObject(l_object);
 }
 
 template <class T>
-void PACCArray::saveOne(OutputStream& o_stream, unsigned int i_index) {
+void PACCArray::saveOne(Stream& o_stream, unsigned int i_index) {
 	reinterpret_cast<T*>(objectAtIndex(i_index))->save(o_stream); 
 }
 

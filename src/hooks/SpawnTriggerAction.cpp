@@ -7,15 +7,15 @@
 using namespace geode::prelude;
 using namespace persistenceAPI;
 
-void PASpawnTriggerAction::load(InputStream& i_stream) {
+void PASpawnTriggerAction::load(Stream& i_stream) {
 	i_stream >> *this;
 }
 
-void PASpawnTriggerAction::save(OutputStream& o_stream) {
+void PASpawnTriggerAction::save(Stream& o_stream) {
 	o_stream << *this;
 }
 
-inline void persistenceAPI::operator>>(InputStream& i_stream, PASpawnTriggerAction& o_value) {
+inline void persistenceAPI::operator>>(Stream& i_stream, PASpawnTriggerAction& o_value) {
 	i_stream.read(reinterpret_cast<char*>(&o_value), 40);
 	SEPARATOR_I
 	i_stream >> o_value.m_gameObject;
@@ -25,7 +25,7 @@ inline void persistenceAPI::operator>>(InputStream& i_stream, PASpawnTriggerActi
 	VEC_SEPARATOR_I
 }
 
-inline void persistenceAPI::operator<<(OutputStream& o_stream, PASpawnTriggerAction& i_value) {
+inline void persistenceAPI::operator<<(Stream& o_stream, PASpawnTriggerAction& i_value) {
 	o_stream.write(reinterpret_cast<char*>(&i_value), 40);
 	SEPARATOR_O
 	o_stream << i_value.m_gameObject;

@@ -5,15 +5,15 @@
 using namespace geode::prelude;
 using namespace persistenceAPI;
 
-void PADynamicSaveObject::load(InputStream& i_stream) {
+void PADynamicSaveObject::load(Stream& i_stream) {
 	i_stream >> *this;
 }
 
-void PADynamicSaveObject::save(OutputStream& o_stream) {
+void PADynamicSaveObject::save(Stream& o_stream) {
 	o_stream << *this;
 }
 
-inline void persistenceAPI::operator>>(InputStream& i_stream, PADynamicSaveObject& o_value) {
+inline void persistenceAPI::operator>>(Stream& i_stream, PADynamicSaveObject& o_value) {
 	i_stream >> o_value.m_gameObject;
 	SEPARATOR_I
 	i_stream >> o_value.m_unkDouble1;
@@ -34,7 +34,7 @@ inline void persistenceAPI::operator>>(InputStream& i_stream, PADynamicSaveObjec
 	SEPARATOR_I_END
 }
 
-inline void persistenceAPI::operator<<(OutputStream& o_stream, PADynamicSaveObject& i_value) {
+inline void persistenceAPI::operator<<(Stream& o_stream, PADynamicSaveObject& i_value) {
 	o_stream << i_value.m_gameObject;
 	SEPARATOR_O
 	o_stream << i_value.m_unkDouble1;

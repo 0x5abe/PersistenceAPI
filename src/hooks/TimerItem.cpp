@@ -5,15 +5,15 @@
 using namespace geode::prelude;
 using namespace persistenceAPI;
 
-void PATimerItem::load(InputStream& i_stream) {
+void PATimerItem::load(Stream& i_stream) {
 	i_stream >> *this;
 }
 
-void PATimerItem::save(OutputStream& o_stream) {
+void PATimerItem::save(Stream& o_stream) {
 	o_stream << *this;
 }
 
-inline void persistenceAPI::operator>>(InputStream& i_stream, PATimerItem& o_value) {
+inline void persistenceAPI::operator>>(Stream& i_stream, PATimerItem& o_value) {
 	i_stream.read(reinterpret_cast<char*>(&o_value), 56);
 	VEC_SEPARATOR_I
 	i_stream >> o_value.m_unkVecInt;
@@ -22,7 +22,7 @@ inline void persistenceAPI::operator>>(InputStream& i_stream, PATimerItem& o_val
 	SEPARATOR_I
 }
 
-inline void persistenceAPI::operator<<(OutputStream& o_stream, PATimerItem& i_value) {
+inline void persistenceAPI::operator<<(Stream& o_stream, PATimerItem& i_value) {
 	o_stream.write(reinterpret_cast<char*>(&i_value), 56);
 	VEC_SEPARATOR_O
 	o_stream << i_value.m_unkVecInt;

@@ -7,22 +7,22 @@
 using namespace geode::prelude;
 using namespace persistenceAPI;
 
-void PAAdvancedFollowInstance::load(InputStream& i_stream) {
+void PAAdvancedFollowInstance::load(Stream& i_stream) {
 	i_stream >> *this;
 }
 
-void PAAdvancedFollowInstance::save(OutputStream& o_stream) {
+void PAAdvancedFollowInstance::save(Stream& o_stream) {
 	o_stream << *this;
 }
 
-inline void persistenceAPI::operator>>(InputStream& i_stream, PAAdvancedFollowInstance& o_value) {
+inline void persistenceAPI::operator>>(Stream& i_stream, PAAdvancedFollowInstance& o_value) {
 	i_stream >> o_value.m_gameObject;
 	SEPARATOR_I
 	i_stream.read(reinterpret_cast<char*>(&o_value) + offsetof(PAAdvancedFollowInstance,m_gameObject) + sizeof(GameObject*), 24);
 	SEPARATOR_I
 }
 
-inline void persistenceAPI::operator<<(OutputStream& o_stream, PAAdvancedFollowInstance& i_value) {
+inline void persistenceAPI::operator<<(Stream& o_stream, PAAdvancedFollowInstance& i_value) {
 	o_stream << i_value.m_gameObject;
 	SEPARATOR_O
 	o_stream.write(reinterpret_cast<char*>(&i_value) + offsetof(PAAdvancedFollowInstance,m_gameObject) + sizeof(GameObject*), 24);

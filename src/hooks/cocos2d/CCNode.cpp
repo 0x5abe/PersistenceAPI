@@ -5,17 +5,17 @@
 using namespace geode::prelude;
 using namespace persistenceAPI;
 
-void PACCNode::load(InputStream& i_stream) {
+void PACCNode::load(Stream& i_stream) {
 	reinterpret_cast<PACCObject*>(this)->load(i_stream);
 	i_stream >> *this;
 }
 
-void PACCNode::save(OutputStream& o_stream) {
+void PACCNode::save(Stream& o_stream) {
 	reinterpret_cast<PACCObject*>(this)->save(o_stream);
 	o_stream << *this;
 }
 
-inline void persistenceAPI::operator>>(InputStream& i_stream, PACCNode& o_value) {
+inline void persistenceAPI::operator>>(Stream& i_stream, PACCNode& o_value) {
 	i_stream >> o_value.m_fRotationX;
 	SEPARATOR_I
 	i_stream >> o_value.m_fRotationY;
@@ -64,7 +64,7 @@ inline void persistenceAPI::operator>>(InputStream& i_stream, PACCNode& o_value)
 	SEPARATOR_I
 }
 
-inline void persistenceAPI::operator<<(OutputStream& o_stream, PACCNode& i_value) {
+inline void persistenceAPI::operator<<(Stream& o_stream, PACCNode& i_value) {
 	o_stream << i_value.m_fRotationX;
 	SEPARATOR_O
 	o_stream << i_value.m_fRotationY;

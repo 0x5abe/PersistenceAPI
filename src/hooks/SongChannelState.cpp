@@ -8,15 +8,15 @@
 using namespace geode::prelude;
 using namespace persistenceAPI;
 
-void PASongChannelState::load(InputStream& i_stream) {
+void PASongChannelState::load(Stream& i_stream) {
 	i_stream >> *this;
 }
 
-void PASongChannelState::save(OutputStream& o_stream) {
+void PASongChannelState::save(Stream& o_stream) {
 	o_stream << *this;
 }
 
-inline void persistenceAPI::operator>>(InputStream& i_stream, PASongChannelState& o_value) {
+inline void persistenceAPI::operator>>(Stream& i_stream, PASongChannelState& o_value) {
 	int l_objectIndex;
 	i_stream >> o_value.m_songTriggerGameObject1;
 	SEPARATOR_I
@@ -28,7 +28,7 @@ inline void persistenceAPI::operator>>(InputStream& i_stream, PASongChannelState
 	SEPARATOR_I
 }
 
-inline void persistenceAPI::operator<<(OutputStream& o_stream, PASongChannelState& i_value) {
+inline void persistenceAPI::operator<<(Stream& o_stream, PASongChannelState& i_value) {
 	int l_objectIndex = -1;
 	o_stream << i_value.m_songTriggerGameObject1;
 	SEPARATOR_O

@@ -5,15 +5,15 @@
 using namespace geode::prelude;
 using namespace persistenceAPI;
 
-void PASequenceTriggerState::load(InputStream& i_stream) {
+void PASequenceTriggerState::load(Stream& i_stream) {
 	i_stream >> *this;
 }
 
-void PASequenceTriggerState::save(OutputStream& o_stream) {
+void PASequenceTriggerState::save(Stream& o_stream) {
 	o_stream << *this;
 }
 
-inline void persistenceAPI::operator>>(InputStream& i_stream, PASequenceTriggerState& o_value) {
+inline void persistenceAPI::operator>>(Stream& i_stream, PASequenceTriggerState& o_value) {
 	UMAP_SEPARATOR_I
 	i_stream >> o_value.m_unkUnorderedMap1;
 	UMAP_SEPARATOR_I
@@ -21,7 +21,7 @@ inline void persistenceAPI::operator>>(InputStream& i_stream, PASequenceTriggerS
 	UMAP_SEPARATOR_I
 }
 
-inline void persistenceAPI::operator<<(OutputStream& o_stream, PASequenceTriggerState& i_value) {
+inline void persistenceAPI::operator<<(Stream& o_stream, PASequenceTriggerState& i_value) {
 	UMAP_SEPARATOR_O
 	o_stream << i_value.m_unkUnorderedMap1;
 	UMAP_SEPARATOR_O

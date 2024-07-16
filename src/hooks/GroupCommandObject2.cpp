@@ -8,15 +8,15 @@
 using namespace geode::prelude;
 using namespace persistenceAPI;
 
-void PAGroupCommandObject2::load(InputStream& i_stream) {
+void PAGroupCommandObject2::load(Stream& i_stream) {
 	i_stream >> *this;
 }
 
-void PAGroupCommandObject2::save(OutputStream& o_stream) {
+void PAGroupCommandObject2::save(Stream& o_stream) {
 	o_stream << *this;
 }
 
-inline void persistenceAPI::operator>>(InputStream& i_stream, PAGroupCommandObject2& o_value) {
+inline void persistenceAPI::operator>>(Stream& i_stream, PAGroupCommandObject2& o_value) {
 	i_stream.read(reinterpret_cast<char*>(&o_value), 440);
 	VEC_SEPARATOR_I
 	i_stream >> o_value.m_unkVecKeyframeObject;
@@ -34,7 +34,7 @@ inline void persistenceAPI::operator>>(InputStream& i_stream, PAGroupCommandObje
 	SEPARATOR_I
 }
 
-inline void persistenceAPI::operator<<(OutputStream& o_stream, PAGroupCommandObject2& i_value) {
+inline void persistenceAPI::operator<<(Stream& o_stream, PAGroupCommandObject2& i_value) {
 	o_stream.write(reinterpret_cast<char*>(&i_value), 440);
 	VEC_SEPARATOR_O
 	o_stream << i_value.m_unkVecKeyframeObject;

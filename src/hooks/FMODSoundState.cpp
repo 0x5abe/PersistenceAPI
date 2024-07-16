@@ -5,15 +5,15 @@
 using namespace geode::prelude;
 using namespace persistenceAPI;
 
-void PAFMODSoundState::load(InputStream& i_stream) {
+void PAFMODSoundState::load(Stream& i_stream) {
 	i_stream >> *this;
 }
 
-void PAFMODSoundState::save(OutputStream& o_stream) {
+void PAFMODSoundState::save(Stream& o_stream) {
 	o_stream << *this;
 }
 
-inline void persistenceAPI::operator>>(InputStream& i_stream, PAFMODSoundState& o_value) {
+inline void persistenceAPI::operator>>(Stream& i_stream, PAFMODSoundState& o_value) {
 	STR_SEPARATOR_I
 	i_stream >> o_value.m_unkString;
 	STR_SEPARATOR_I
@@ -21,7 +21,7 @@ inline void persistenceAPI::operator>>(InputStream& i_stream, PAFMODSoundState& 
 	SEPARATOR_I
 }
 
-inline void persistenceAPI::operator<<(OutputStream& o_stream, PAFMODSoundState& i_value) {
+inline void persistenceAPI::operator<<(Stream& o_stream, PAFMODSoundState& i_value) {
 	STR_SEPARATOR_O
 	o_stream << i_value.m_unkString;
 	STR_SEPARATOR_O

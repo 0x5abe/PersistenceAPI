@@ -5,17 +5,17 @@
 using namespace geode::prelude;
 using namespace persistenceAPI;
 
-void PAPlayerCheckpoint::load(InputStream& i_stream) {
+void PAPlayerCheckpoint::load(Stream& i_stream) {
 	reinterpret_cast<PACCNode*>(this)->load(i_stream);
 	i_stream >> *this;
 }
 
-void PAPlayerCheckpoint::save(OutputStream& o_stream) {
+void PAPlayerCheckpoint::save(Stream& o_stream) {
 	reinterpret_cast<PACCNode*>(this)->save(o_stream);
 	o_stream << *this;
 }
 
-inline void persistenceAPI::operator>>(InputStream& i_stream, PAPlayerCheckpoint& o_value) {
+inline void persistenceAPI::operator>>(Stream& i_stream, PAPlayerCheckpoint& o_value) {
 	i_stream >> o_value.m_position;
 	SEPARATOR_I
 	i_stream >> o_value.m_lastPosition;
@@ -75,7 +75,7 @@ inline void persistenceAPI::operator>>(InputStream& i_stream, PAPlayerCheckpoint
 	SEPARATOR_I
 }
 
-inline void persistenceAPI::operator<<(OutputStream& o_stream, PAPlayerCheckpoint& i_value) {
+inline void persistenceAPI::operator<<(Stream& o_stream, PAPlayerCheckpoint& i_value) {
 	o_stream << i_value.m_position;
 	SEPARATOR_O
 	o_stream << i_value.m_lastPosition;

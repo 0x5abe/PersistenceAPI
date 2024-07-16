@@ -10,15 +10,15 @@
 using namespace geode::prelude;
 using namespace persistenceAPI;
 
-void PAFMODAudioState::load(InputStream& i_stream) {
+void PAFMODAudioState::load(Stream& i_stream) {
 	i_stream >> *this;
 }
 
-void PAFMODAudioState::save(OutputStream& o_stream) {
+void PAFMODAudioState::save(Stream& o_stream) {
 	o_stream << *this;
 }
 
-inline void persistenceAPI::operator>>(InputStream& i_stream, PAFMODAudioState& o_value) {
+inline void persistenceAPI::operator>>(Stream& i_stream, PAFMODAudioState& o_value) {
 	i_stream >> o_value.m_unkFloat1;
 	SEPARATOR_I
 	i_stream >> o_value.m_unkFloat2;
@@ -61,7 +61,7 @@ inline void persistenceAPI::operator>>(InputStream& i_stream, PAFMODAudioState& 
 	SEPARATOR_I
 }
 
-inline void persistenceAPI::operator<<(OutputStream& o_stream, PAFMODAudioState& i_value) {
+inline void persistenceAPI::operator<<(Stream& o_stream, PAFMODAudioState& i_value) {
 	o_stream << i_value.m_unkFloat1;
 	SEPARATOR_O
 	o_stream << i_value.m_unkFloat2;

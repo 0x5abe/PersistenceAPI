@@ -4,15 +4,15 @@
 using namespace geode::prelude;
 using namespace persistenceAPI;
 
-void PACCObject::load(InputStream& i_stream) {
+void PACCObject::load(Stream& i_stream) {
 	i_stream >> *this;
 }
 
-void PACCObject::save(OutputStream& o_stream) {
+void PACCObject::save(Stream& o_stream) {
 	o_stream << *this;
 }
 
-inline void persistenceAPI::operator>>(InputStream& i_stream, PACCObject& o_value) {
+inline void persistenceAPI::operator>>(Stream& i_stream, PACCObject& o_value) {
 	i_stream >> (int&)(o_value.m_eObjType);
 	SEPARATOR_I
 	i_stream >> o_value.m_nZOrder;
@@ -21,7 +21,7 @@ inline void persistenceAPI::operator>>(InputStream& i_stream, PACCObject& o_valu
 	SEPARATOR_I
 }
 
-inline void persistenceAPI::operator<<(OutputStream& o_stream, PACCObject& i_value) {
+inline void persistenceAPI::operator<<(Stream& o_stream, PACCObject& i_value) {
 	o_stream << (int&)(i_value.m_eObjType);
 	SEPARATOR_O
 	o_stream << i_value.m_nZOrder;
