@@ -10,6 +10,7 @@
 #include "Geode/binding/SongTriggerState.hpp"
 #include "Geode/binding/SFXTriggerState.hpp"
 #include "import_export.hpp"
+#include <filesystem>
 
 #define PA_OPERATOR_READ(type) SABE_PA_DLL virtual void operator>>(type& o_value) { read(reinterpret_cast<char*>(&o_value), sizeof(type)); }
 
@@ -26,9 +27,21 @@ namespace persistenceAPI {
 			m_stream = nullptr;
 			m_bytesRead = nullptr;
 		};
-		SABE_PA_DLL Stream(std::string i_filePath) { m_stream = new std::fstream(i_filePath, std::ios_base::binary); }
-		SABE_PA_DLL Stream(std::string i_filePath, unsigned int* i_bytesRead) {
-			m_stream = new std::fstream(i_filePath, std::ios_base::binary);
+		SABE_PA_DLL Stream(std::string i_filePath, bool i_trunc = false) {
+			int l_mode = std::ios_base::binary | std::ios_base::out;
+			if (std::filesystem::exists(i_filePath)) {
+				l_mode |= std::ios_base::in;
+			}
+			if (i_trunc) l_mode |= std::ios_base::trunc;
+			m_stream = new std::fstream(i_filePath, l_mode);
+		}
+		SABE_PA_DLL Stream(std::string i_filePath, unsigned int* i_bytesRead, bool i_trunc = false) {
+			int l_mode = std::ios_base::binary | std::ios_base::out;
+			if (std::filesystem::exists(i_filePath)) {
+				l_mode |= std::ios_base::in;
+			}
+			if (i_trunc) l_mode |= std::ios_base::trunc;
+			m_stream = new std::fstream(i_filePath, l_mode);
 			m_bytesRead = i_bytesRead;
 		}
 		SABE_PA_DLL ~Stream() { delete m_stream; }
@@ -63,26 +76,36 @@ namespace persistenceAPI {
 		PA_OPERATOR_WRITE(uint64_t)
 		PA_OPERATOR_WRITE(long long)
 
-		SABE_PA_DLL bool setFile(std::string i_filePath, unsigned int* i_bytesRead) {
+		SABE_PA_DLL bool setFile(std::string i_filePath, unsigned int* i_bytesRead, bool i_trunc = false) {
 			if (m_stream) {
 				delete m_stream;
 			}
-			m_stream = new std::fstream(i_filePath,  std::ios_base::binary | std::ios_base::in | std::ios_base::out);
+			int l_mode = std::ios_base::binary | std::ios_base::out;
+			if (std::filesystem::exists(i_filePath)) {
+				l_mode |= std::ios_base::in;
+			}
+			if (i_trunc) l_mode |= std::ios_base::trunc;
+			m_stream = new std::fstream(i_filePath, l_mode);
 			if (!m_stream->good()) {
-				geode::log::info("!!!!!!!!!!!!!!! Failed to open file path: {} !!!!!!!!!!!!!!!!", i_filePath);
+				//geode::log::info("!!!!!!!!!!!!!!! Failed to open file path: {} !!!!!!!!!!!!!!!!", i_filePath);
 				return false;
 			}
 			m_bytesRead = i_bytesRead;
 			return true;
 		}
 
-		SABE_PA_DLL bool setFile(std::string i_filePath) {
+		SABE_PA_DLL bool setFile(std::string i_filePath, bool i_trunc = false) {
 			if (m_stream) {
 				delete m_stream;
 			}
-			m_stream = new std::fstream(i_filePath,  std::ios_base::binary | std::ios_base::in | std::ios_base::out);
+			int l_mode = std::ios_base::binary | std::ios_base::out;
+			if (std::filesystem::exists(i_filePath)) {
+				l_mode |= std::ios_base::in;
+			}
+			if (i_trunc) l_mode |= std::ios_base::trunc;
+			m_stream = new std::fstream(i_filePath, l_mode);
 			if (!m_stream->good()) {
-				geode::log::info("Failed to open file path: {}", i_filePath);
+				//geode::log::info("Failed to open file path: {}", i_filePath);
 				return false;
 			}
 			return true;
@@ -109,8 +132,24 @@ namespace persistenceAPI {
 			m_stream->write(m_zeros, i_size);
 		}
 
-		SABE_PA_DLL void seek(int i_pos) {
+		SABE_PA_DLL void seek(int i_pos, bool i_fromEnd = false) {
+			if (i_fromEnd) {
+				m_stream->seekp(i_pos, std::ios_base::end);
+				return;
+			}
 			m_stream->seekp(i_pos, std::ios_base::beg);
+		}
+
+		SABE_PA_DLL void flush() {
+			if (m_stream) {
+				m_stream->flush();
+			}
+		}
+
+		SABE_PA_DLL void clear() {
+			if (m_stream) {
+				m_stream->clear();
+			}
 		}
 
 		SABE_PA_DLL void end() {
