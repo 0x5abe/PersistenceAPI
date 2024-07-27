@@ -356,9 +356,9 @@ inline void persistenceAPI::operator>>(Stream& i_stream, PAGJGameState& o_value)
 	SEPARATOR_I
 	i_stream >> o_value.m_unkBool32;
 	SEPARATOR_I
-	i_stream >> o_value.m_unkUint21;
+	i_stream >> o_value.m_pauseCounter;
 	SEPARATOR_I
-	i_stream >> o_value.m_unkUint22;
+	i_stream >> o_value.m_pauseBufferTimer;
 	SEPARATOR_I
 }
 
@@ -701,9 +701,9 @@ inline void persistenceAPI::operator<<(Stream& o_stream, PAGJGameState& i_value)
 	SEPARATOR_O
 	o_stream << i_value.m_unkBool32;
 	SEPARATOR_O
-	o_stream << i_value.m_unkUint21;
+	o_stream << i_value.m_pauseCounter;
 	SEPARATOR_O
-	o_stream << i_value.m_unkUint22;
+	o_stream << i_value.m_pauseBufferTimer;
 	SEPARATOR_O
 }
 
