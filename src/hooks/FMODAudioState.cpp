@@ -57,8 +57,6 @@ inline void persistenceAPI::operator>>(Stream& i_stream, PAFMODAudioState& o_val
 	UMAP_SEPARATOR_I
 	i_stream >> o_value.m_unkInt1;
 	SEPARATOR_I
-	i_stream >> o_value.m_unkInt2;
-	SEPARATOR_I
 }
 
 inline void persistenceAPI::operator<<(Stream& o_stream, PAFMODAudioState& i_value) {
@@ -99,8 +97,6 @@ inline void persistenceAPI::operator<<(Stream& o_stream, PAFMODAudioState& i_val
 	o_stream << i_value.m_unkMapIntFMODSoundState;
 	UMAP_SEPARATOR_O
 	o_stream << i_value.m_unkInt1;
-	SEPARATOR_O
-	o_stream << i_value.m_unkInt2;
 	SEPARATOR_O
 }
 
@@ -237,6 +233,5 @@ void PAFMODAudioState::describe() {
 		reinterpret_cast<PAFMODSoundState*>(&l_pair.second)->describe();
 	}
 	log::info("[PAFMODAudioState - describe] m_unkInt1", m_unkInt1);
-	log::info("[PAFMODAudioState - describe] m_unkInt2", m_unkInt2);
 }
 #endif
