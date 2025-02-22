@@ -1,7 +1,8 @@
 #include "util/Stream.hpp"
 #include "Geode/binding/GameObject.hpp"
-#include "hooks/DynamicSaveObject.hpp"
-#include "hooks/ActiveSaveObject.hpp"
+#include "hooks/SavedObjectStateRef.hpp"
+#include "hooks/SavedActiveObjectState.hpp"
+#include "hooks/SavedSpecialObjectState.hpp"
 #include "hooks/SequenceTriggerState.hpp"
 #include "hooks/FMODQueuedMusic.hpp"
 #include "hooks/FMODSoundState.hpp"
@@ -23,6 +24,12 @@
 #include "hooks/SongTriggerState.hpp"
 #include "hooks/SFXTriggerState.hpp"
 #include "hooks/SFXTriggerInstance.hpp"
+#include "hooks/EnterEffectAnimValue.hpp"
+#include "hooks/FMODSoundTween.hpp"
+#include "hooks/GJValueTween.hpp"
+#include "hooks/GameObjectPhysics.hpp"
+#include "hooks/OpacityEffectAction.hpp"
+#include "hooks/PulseEffectAction.hpp"
 #include "hooks/DynamicObjectAction.hpp"
 
 using namespace persistenceAPI;
@@ -49,6 +56,14 @@ void Stream::operator<<(SongTriggerGameObject*& i_value) {
 	writeGenericGameObjectPtr<SongTriggerGameObject>(this, &i_value);
 }
 
+void Stream::operator<<(DashRingObject*& i_value) {
+	writeGenericGameObjectPtr<DashRingObject>(this, &i_value);
+}
+
+void Stream::operator<<(EnterEffectObject*& i_value) {
+	writeGenericGameObjectPtr<EnterEffectObject>(this, &i_value);
+}
+
 // vector
 
 template<class T, class U>
@@ -63,18 +78,18 @@ inline void writeGenericVector(Stream* o_stream, gd::vector<T>& i_value) {
 }
 
 template <>
-void Stream::operator<<<DynamicSaveObject>(gd::vector<DynamicSaveObject>& i_value) {
-	writeGenericVector<DynamicSaveObject, PADynamicSaveObject>(this, i_value);
+void Stream::operator<<<SavedObjectStateRef>(gd::vector<SavedObjectStateRef>& i_value) {
+	writeGenericVector<SavedObjectStateRef, PASavedObjectStateRef>(this, i_value);
 }
 
 template <>
-void Stream::operator<<<ActiveSaveObject1>(gd::vector<ActiveSaveObject1>& i_value) {
-	writeGenericVector<ActiveSaveObject1, PAActiveSaveObject1>(this, i_value);
+void Stream::operator<<<SavedActiveObjectState>(gd::vector<SavedActiveObjectState>& i_value) {
+	writeGenericVector<SavedActiveObjectState, PASavedActiveObjectState>(this, i_value);
 }
 
 template <>
-void Stream::operator<<<ActiveSaveObject2>(gd::vector<ActiveSaveObject2>& i_value) {
-	writeGenericVector<ActiveSaveObject2, PAActiveSaveObject2>(this, i_value);
+void Stream::operator<<<SavedSpecialObjectState>(gd::vector<SavedSpecialObjectState>& i_value) {
+	writeGenericVector<SavedSpecialObjectState, PASavedSpecialObjectState>(this, i_value);
 }
 
 template <>
@@ -157,14 +172,20 @@ void Stream::operator<<<SongTriggerState>(gd::vector<SongTriggerState>& i_value)
 
 template <>
 void Stream::operator<<<SFXTriggerState>(gd::vector<SFXTriggerState>& i_value) {
-	//geode::log::info("EWEWEWEWEWEWE VECTOR CustomWrite SongTriggerState");
+	//geode::log::info("EWEWEWEWEWEWE VECTOR CustomWrite SFXTriggerState");
 	writeGenericVector<SFXTriggerState, PASFXTriggerState>(this, i_value);
 }
 
 template <>
 void Stream::operator<<<DynamicObjectAction>(gd::vector<DynamicObjectAction>& i_value) {
-	//geode::log::info("EWEWEWEWEWEWE VECTOR CustomWrite SongTriggerState");
+	//geode::log::info("EWEWEWEWEWEWE VECTOR CustomWrite DynamicObjectAction");
 	writeGenericVector<DynamicObjectAction, PADynamicObjectAction>(this, i_value);
+}
+
+template <>
+void Stream::operator<<<PulseEffectAction>(gd::vector<PulseEffectAction>& i_value) {
+	geode::log::info("444444444444444411111111111111 VECTOR CustomWrite PulseEffectAction");
+	writeGenericVector<PulseEffectAction, PAPulseEffectAction>(this, i_value);
 }
 
 // unordered_map
@@ -209,6 +230,24 @@ void Stream::operator<<<int, SongChannelState>(gd::unordered_map<int, SongChanne
 }
 
 template <>
+void Stream::operator<<<int, GJValueTween>(gd::unordered_map<int, GJValueTween>& i_value) {
+	geode::log::info("************************ Unordered Map CustomWrite GJValueTween");
+	writeGenericUnorderedMap<int, GJValueTween, PAGJValueTween>(this, i_value);
+}
+
+template <>
+void Stream::operator<<<int, GameObjectPhysics>(gd::unordered_map<int, GameObjectPhysics>& i_value) {
+	geode::log::info("&&&&&&&&&&&&&&&&&&&&&&&&& Unordered Map CustomWrite GameObjectPhysics");
+	writeGenericUnorderedMap<int, GameObjectPhysics, PAGameObjectPhysics>(this, i_value);
+}
+
+template <>
+void Stream::operator<<<int, OpacityEffectAction>(gd::unordered_map<int, OpacityEffectAction>& i_value) {
+	geode::log::info("^^^^^^^^^^^^^^^^^^^^^^^^^^ Unordered Map CustomWrite OpacityEffectAction");
+	writeGenericUnorderedMap<int, OpacityEffectAction, PAOpacityEffectAction>(this, i_value);
+}
+
+template <>
 void Stream::operator<<<int, EnhancedGameObject*>(gd::unordered_map<int, EnhancedGameObject*>& i_value) {
 	unsigned int l_size = i_value.size();
 	this->write(reinterpret_cast<char*>(&l_size), 4);
@@ -242,4 +281,16 @@ template <>
 void Stream::operator<<<std::pair<int,int>, SFXTriggerInstance>(gd::map<std::pair<int,int>, SFXTriggerInstance>& i_value) {
 	//geode::log::info("jjjjjjjjjjjjjjjjjjjjj Map CustomWrite SFXTriggerInstance");
 	writeGenericMap<std::pair<int,int>, SFXTriggerInstance, PASFXTriggerInstance>(this, i_value);
+}
+
+template <>
+void Stream::operator<<<int, EnterEffectAnimValue>(gd::map<int, EnterEffectAnimValue>& i_value) {
+	geode::log::info("ooooooooooooooooooooooooooooooo Map CustomWrite EnterEffectAnimValue");
+	writeGenericMap<int, EnterEffectAnimValue, PAEnterEffectAnimValue>(this, i_value);
+}
+
+template <>
+void Stream::operator<<<std::pair<int,int>, FMODSoundTween>(gd::map<std::pair<int,int>, FMODSoundTween>& i_value) {
+	geode::log::info("aaaaaaaaaaaaaaaaaaaaaaaaaaa Map CustomWrite FMODSoundTween");
+	writeGenericMap<std::pair<int,int>, FMODSoundTween, PAFMODSoundTween>(this, i_value);
 }

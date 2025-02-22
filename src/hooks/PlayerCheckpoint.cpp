@@ -1,4 +1,5 @@
 #include "hooks/PlayerCheckpoint.hpp"
+#include "hooks/PlayLayer.hpp"
 #include "hooks/cocos2d/CCNode.hpp"
 #include "util/debug.hpp"
 
@@ -20,11 +21,11 @@ inline void persistenceAPI::operator>>(Stream& i_stream, PAPlayerCheckpoint& o_v
 	SEPARATOR_I
 	i_stream >> o_value.m_lastPosition;
 	SEPARATOR_I
-	i_stream >> o_value.m_unkInt1;
+	i_stream >> o_value.m_yVelocity;
 	SEPARATOR_I
 	i_stream >> o_value.m_isUpsideDown;
 	SEPARATOR_I
-	i_stream >> o_value.m_unk7b3;
+	i_stream >> o_value.m_rotateGameplayOnly;
 	SEPARATOR_I
 	i_stream >> o_value.m_isShip;
 	SEPARATOR_I
@@ -44,7 +45,11 @@ inline void persistenceAPI::operator>>(Stream& i_stream, PAPlayerCheckpoint& o_v
 	SEPARATOR_I
 	i_stream >> o_value.m_hasGhostTrail;
 	SEPARATOR_I
-	i_stream.read((char*)o_value.m_unkBytes1, 4);
+	if (i_stream.getFileVersion() > 9) {
+		i_stream >> o_value.m_isMini;
+	} else {
+		i_stream.read((char*)o_value.m_isMini, 4);
+	}
 	SEPARATOR_I
 	i_stream >> o_value.m_speed;
 	SEPARATOR_I
@@ -52,26 +57,54 @@ inline void persistenceAPI::operator>>(Stream& i_stream, PAPlayerCheckpoint& o_v
 	SEPARATOR_I
 	i_stream >> o_value.m_isGoingLeft;
 	SEPARATOR_I
-	i_stream.read((char*)o_value.m_unkBytes2, 34);
+	if (i_stream.getFileVersion() > 9) {
+		i_stream >> o_value.m_maybeReverseSpeed;
+		SEPARATOR_I
+		i_stream >> o_value.m_isDashing;
+		SEPARATOR_I
+		i_stream >> o_value.m_dashX;
+		SEPARATOR_I
+		i_stream >> o_value.m_dashY;
+		SEPARATOR_I
+		i_stream >> o_value.m_dashAngle;
+		SEPARATOR_I
+		i_stream >> o_value.m_dashStartTime;
+		SEPARATOR_I
+		i_stream >> o_value.m_dashRing;
+	} else {
+		i_stream.read(reinterpret_cast<char*>(&o_value) + offsetof(PAPlayerCheckpoint,m_isGoingLeft) + sizeof(bool), 34);
+	}
 	SEPARATOR_I
-	// TODO SEE IF IT IS A PTR
-	i_stream >> o_value.m_hideAttemptCount;
+	i_stream >> o_value.m_isAutoCheckpoint;
 	SEPARATOR_I
-	i_stream.read((char*)o_value.m_unkBytes3, 7);
+	if (i_stream.getFileVersion() > 9) {
+		i_stream >> o_value.m_lastFlipTime;
+	} else {
+		i_stream.read(reinterpret_cast<char*>(&o_value) + offsetof(PAPlayerCheckpoint,m_isAutoCheckpoint) + sizeof(bool), 7);
+		SEPARATOR_I
+		i_stream.read(reinterpret_cast<char*>(&o_value) + offsetof(PAPlayerCheckpoint,m_lastFlipTime), sizeof(bool));
+		SEPARATOR_I
+		i_stream.read(reinterpret_cast<char*>(&o_value) + offsetof(PAPlayerCheckpoint,m_lastFlipTime) + sizeof(float), sizeof(float));
+	}
 	SEPARATOR_I
-	i_stream >> o_value.m_unkBool;
+	i_stream >> o_value.m_gravityMod;
 	SEPARATOR_I
-	i_stream >> o_value.m_unkFloat1;
+	if (i_stream.getFileVersion() > 9) {
+		i_stream >> o_value.m_decreaseBoostSlide;
+	} else {
+		i_stream.read(reinterpret_cast<char*>(&o_value) + offsetof(PAPlayerCheckpoint,m_decreaseBoostSlide), sizeof(int));
+	}
+
 	SEPARATOR_I
-	i_stream >> o_value.m_possiblyFlags;
-	SEPARATOR_I
-	i_stream >> o_value.m_timeOrPercentRelated;
-	SEPARATOR_I
-	i_stream.read((char*)o_value.m_unkBytes4, 4);
+	i_stream >> o_value.m_followRelated;
 	VEC_SEPARATOR_I
-	i_stream >> o_value.m_yPositionVector;
+	i_stream >> o_value.m_playerFollowFloats;
 	VEC_SEPARATOR_I
-	i_stream.read((char*)o_value.m_unkBytes5, 8);
+	if (i_stream.getFileVersion() > 9) {
+		i_stream >> o_value.m_followRelated2;
+	} else {
+		i_stream.read(reinterpret_cast<char*>(&o_value) + offsetof(PAPlayerCheckpoint,m_followRelated2), 8);
+	}
 	SEPARATOR_I
 }
 
@@ -80,11 +113,11 @@ inline void persistenceAPI::operator<<(Stream& o_stream, PAPlayerCheckpoint& i_v
 	SEPARATOR_O
 	o_stream << i_value.m_lastPosition;
 	SEPARATOR_O
-	o_stream << i_value.m_unkInt1;
+	o_stream << i_value.m_yVelocity;
 	SEPARATOR_O
 	o_stream << i_value.m_isUpsideDown;
 	SEPARATOR_O
-	o_stream << i_value.m_unk7b3;
+	o_stream << i_value.m_rotateGameplayOnly;
 	SEPARATOR_O
 	o_stream << i_value.m_isShip;
 	SEPARATOR_O
@@ -104,7 +137,7 @@ inline void persistenceAPI::operator<<(Stream& o_stream, PAPlayerCheckpoint& i_v
 	SEPARATOR_O
 	o_stream << i_value.m_hasGhostTrail;
 	SEPARATOR_O
-	o_stream.write((char*)i_value.m_unkBytes1, 4);
+	o_stream << i_value.m_isMini;
 	SEPARATOR_O
 	o_stream << i_value.m_speed;
 	SEPARATOR_O
@@ -112,35 +145,45 @@ inline void persistenceAPI::operator<<(Stream& o_stream, PAPlayerCheckpoint& i_v
 	SEPARATOR_O
 	o_stream << i_value.m_isGoingLeft;
 	SEPARATOR_O
-	o_stream.write((char*)i_value.m_unkBytes2, 34);
+	o_stream << i_value.m_maybeReverseSpeed;
 	SEPARATOR_O
-	o_stream << i_value.m_hideAttemptCount;
+	o_stream << i_value.m_isDashing;
 	SEPARATOR_O
-	o_stream.write((char*)i_value.m_unkBytes3, 7);
+	o_stream << i_value.m_dashX;
 	SEPARATOR_O
-	o_stream << i_value.m_unkBool;
+	o_stream << i_value.m_dashY;
 	SEPARATOR_O
-	o_stream << i_value.m_unkFloat1;
+	o_stream << i_value.m_dashAngle;
 	SEPARATOR_O
-	o_stream << i_value.m_possiblyFlags;
+	o_stream << i_value.m_dashStartTime;
 	SEPARATOR_O
-	o_stream << i_value.m_timeOrPercentRelated;
+	o_stream << i_value.m_dashRing;
 	SEPARATOR_O
-	o_stream.write((char*)i_value.m_unkBytes4, 4);
+	o_stream << i_value.m_isAutoCheckpoint;
+	SEPARATOR_O
+	o_stream << i_value.m_lastFlipTime;
+	SEPARATOR_O
+	o_stream << i_value.m_gravityMod;
+	SEPARATOR_O
+	o_stream << i_value.m_decreaseBoostSlide;
+	SEPARATOR_O
+	o_stream << i_value.m_followRelated;
 	VEC_SEPARATOR_O
-	o_stream << i_value.m_yPositionVector;
+	o_stream << i_value.m_playerFollowFloats;
 	VEC_SEPARATOR_O
-	o_stream.write((char*)i_value.m_unkBytes5, 8);
+	o_stream << i_value.m_followRelated2;
 	SEPARATOR_O
 }
 
 #if defined(PA_DEBUG) && defined(PA_DESCRIBE)
 void PAPlayerCheckpoint::describe() {
+	int l_objectIndex = -1;
+	PAPlayLayer* l_playLayer = static_cast<PAPlayLayer*>(PlayLayer::get());
 	log::info("[PAPlayerCheckpoint - describe] m_position: {}", m_position);
 	log::info("[PAPlayerCheckpoint - describe] m_lastPosition: {}", m_lastPosition);
-	log::info("[PAPlayerCheckpoint - describe] m_unkInt1: {}", m_unkInt1);
+	log::info("[PAPlayerCheckpoint - describe] m_yVelocity: {}", m_yVelocity);
 	log::info("[PAPlayerCheckpoint - describe] m_isUpsideDown: {}", m_isUpsideDown);
-	log::info("[PAPlayerCheckpoint - describe] m_unk7b3: {}", m_unk7b3);
+	log::info("[PAPlayerCheckpoint - describe] m_rotateGameplayOnly: {}", m_rotateGameplayOnly);
 	log::info("[PAPlayerCheckpoint - describe] m_isShip: {}", m_isShip);
 	log::info("[PAPlayerCheckpoint - describe] m_isBall: {}", m_isBall);
 	log::info("[PAPlayerCheckpoint - describe] m_isBird: {}", m_isBird);
@@ -150,22 +193,28 @@ void PAPlayerCheckpoint::describe() {
 	log::info("[PAPlayerCheckpoint - describe] m_isSpider: {}", m_isSpider);
 	log::info("[PAPlayerCheckpoint - describe] m_isOnGround: {}", m_isOnGround);
 	log::info("[PAPlayerCheckpoint - describe] m_hasGhostTrail: {}", m_hasGhostTrail);
-	log::info("[PAPlayerCheckpoint - describe] m_unkBytes1: [{}]", hexStr(m_unkBytes1, 4));
+	log::info("[PAPlayerCheckpoint - describe] m_isMini: {}", m_isMini);
 	log::info("[PAPlayerCheckpoint - describe] m_speed: {}", m_speed);
 	log::info("[PAPlayerCheckpoint - describe] m_isHidden: {}", m_isHidden);
 	log::info("[PAPlayerCheckpoint - describe] m_isGoingLeft: {}", m_isGoingLeft);
-	log::info("[PAPlayerCheckpoint - describe] m_unkBytes2: [{}]", hexStr(m_unkBytes2, 27));
-	log::info("[PAPlayerCheckpoint - describe] m_maybeAPointer: {}", m_maybeAPointer);
-	log::info("[PAPlayerCheckpoint - describe] m_unkBool: {}", m_unkBool);
-	log::info("[PAPlayerCheckpoint - describe] m_unkFloat1: {}", m_unkFloat1);
-	log::info("[PAPlayerCheckpoint - describe] m_possiblyFlags: {}", m_possiblyFlags);
-	log::info("[PAPlayerCheckpoint - describe] m_timeOrPercentRelated: {}", m_timeOrPercentRelated);
-	log::info("[PAPlayerCheckpoint - describe] m_unkBytes3: [{}]", hexStr(m_unkBytes3, 4));
-	int l_size = m_yPositionVector.size();
-	log::info("[PAPlayerCheckpoint - describe] m_yPositionVector.size(): {}", l_size);
+	log::info("[PAPlayerCheckpoint - describe] m_maybeReverseSpeed: {}", m_maybeReverseSpeed);
+	log::info("[PAPlayerCheckpoint - describe] m_isDashing: {}", m_isDashing);
+	log::info("[PAPlayerCheckpoint - describe] m_dashX: {}", m_dashX);
+	log::info("[PAPlayerCheckpoint - describe] m_dashY: {}", m_dashY);
+	log::info("[PAPlayerCheckpoint - describe] m_dashAngle: {}", m_dashAngle);
+	log::info("[PAPlayerCheckpoint - describe] m_dashStartTime: {}", m_dashStartTime);
+	if (l_playLayer) l_objectIndex = l_playLayer->getGameObjectIndex(m_dashRing);
+	log::info("[PAPlayerCheckpoint - describe] m_dashRing: {}", l_objectIndex);
+	log::info("[PAPlayerCheckpoint - describe] m_isAutoCheckpoint: {}", m_isAutoCheckpoint);
+	log::info("[PAPlayerCheckpoint - describe] m_lastFlipTime: {}", m_lastFlipTime);
+	log::info("[PAPlayerCheckpoint - describe] m_gravityMod: {}", m_gravityMod);
+	log::info("[PAPlayerCheckpoint - describe] m_decreaseBoostSlide: {}", m_decreaseBoostSlide);
+	log::info("[PAPlayerCheckpoint - describe] m_followRelated: {}", m_followRelated);
+	int l_size = m_playerFollowFloats.size();
+	log::info("[PAPlayerCheckpoint - describe] m_playerFollowFloats.size(): {}", l_size);
 	for (int i = 0; i < l_size; i++) {
-		log::info("[PAPlayerCheckpoint - describe] m_yPositionVector[{}]: {}", i, m_yPositionVector[i]);
+		log::info("[PAPlayerCheckpoint - describe] m_playerFollowFloats[{}]: {}", i, m_playerFollowFloats[i]);
 	}
-	log::info("[PAPlayerCheckpoint - describe] m_unkBytes4: [{}]", hexStr(m_unkBytes4, 8));
+	log::info("[PAPlayerCheckpoint - describe] m_followRelated2: {}", m_followRelated2);
 }
 #endif

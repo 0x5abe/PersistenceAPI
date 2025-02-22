@@ -31,7 +31,29 @@ inline void persistenceAPI::operator>>(Stream& i_stream, PADynamicObjectAction& 
 	SEPARATOR_I
 	i_stream >> o_value.m_gameObject8;
 	SEPARATOR_I
-	i_stream.read(reinterpret_cast<char*>(&o_value) + offsetof(PADynamicObjectAction,m_gameObject8) + sizeof(GameObject*), 32);
+	if (i_stream.getFileVersion() > 9) {
+		i_stream >> o_value.m_unkFloat1;
+		SEPARATOR_I
+		i_stream >> o_value.m_unkFloat2;
+		SEPARATOR_I
+		i_stream >> o_value.m_unkFloat3;
+		SEPARATOR_I
+		i_stream >> o_value.m_unkBool1;
+		SEPARATOR_I
+		i_stream >> o_value.m_unkBool2;
+		SEPARATOR_I
+		i_stream >> o_value.m_unkBool3;
+		SEPARATOR_I
+		i_stream >> o_value.m_unkBool4;
+		SEPARATOR_I
+		i_stream >> o_value.m_unkFloat4;
+		SEPARATOR_I
+		i_stream >> o_value.m_unkFloat5;
+		SEPARATOR_I
+		i_stream >> o_value.m_unkFloat6;
+	} else {
+		i_stream.read(reinterpret_cast<char*>(&o_value) + offsetof(PADynamicObjectAction,m_gameObject8) + sizeof(GameObject*), 32);
+	}
 	SEPARATOR_I	
 }
 
@@ -52,13 +74,38 @@ inline void persistenceAPI::operator<<(Stream& o_stream, PADynamicObjectAction& 
 	SEPARATOR_O
 	o_stream << i_value.m_gameObject8;
 	SEPARATOR_O
-	o_stream.write(reinterpret_cast<char*>(&i_value) + offsetof(PADynamicObjectAction,m_gameObject8) + sizeof(GameObject*), 32);
+	o_stream << i_value.m_unkFloat1;
+	SEPARATOR_O
+	o_stream << i_value.m_unkFloat2;
+	SEPARATOR_O
+	o_stream << i_value.m_unkFloat3;
+	SEPARATOR_O
+	o_stream << i_value.m_unkBool1;
+	SEPARATOR_O
+	o_stream << i_value.m_unkBool2;
+	SEPARATOR_O
+	o_stream << i_value.m_unkBool3;
+	SEPARATOR_O
+	o_stream << i_value.m_unkBool4;
+	SEPARATOR_O
+	o_stream << i_value.m_unkFloat4;
+	SEPARATOR_O
+	o_stream << i_value.m_unkFloat5;
+	SEPARATOR_O
+	o_stream << i_value.m_unkFloat6;
 	SEPARATOR_O
 }
 
 #if defined(PA_DEBUG) && defined(PA_DESCRIBE)
 void PADynamicObjectAction::describe() {
 	int l_object1Index = -1;
+	int l_object2Index = -1;
+	int l_object3Index = -1;
+	int l_object4Index = -1;
+	int l_object5Index = -1;
+	int l_object6Index = -1;
+	int l_object7Index = -1;
+	int l_object8Index = -1;
 	if (!m_gameObject1) {
 		log::info("[PADynamicObjectAction - describe] no game object?? @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 	} else {
@@ -116,6 +163,15 @@ void PADynamicObjectAction::describe() {
 	log::info("[PADynamicObjectAction - describe] l_object6Index: {}", l_object6Index);
 	log::info("[PADynamicObjectAction - describe] l_object7Index: {}", l_object7Index);
 	log::info("[PADynamicObjectAction - describe] l_object8Index: {}", l_object8Index);
-	log::info("[PADynamicObjectAction - describe] pad_1: [{}]", hexStr(reinterpret_cast<unsigned char*>(this) + offsetof(PADynamicObjectAction,m_gameObject8) + sizeof(GameObject*), 32));
+	log::info("[PADynamicObjectAction - describe] m_unkFloat1: {}", m_unkFloat1);
+	log::info("[PADynamicObjectAction - describe] m_unkFloat2: {}", m_unkFloat2);
+	log::info("[PADynamicObjectAction - describe] m_unkFloat3: {}", m_unkFloat3);
+	log::info("[PADynamicObjectAction - describe] m_unkBool1: {}", m_unkBool1);
+	log::info("[PADynamicObjectAction - describe] m_unkBool2: {}", m_unkBool2);
+	log::info("[PADynamicObjectAction - describe] m_unkBool3: {}", m_unkBool3);
+	log::info("[PADynamicObjectAction - describe] m_unkBool4: {}", m_unkBool4);
+	log::info("[PADynamicObjectAction - describe] m_unkFloat4: {}", m_unkFloat4);
+	log::info("[PADynamicObjectAction - describe] m_unkFloat5: {}", m_unkFloat5);
+	log::info("[PADynamicObjectAction - describe] m_unkFloat6: {}", m_unkFloat6);
 }
 #endif

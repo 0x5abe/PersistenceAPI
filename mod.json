@@ -1,9 +1,9 @@
 {
-	"geode": "3.9.0",
+	"geode": "4.2.1",
 	"gd": {
-		"win": "2.206"
+		"win": "2.2074"
 	},
-	"version": "v1.0.0-alpha.3",
+	"version": "v1.0.0-alpha.4",
 	"id": "sabe.persistenceapi",
 	"name": "PersistenceAPI",
 	"developer": "Sabe",

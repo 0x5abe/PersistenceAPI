@@ -14,26 +14,45 @@ void PAEventTriggerInstance::save(Stream& o_stream) {
 }
 
 inline void persistenceAPI::operator>>(Stream& i_stream, PAEventTriggerInstance& o_value) {
-	i_stream.read(reinterpret_cast<char*>(&o_value), 16);
+	if (i_stream.getFileVersion() > 9) {
+		i_stream >> o_value.m_targetID;
+		SEPARATOR_I
+		i_stream >> o_value.m_uniqueID;
+		SEPARATOR_I
+		i_stream >> o_value.m_controlID;
+		SEPARATOR_I
+		i_stream >> o_value.m_inactive;
+	} else {
+		i_stream.read(reinterpret_cast<char*>(&o_value), 16);
+	}
 	VEC_SEPARATOR_I
-	i_stream >> o_value.m_unkVecInt;
+	i_stream >> o_value.m_remapKeys;
 	VEC_SEPARATOR_I
 }
 
 inline void persistenceAPI::operator<<(Stream& o_stream, PAEventTriggerInstance& i_value) {
-	o_stream.write(reinterpret_cast<char*>(&i_value), 16);
+	o_stream << i_value.m_targetID;
+	SEPARATOR_O
+	o_stream << i_value.m_uniqueID;
+	SEPARATOR_O
+	o_stream << i_value.m_controlID;
+	SEPARATOR_O
+	o_stream << i_value.m_inactive;
 	VEC_SEPARATOR_O
-	o_stream << i_value.m_unkVecInt;
+	o_stream << i_value.m_remapKeys;
 	VEC_SEPARATOR_O
 }
 
 #if defined(PA_DEBUG) && defined(PA_DESCRIBE)
 void PAEventTriggerInstance::describe() {
-	log::info("[PAEventTriggerInstance - describe] pad_1: [{}]", hexStr(reinterpret_cast<unsigned char*>(this), 16));
-	int l_size = m_unkVecInt.size();
-	log::info("[PAEventTriggerInstance - describe] m_unkVecInt.size(): {}", l_size);
+	log::info("[PAEventTriggerInstance - describe] m_targetID: {}", m_targetID);
+	log::info("[PAEventTriggerInstance - describe] m_uniqueID: {}", m_uniqueID);
+	log::info("[PAEventTriggerInstance - describe] m_controlID: {}", m_controlID);
+	log::info("[PAEventTriggerInstance - describe] m_inactive: {}", m_inactive);
+	int l_size = m_remapKeys.size();
+	log::info("[PAEventTriggerInstance - describe] m_remapKeys.size(): {}", l_size);
 	for (int i = 0; i < l_size; i++) {
-		log::info("[PAEventTriggerInstance - describe] m_unkVecInt[{}]: {}", i, m_unkVecInt[i]);
+		log::info("[PAEventTriggerInstance - describe] m_remapKeys[{}]: {}", i, m_remapKeys[i]);
 	}
 }
 #endif

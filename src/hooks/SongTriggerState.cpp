@@ -19,14 +19,14 @@ void PASongTriggerState::save(Stream& o_stream) {
 inline void persistenceAPI::operator>>(Stream& i_stream, PASongTriggerState& o_value) {
 	i_stream >> o_value.m_songTriggerGameObject;
 	SEPARATOR_I
-	i_stream.read(reinterpret_cast<char*>(&o_value) + offsetof(PASongTriggerState,m_songTriggerGameObject) + sizeof(SongTriggerGameObject*), 8);
+	i_stream >> o_value.m_unkDouble;
 	SEPARATOR_I
 }
 
 inline void persistenceAPI::operator<<(Stream& o_stream, PASongTriggerState& i_value) {
 	o_stream << i_value.m_songTriggerGameObject;
 	SEPARATOR_O
-	o_stream.write(reinterpret_cast<char*>(&i_value) + offsetof(PASongTriggerState,m_songTriggerGameObject) + sizeof(SongTriggerGameObject*), 8);
+	o_stream << i_value.m_unkDouble;
 	SEPARATOR_O
 }
 
@@ -36,6 +36,6 @@ void PASongTriggerState::describe() {
 	PAPlayLayer* l_playLayer = static_cast<PAPlayLayer*>(PlayLayer::get());
 	if (l_playLayer) l_objectIndex = l_playLayer->getGameObjectIndex(m_songTriggerGameObject);
 	log::info("[PASongTriggerState - describe] m_songTriggerGameObject l_objectIndex: {}", l_objectIndex);
-	log::info("[PASongTriggerState - describe] pad_1: [{}]", hexStr(reinterpret_cast<unsigned char*>(this) + offsetof(PASongTriggerState,m_songTriggerGameObject) + sizeof(SongTriggerGameObject*), 8));
+	log::info("[PASongTriggerState - describe] m_unkDouble: {}", m_unkDouble);
 }
 #endif

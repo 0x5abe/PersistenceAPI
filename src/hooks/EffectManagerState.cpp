@@ -1,9 +1,4 @@
 #include "hooks/EffectManagerState.hpp"
-#include "Geode/binding/CountTriggerAction.hpp"
-#include "Geode/binding/OpacityEffectAction.hpp"
-#include "Geode/binding/PulseEffectAction.hpp"
-#include "Geode/binding/TimerItem.hpp"
-#include "Geode/binding/TimerTriggerAction.hpp"
 #include "hooks/cocos2d/CCNode.hpp"
 #include "hooks/CountTriggerAction.hpp"
 #include "hooks/TouchToggleAction.hpp"
@@ -14,6 +9,8 @@
 #include "hooks/TimerItem.hpp"
 #include "hooks/TimerTriggerAction.hpp"
 #include "hooks/CAState.hpp"
+#include "hooks/OpacityEffectAction.hpp"
+#include "hooks/PulseEffectAction.hpp"
 #include "util/debug.hpp"
 
 using namespace geode::prelude;
@@ -176,7 +173,8 @@ void PAEffectManagerState::describe() {
 	l_size = m_unkVecPulseEffectAction.size();
 	log::info("[PAEffectManagerState - describe] m_unkVecPulseEffectAction.size(): {}", l_size);
 	for (int i = 0; i < l_size; i++) {
-		log::info("[PAEffectManagerState - describe] m_unkVecPulseEffectAction[{}]: {}", i, hexStr(reinterpret_cast<uint8_t*>(&m_unkVecPulseEffectAction[i]), sizeof(PulseEffectAction)));
+		log::info("[PAEffectManagerState - describe] m_unkVecPulseEffectAction[{}]:", i);
+		reinterpret_cast<PAPulseEffectAction*>(&m_unkVecPulseEffectAction[i])->describe();
 	}
 	l_size = m_unorderedMapInt_vectorPulseEffectAction.size();
 	log::info("[PAEffectManagerState - describe] m_unorderedMapInt_vectorPulseEffectAction.size(): {}", l_size);
@@ -187,7 +185,8 @@ void PAEffectManagerState::describe() {
 		l_size = l_pair.second.size();
 		log::info("[PAEffectManagerState - describe] m_unorderedMapInt_vectorPulseEffectAction element {} value.size(): {}", i, l_size);
 		for (int j = 0; j < l_size; j++) {
-			log::info("[PAEffectManagerState - describe] m_unorderedMapInt_vectorPulseEffectAction element {} value[{}]: {}", i, j, hexStr(reinterpret_cast<uint8_t*>(&l_pair.second[j]), sizeof(PulseEffectAction)));
+			log::info("[PAEffectManagerState - describe] m_unorderedMapInt_vectorPulseEffectAction element {} value[{}]:", i, j);
+			reinterpret_cast<PAPulseEffectAction*>(&l_pair.second[j])->describe();
 		}
 		i++;
 	}
@@ -219,7 +218,7 @@ void PAEffectManagerState::describe() {
 	i = 0;
 	for (std::pair<int, OpacityEffectAction> l_pair : m_unorderedMapInt_OpacityEffectAction) {
 		log::info("[PAEffectManagerState - describe] m_unorderedMapInt_OpacityEffectAction element {} key: {}", i, l_pair.first);
-		log::info("[PAEffectManagerState - describe] m_unorderedMapInt_OpacityEffectAction element {} value: {}", i, hexStr(reinterpret_cast<uint8_t*>(&l_pair.second), sizeof(OpacityEffectAction)));
+		reinterpret_cast<PAOpacityEffectAction*>(&l_pair.second)->describe();
 		i++;
 	}
 	l_size = m_vectorTouchToggleAction.size();

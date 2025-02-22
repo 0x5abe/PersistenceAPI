@@ -18,23 +18,68 @@ void PAAdvancedFollowInstance::save(Stream& o_stream) {
 inline void persistenceAPI::operator>>(Stream& i_stream, PAAdvancedFollowInstance& o_value) {
 	i_stream >> o_value.m_gameObject;
 	SEPARATOR_I
-	i_stream.read(reinterpret_cast<char*>(&o_value) + offsetof(PAAdvancedFollowInstance,m_gameObject) + sizeof(GameObject*), 24);
+	if (i_stream.getFileVersion() > 9) {
+		i_stream >> o_value.m_group;
+		SEPARATOR_I
+		i_stream >> o_value.m_objectKey;
+		SEPARATOR_I
+		i_stream >> o_value.m_controlId;
+		SEPARATOR_I
+		i_stream >> o_value.m_otherObjectKey;
+		SEPARATOR_I
+		i_stream >> o_value.m_relatedToGJGameStateUnkUint7;
+		SEPARATOR_I
+		i_stream >> o_value.m_finished;
+		SEPARATOR_I
+		i_stream >> o_value.m_doStart;
+		SEPARATOR_I
+		i_stream >> o_value.m_started;
+		SEPARATOR_I
+		i_stream >> o_value.m_processed;
+	} else {
+		i_stream.read(reinterpret_cast<char*>(&o_value) + offsetof(PAAdvancedFollowInstance,m_gameObject) + sizeof(GameObject*), 24);
+	}
 	SEPARATOR_I
 }
 
 inline void persistenceAPI::operator<<(Stream& o_stream, PAAdvancedFollowInstance& i_value) {
 	o_stream << i_value.m_gameObject;
 	SEPARATOR_O
-	o_stream.write(reinterpret_cast<char*>(&i_value) + offsetof(PAAdvancedFollowInstance,m_gameObject) + sizeof(GameObject*), 24);
+	o_stream << i_value.m_group;
+	SEPARATOR_O
+	o_stream << i_value.m_objectKey;
+	SEPARATOR_O
+	o_stream << i_value.m_controlId;
+	SEPARATOR_O
+	o_stream << i_value.m_otherObjectKey;
+	SEPARATOR_O
+	o_stream << i_value.m_relatedToGJGameStateUnkUint7;
+	SEPARATOR_O
+	o_stream << i_value.m_finished;
+	SEPARATOR_O
+	o_stream << i_value.m_doStart;
+	SEPARATOR_O
+	o_stream << i_value.m_started;
+	SEPARATOR_O
+	o_stream << i_value.m_processed;
 	SEPARATOR_O
 }
 
 #if defined(PA_DEBUG) && defined(PA_DESCRIBE)
 void PAAdvancedFollowInstance::describe() {
-	log::info("[PAAdvancedFollowInstance - describe] pad_1: [{}]", hexStr(reinterpret_cast<unsigned char*>(this) + offsetof(PAAdvancedFollowInstance,m_gameObject) + sizeof(GameObject*), 24));
 	int l_objectIndex = -1;
 	PAPlayLayer* l_playLayer = static_cast<PAPlayLayer*>(PlayLayer::get());
 	if (l_playLayer) l_objectIndex = l_playLayer->getGameObjectIndex(m_gameObject);
 	log::info("[PAAdvancedFollowInstance - describe] m_gameObject l_objectIndex: {}", l_objectIndex);
+	log::info("[PAAdvancedFollowInstance - describe] m_group: {}", m_group);
+	log::info("[PAAdvancedFollowInstance - describe] m_objectKey: {}", m_objectKey);
+	log::info("[PAAdvancedFollowInstance - describe] m_controlId: {}", m_controlId);
+	log::info("[PAAdvancedFollowInstance - describe] m_otherObjectKey: {}", m_otherObjectKey);
+	log::info("[PAAdvancedFollowInstance - describe] m_relatedToGJGameStateUnkUint7: {}", m_relatedToGJGameStateUnkUint7);
+	log::info("[PAAdvancedFollowInstance - describe] m_finished: {}", m_finished);
+	log::info("[PAAdvancedFollowInstance - describe] m_doStart: {}", m_doStart);
+	log::info("[PAAdvancedFollowInstance - describe] m_started: {}", m_started);
+	log::info("[PAAdvancedFollowInstance - describe] m_processed: {}", m_processed);
+	log::info("[PAAdvancedFollowInstance - describe] m_group: {}", m_group);
 }
 #endif

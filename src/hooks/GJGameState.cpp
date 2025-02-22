@@ -4,6 +4,14 @@
 #include "hooks/EventTriggerInstance.hpp"
 #include "hooks/PlayLayer.hpp"
 #include "hooks/EnterEffectInstance.hpp"
+#include "hooks/SFXTriggerState.hpp"
+#include "hooks/SFXTriggerInstance.hpp"
+#include "hooks/SongTriggerState.hpp"
+#include "hooks/SongChannelState.hpp"
+#include "hooks/DynamicObjectAction.hpp"
+#include "hooks/AdvancedFollowInstance.hpp"
+#include "hooks/GameObjectPhysics.hpp"
+#include "hooks/GJValueTween.hpp"
 #include "util/debug.hpp"
 
 using namespace geode::prelude;
@@ -277,7 +285,7 @@ inline void persistenceAPI::operator>>(Stream& i_stream, PAGJGameState& o_value)
 	SEPARATOR_I
 	i_stream >> o_value.m_unkPoint34;
 	SEPARATOR_I
-	i_stream >> o_value.dualRelated;
+	i_stream >> o_value.m_dualRelated;
 	SEPARATOR_I
 	UMAP_SEPARATOR_I
 	i_stream >> o_value.m_stateObjects;
@@ -622,7 +630,7 @@ inline void persistenceAPI::operator<<(Stream& o_stream, PAGJGameState& i_value)
 	SEPARATOR_O
 	o_stream << i_value.m_unkPoint34;
 	SEPARATOR_O
-	o_stream << i_value.dualRelated;
+	o_stream << i_value.m_dualRelated;
 	SEPARATOR_O
 	UMAP_SEPARATOR_O
 	o_stream << i_value.m_stateObjects;
@@ -781,7 +789,8 @@ void PAGJGameState::describe() {
 	log::info("[PAGJGameState - describe] m_middleGroundOffsetY: {}", m_middleGroundOffsetY);
 	log::info("[PAGJGameState - describe] m_unkInt3: {}", m_unkInt3);
 	log::info("[PAGJGameState - describe] m_unkInt4: {}", m_unkInt4);
-	log::info("[PAGJGameState - describe] m_unkShort1: {}", m_unkShort1);
+	log::info("[PAGJGameState - describe] m_unkBool4: {}", m_unkBool4);
+	log::info("[PAGJGameState - describe] m_unkBool5: {}", m_unkBool5);
 	log::info("[PAGJGameState - describe] m_unkFloat2: {}", m_unkFloat2);
 	log::info("[PAGJGameState - describe] m_unkFloat3: {}", m_unkFloat3);
 	log::info("[PAGJGameState - describe] m_unkInt5: {}", m_unkInt5);
@@ -794,15 +803,15 @@ void PAGJGameState::describe() {
 	log::info("[PAGJGameState - describe] m_unkFloat4: {}", m_unkFloat4);
 	log::info("[PAGJGameState - describe] m_unkUint1: {}", m_unkUint1);
 	log::info("[PAGJGameState - describe] m_portalY: {}", m_portalY);
-	log::info("[PAGJGameState - describe] m_unkBool4: {}", m_unkBool4);
+	log::info("[PAGJGameState - describe] m_unkBool6: {}", m_unkBool6);
 	log::info("[PAGJGameState - describe] m_gravityRelated: {}", m_gravityRelated);
 	log::info("[PAGJGameState - describe] m_unkInt12: {}", m_unkInt12);
 	log::info("[PAGJGameState - describe] m_unkInt13: {}", m_unkInt13);
 	log::info("[PAGJGameState - describe] m_unkInt14: {}", m_unkInt14);
 	log::info("[PAGJGameState - describe] m_unkInt15: {}", m_unkInt15);
-	log::info("[PAGJGameState - describe] m_unkShort2: {}", m_unkShort2);
-	log::info("[PAGJGameState - describe] m_unkBool5: {}", m_unkBool5);
-	log::info("[PAGJGameState - describe] m_unkBool6: {}", m_unkBool6);
+	log::info("[PAGJGameState - describe] m_unkBool7: {}", m_unkBool7);
+	log::info("[PAGJGameState - describe] m_unkBool8: {}", m_unkBool8);
+	log::info("[PAGJGameState - describe] m_unkBool9: {}", m_unkBool9);
 	log::info("[PAGJGameState - describe] m_unkFloat5: {}", m_unkFloat5);
 	log::info("[PAGJGameState - describe] m_unkFloat6: {}", m_unkFloat6);
 	log::info("[PAGJGameState - describe] m_unkFloat7: {}", m_unkFloat7);
@@ -844,25 +853,19 @@ void PAGJGameState::describe() {
 	if (l_playLayer) l_objectIndex = l_playLayer->getGameObjectIndex(m_unkGameObjPtr2);
 	log::info("[PAGJGameState - describe] m_unkGameObjPtr2 objectIndex: {}", l_objectIndex);
 	log::info("[PAGJGameState - describe] m_cameraPosition: {}", m_cameraPosition);
-	log::info("[PAGJGameState - describe] m_unkBool8: {}", m_unkBool8);
-	log::info("[PAGJGameState - describe] m_unkBool9: {}", m_unkBool9);
 	log::info("[PAGJGameState - describe] m_unkBool10: {}", m_unkBool10);
+	log::info("[PAGJGameState - describe] m_levelFlipping: {}", m_levelFlipping);
 	log::info("[PAGJGameState - describe] m_unkBool11: {}", m_unkBool11);
 	log::info("[PAGJGameState - describe] m_unkBool12: {}", m_unkBool12);
 	log::info("[PAGJGameState - describe] m_isDualMode: {}", m_isDualMode);
-	log::info("[PAGJGameState - describe] m_unkBool14: {}", m_unkBool14);
-	log::info("[PAGJGameState - describe] m_unkBool15: {}", m_unkBool15);
-	log::info("[PAGJGameState - describe] m_unkBool16: {}", m_unkBool16);
-	log::info("[PAGJGameState - describe] m_unkBool17: {}", m_unkBool17);
-	log::info("[PAGJGameState - describe] m_isDualMode: {}", m_isDualMode);
-	log::info("[PAGJGameState - describe] m_unkBool18: {}", m_unkBool18);
 	log::info("[PAGJGameState - describe] m_unkFloat9: {}", m_unkFloat9);
 	int l_size = m_tweenActions.size();
 	log::info("[PAGJGameState - describe] m_tweenActions.size(): {}", l_size);
 	i = 0;
 	for (std::pair<int,GJValueTween> l_pair : m_tweenActions) {
 		log::info("[PAGJGameState - describe] m_tweenActions element {} key: {}", i, l_pair.first);
-		log::info("[PAGJGameState - describe] m_tweenActions element {} value (GJValueTween): [{}]", i, hexStr(reinterpret_cast<uint8_t*>(&l_pair.second), 40));
+		log::info("[PAGJGameState - describe] m_tweenActions element {} value:", i);
+		reinterpret_cast<PAGJValueTween*>(&l_pair.second)->describe();
 		i++;
 	}
 	log::info("[PAGJGameState - describe] m_cameraEdgeValue0: {}", m_cameraEdgeValue0);
@@ -874,7 +877,8 @@ void PAGJGameState::describe() {
 	i = 0;
 	for (std::pair<int,GameObjectPhysics> l_pair : m_gameObjectPhysics) {
 		log::info("[PAGJGameState - describe] m_gameObjectPhysics element {} key: {}", i, l_pair.first);
-		log::info("[PAGJGameState - describe] m_gameObjectPhysics element {} value (GameObjectPhysics): [{}]", i, hexStr(reinterpret_cast<uint8_t*>(&l_pair.second), 40));
+		log::info("[PAGJGameState - describe] m_gameObjectPhysics element {} value:", i);
+		reinterpret_cast<PAGameObjectPhysics*>(&l_pair.second)->describe();
 		i++;
 	}
 	l_size = m_unkVecFloat1.size();
@@ -898,21 +902,18 @@ void PAGJGameState::describe() {
 	log::info("[PAGJGameState - describe] m_unkUint13: {}", m_unkUint13);
 	log::info("[PAGJGameState - describe] m_unkPoint32: {}", m_unkPoint32);
 	log::info("[PAGJGameState - describe] m_unkPoint33: {}", m_unkPoint33);
-	log::info("[PAGJGameState - describe] m_unkBool19: {}", m_unkBool19);
 	log::info("[PAGJGameState - describe] m_unkBool20: {}", m_unkBool20);
 	log::info("[PAGJGameState - describe] m_unkBool21: {}", m_unkBool21);
 	log::info("[PAGJGameState - describe] m_unkBool22: {}", m_unkBool22);
-	log::info("[PAGJGameState - describe] m_unkBool23: {}", m_unkBool23);
-	log::info("[PAGJGameState - describe] m_unkBool24: {}", m_unkBool24);
 	log::info("[PAGJGameState - describe] m_unkUint14: {}", m_unkUint14);
-	log::info("[PAGJGameState - describe] m_unkBool25: {}", m_unkBool25);
+	log::info("[PAGJGameState - describe] m_unkBool26: {}", m_unkBool26);
 	log::info("[PAGJGameState - describe] m_cameraShakeEnabled: {}", m_cameraShakeEnabled);
 	log::info("[PAGJGameState - describe] m_cameraShakeFactor: {}", m_cameraShakeFactor);
 	log::info("[PAGJGameState - describe] m_unkUint15: {}", m_unkUint15);
 	log::info("[PAGJGameState - describe] m_unkUint16: {}", m_unkUint16);
 	log::info("[PAGJGameState - describe] m_unkUint64_1: {}", m_unkUint64_1);
 	log::info("[PAGJGameState - describe] m_unkPoint34: {}", m_unkPoint34);
-	log::info("[PAGJGameState - describe] dualRelated: {}", dualRelated);
+	log::info("[PAGJGameState - describe] m_dualRelated: {}", m_dualRelated);
 	i = 0;
 	for (std::pair<int, EnhancedGameObject*> l_pair : m_stateObjects) {
 		log::info("[PAGJGameState - describe] m_stateObjects element {} key: {}", i, l_pair.first);
@@ -1011,33 +1012,36 @@ void PAGJGameState::describe() {
 		log::info("[PAGJGameState - describe] m_unkUnorderedSet1 element {} value: {}", i, l_value);
 		i++;
 	}
-	log::info("[PAGJGameState - describe] m_unkBool26: {}", m_unkBool26);
+	log::info("[PAGJGameState - describe] m_unkBool27: {}", m_unkBool27);
 	l_size = m_advanceFollowInstances.size();
 	log::info("[PAGJGameState - describe] m_advanceFollowInstances.size(): {}", l_size);
 	for (int i = 0; i < l_size; i++) {
-		log::info("[PAGJGameState - describe] m_advanceFollowInstances element {} value (AdvancedFollowInstance): [{}]", i, hexStr(reinterpret_cast<uint8_t*>(&m_advanceFollowInstances[i]), 28));
+		log::info("[PAGJGameState - describe] m_advanceFollowInstances element[{}]:", i);
+		reinterpret_cast<PAAdvancedFollowInstance*>(&m_advanceFollowInstances[i])->describe();
 	}
 	l_size = m_dynamicObjActions1.size();
 	log::info("[PAGJGameState - describe] m_dynamicObjActions1.size(): {}", l_size);
 	for (int i = 0; i < l_size; i++) {
-		log::info("[PAGJGameState - describe] m_dynamicObjActions1 element {} value (DynamicObjectAction): [{}]", i, hexStr(reinterpret_cast<uint8_t*>(&m_dynamicObjActions1[i]), 60));
+		log::info("[PAGJGameState - describe] m_dynamicObjActions1[{}]:", i);
+		reinterpret_cast<PADynamicObjectAction*>(&m_dynamicObjActions1[i])->describe();
 	}
 	l_size = m_dynamicObjActions2.size();
 	log::info("[PAGJGameState - describe] m_dynamicObjActions2.size(): {}", l_size);
 	for (int i = 0; i < l_size; i++) {
-		log::info("[PAGJGameState - describe] m_dynamicObjActions2 element {} value (DynamicObjectAction): [{}]", i, hexStr(reinterpret_cast<uint8_t*>(&m_dynamicObjActions2[i]), 60));
+		log::info("[PAGJGameState - describe] m_dynamicObjActions2[{}]:", i);
+		reinterpret_cast<PADynamicObjectAction*>(&m_dynamicObjActions2[i])->describe();
 	}
-	log::info("[PAGJGameState - describe] m_unkBool27: {}", m_unkBool27);
 	log::info("[PAGJGameState - describe] m_unkBool28: {}", m_unkBool28);
+	log::info("[PAGJGameState - describe] m_unkBool29: {}", m_unkBool29);
 	log::info("[PAGJGameState - describe] m_unkUint17: {}", m_unkUint17);
 	i = 0;
-	for (std::pair<int, gd::vector<int>> l_pair : unkUMap8) {
-		log::info("[PAGJGameState - describe] unkUMap8 element {} key.key: {}", i, l_pair.first);
-		log::info("[PAGJGameState - describe] unkUMap8 element {} value:", i);
+	for (std::pair<int, gd::vector<int>> l_pair : m_unkUMap8) {
+		log::info("[PAGJGameState - describe] m_unkUMap8 element {} key.key: {}", i, l_pair.first);
+		log::info("[PAGJGameState - describe] m_unkUMap8 element {} value:", i);
 		l_size = l_pair.second.size();
-		log::info("[PAGJGameState - describe] unkUMap8 element {} value.size(): {}", i, l_size);
+		log::info("[PAGJGameState - describe] m_unkUMap8 element {} value.size(): {}", i, l_size);
 		for (int j = 0; j < l_size; j++) {
-			log::info("[PAGJGameState - describe] unkUMap8 element {} value[{}]: {}", i, j, l_pair.second[j]);
+			log::info("[PAGJGameState - describe] m_unkUMap8 element {} value[{}]: {}", i, j, l_pair.second[j]);
 		}
 		i++;
 	}
@@ -1045,13 +1049,15 @@ void PAGJGameState::describe() {
 	for (std::pair<std::pair<int, int>, SFXTriggerInstance> l_pair : m_proximityVolumeRelated) {
 		log::info("[PAGJGameState - describe] m_proximityVolumeRelated element {} key.key: {}", i, l_pair.first.first);
 		log::info("[PAGJGameState - describe] m_proximityVolumeRelated element {} key.value: {}", i, l_pair.first.second);
-		log::info("[PAGJGameState - describe] m_proximityVolumeRelated element {} value (SFXTriggerInstance): [{}]", i, hexStr(reinterpret_cast<uint8_t*>(&l_pair.second), 16));
+		log::info("[PAGJGameState - describe] m_proximityVolumeRelated element {} value:", i);
+		reinterpret_cast<PASFXTriggerInstance*>(&l_pair.second)->describe();
 		i++;
 	}
 	i = 0;
 	for (std::pair<int, SongChannelState> l_pair : m_songChannelStates) {
 		log::info("[PAGJGameState - describe] m_songChannelStates element {} key: {}", i, l_pair.first);
-		log::info("[PAGJGameState - describe] m_songChannelStates element {} value (SongChannelState): [{}]", i, hexStr(reinterpret_cast<uint8_t*>(&l_pair.second), 36));
+		log::info("[PAGJGameState - describe] m_songChannelStates element {} value:", i);
+		reinterpret_cast<PASongChannelState*>(&l_pair.second)->describe();
 		i++;
 	}
 	i = 0;
@@ -1061,21 +1067,25 @@ void PAGJGameState::describe() {
 		l_size = l_pair.second.size();
 		log::info("[PAGJGameState - describe] m_songTriggerStateVectors element {} value.size(): {}", i, l_size);
 		for (int j = 0; j < l_size; j++) {
-			log::info("[PAGJGameState - describe] m_songTriggerStateVectors element {} value[{}]: {}", i, j, hexStr(reinterpret_cast<uint8_t*>(&l_pair.second), 16));
+			log::info("[PAGJGameState - describe] m_songTriggerStateVectors element {} value[{}]:", i, j);
+			reinterpret_cast<PASongTriggerState*>(&l_pair.second[j])->describe();
 		}
 		i++;
 	}
 	l_size = m_sfxTriggerStates.size();
 	log::info("[PAGJGameState - describe] m_sfxTriggerStates.size(): {}", l_size);
 	for (int i = 0; i < l_size; i++) {
-		log::info("[PAGJGameState - describe] m_sfxTriggerStates element {} value (SFXTriggerState): [{}]", i, hexStr(reinterpret_cast<uint8_t*>(&m_sfxTriggerStates[i]), 160));
+		log::info("[PAGJGameState - describe] m_sfxTriggerStates element {} value:", i);
+		reinterpret_cast<PASFXTriggerState*>(&m_sfxTriggerStates[i])->describe();
 	}
-	log::info("[PAGJGameState - describe] m_unkBool29: {}", m_unkBool29);
+	log::info("[PAGJGameState - describe] m_unkBool30: {}", m_unkBool30);
 	log::info("[PAGJGameState - describe] m_unkUint18: {}", m_unkUint18);
 	log::info("[PAGJGameState - describe] m_ground: {}", m_ground);
 	log::info("[PAGJGameState - describe] m_unkUint19: {}", m_unkUint19);
-	log::info("[PAGJGameState - describe] m_unkBool30: {}", m_unkBool30);
-	log::info("[PAGJGameState - describe] m_unkUint20: {}", m_unkUint20);
 	log::info("[PAGJGameState - describe] m_unkBool31: {}", m_unkBool31);
+	log::info("[PAGJGameState - describe] m_unkUint20: {}", m_unkUint20);
+	log::info("[PAGJGameState - describe] m_unkBool32: {}", m_unkBool32);
+	log::info("[PAGJGameState - describe] m_pauseCounter: {}", m_pauseCounter);
+	log::info("[PAGJGameState - describe] m_pauseBufferTimer: {}", m_pauseBufferTimer);
 }
 #endif

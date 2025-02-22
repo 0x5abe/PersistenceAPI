@@ -1,6 +1,7 @@
 #pragma once
 #include "iostream"
 #include "Geode/Geode.hpp"
+#include "Geode/Enums.hpp"
 #include "Geode/loader/Log.hpp"
 #include "Geode/binding/AdvancedFollowInstance.hpp"
 #include "Geode/binding/EnhancedGameObject.hpp"
@@ -9,6 +10,9 @@
 #include "Geode/binding/SongChannelState.hpp"
 #include "Geode/binding/SongTriggerState.hpp"
 #include "Geode/binding/SFXTriggerState.hpp"
+#include "Geode/binding/DashRingObject.hpp"
+#include "Geode/binding/EnterEffectObject.hpp"
+#include "Geode/binding/EnterEffectAnimValue.hpp"
 #include "import_export.hpp"
 #include <filesystem>
 
@@ -21,21 +25,19 @@ namespace persistenceAPI {
 	protected:
 		std::fstream* m_stream;
 		unsigned int* m_bytesRead;
+		int m_fileVersion;
 		const char m_zeros[256] = {};
 	public:
-		SABE_PA_DLL Stream() {
-			m_stream = nullptr;
-			m_bytesRead = nullptr;
-		};
-		SABE_PA_DLL Stream(std::string i_filePath, bool i_trunc = false) {
+		SABE_PA_DLL Stream(std::string i_filePath, bool i_trunc = false, int i_fileVersion = -1) {
 			int l_mode = std::ios_base::binary | std::ios_base::out;
 			if (std::filesystem::exists(i_filePath)) {
 				l_mode |= std::ios_base::in;
 			}
 			if (i_trunc) l_mode |= std::ios_base::trunc;
 			m_stream = new std::fstream(i_filePath, l_mode);
+			m_fileVersion = i_fileVersion;
 		}
-		SABE_PA_DLL Stream(std::string i_filePath, unsigned int* i_bytesRead, bool i_trunc = false) {
+		SABE_PA_DLL Stream(std::string i_filePath, unsigned int* i_bytesRead, bool i_trunc = false, int i_fileVersion = -1) {
 			int l_mode = std::ios_base::binary | std::ios_base::out;
 			if (std::filesystem::exists(i_filePath)) {
 				l_mode |= std::ios_base::in;
@@ -43,6 +45,7 @@ namespace persistenceAPI {
 			if (i_trunc) l_mode |= std::ios_base::trunc;
 			m_stream = new std::fstream(i_filePath, l_mode);
 			m_bytesRead = i_bytesRead;
+			m_fileVersion = i_fileVersion;
 		}
 		SABE_PA_DLL ~Stream() { delete m_stream; }
 
@@ -58,8 +61,14 @@ namespace persistenceAPI {
 		PA_OPERATOR_READ(cocos2d::CCPoint)
 		PA_OPERATOR_READ(cocos2d::CCSize)
 		PA_OPERATOR_READ(cocos2d::CCAffineTransform)
+		PA_OPERATOR_READ(cocos2d::ccHSVValue)
+		PA_OPERATOR_READ(cocos2d::ccColor3B)
 		PA_OPERATOR_READ(uint64_t)
 		PA_OPERATOR_READ(long long)
+		PA_OPERATOR_READ(EasingType)
+		PA_OPERATOR_READ(TouchTriggerType)
+		PA_OPERATOR_READ(TouchTriggerControl)
+		PA_OPERATOR_READ(PulseEffectType)
 
 		PA_OPERATOR_WRITE(bool)
 		PA_OPERATOR_WRITE(char)
@@ -73,8 +82,14 @@ namespace persistenceAPI {
 		PA_OPERATOR_WRITE(cocos2d::CCPoint)
 		PA_OPERATOR_WRITE(cocos2d::CCSize)
 		PA_OPERATOR_WRITE(cocos2d::CCAffineTransform)
+		PA_OPERATOR_WRITE(cocos2d::ccHSVValue)
+		PA_OPERATOR_WRITE(cocos2d::ccColor3B)
 		PA_OPERATOR_WRITE(uint64_t)
 		PA_OPERATOR_WRITE(long long)
+		PA_OPERATOR_WRITE(EasingType)
+		PA_OPERATOR_WRITE(TouchTriggerType)
+		PA_OPERATOR_WRITE(TouchTriggerControl)
+		PA_OPERATOR_WRITE(PulseEffectType)
 
 		SABE_PA_DLL bool setFile(std::string i_filePath, unsigned int* i_bytesRead, bool i_trunc = false) {
 			if (m_stream) {
@@ -161,6 +176,10 @@ namespace persistenceAPI {
 			m_stream = nullptr;
 		}
 
+		SABE_PA_DLL inline int getFileVersion() {
+			return m_fileVersion;
+		}
+
 		// custom operators read
 
 		// GameObject*
@@ -170,6 +189,10 @@ namespace persistenceAPI {
 		SABE_PA_DLL void operator>>(SFXTriggerGameObject*& o_value);
 
 		SABE_PA_DLL void operator>>(SongTriggerGameObject*& o_value);
+
+		SABE_PA_DLL void operator>>(DashRingObject*& o_value);
+
+		SABE_PA_DLL void operator>>(EnterEffectObject*& o_value);
 
 		// vector
 
@@ -202,13 +225,13 @@ namespace persistenceAPI {
 		}
 
 		template <>
-		SABE_PA_DLL void operator>><DynamicSaveObject>(gd::vector<DynamicSaveObject>& o_value);
+		SABE_PA_DLL void operator>><SavedObjectStateRef>(gd::vector<SavedObjectStateRef>& o_value);
 
 		template <>
-		SABE_PA_DLL void operator>><ActiveSaveObject1>(gd::vector<ActiveSaveObject1>& o_value);
+		SABE_PA_DLL void operator>><SavedActiveObjectState>(gd::vector<SavedActiveObjectState>& o_value);
 
 		template <>
-		SABE_PA_DLL void operator>><ActiveSaveObject2>(gd::vector<ActiveSaveObject2>& o_value);
+		SABE_PA_DLL void operator>><SavedSpecialObjectState>(gd::vector<SavedSpecialObjectState>& o_value);
 
 		template <>
 		SABE_PA_DLL void operator>><CountTriggerAction>(gd::vector<CountTriggerAction>& o_value);
@@ -257,6 +280,9 @@ namespace persistenceAPI {
 
 		template <>
 		SABE_PA_DLL void operator>><DynamicObjectAction>(gd::vector<DynamicObjectAction>& o_value);
+
+		template <>
+		SABE_PA_DLL void operator>><PulseEffectAction>(gd::vector<PulseEffectAction>& o_value);
 
 		// unordered_map
 
@@ -313,6 +339,15 @@ namespace persistenceAPI {
 
 		template <>
 		SABE_PA_DLL void operator>><int, SongChannelState>(gd::unordered_map<int, SongChannelState>& o_value);
+
+		template <>
+		SABE_PA_DLL void operator>><int, GJValueTween>(gd::unordered_map<int, GJValueTween>& o_value);
+
+		template <>
+		SABE_PA_DLL void operator>><int, GameObjectPhysics>(gd::unordered_map<int, GameObjectPhysics>& o_value);
+
+		template <>
+		SABE_PA_DLL void operator>><int, OpacityEffectAction>(gd::unordered_map<int, OpacityEffectAction>& o_value);
 
 		// unordered_set
 
@@ -374,6 +409,12 @@ namespace persistenceAPI {
 
 		template <>
 		SABE_PA_DLL void operator>><std::pair<int,int>, SFXTriggerInstance>(gd::map<std::pair<int,int>, SFXTriggerInstance>& o_value);
+
+		template <>
+		SABE_PA_DLL void operator>><int, EnterEffectAnimValue>(gd::map<int, EnterEffectAnimValue>& o_value);
+
+		template <>
+		SABE_PA_DLL void operator>><std::pair<int,int>, FMODSoundTween>(gd::map<std::pair<int,int>, FMODSoundTween>& o_value);
 		
 		// set
 
@@ -422,6 +463,10 @@ namespace persistenceAPI {
 
 		SABE_PA_DLL void operator<<(SongTriggerGameObject*& i_value);
 
+		SABE_PA_DLL void operator<<(DashRingObject*& i_value);
+
+		SABE_PA_DLL void operator<<(EnterEffectObject*& i_value);
+
 		// vector
 
 		template <class T>
@@ -433,13 +478,13 @@ namespace persistenceAPI {
 		}
 
 		template <>
-		SABE_PA_DLL void operator<<<DynamicSaveObject>(gd::vector<DynamicSaveObject>& i_value);
+		SABE_PA_DLL void operator<<<SavedObjectStateRef>(gd::vector<SavedObjectStateRef>& i_value);
 
 		template <>
-		SABE_PA_DLL void operator<<<ActiveSaveObject1>(gd::vector<ActiveSaveObject1>& i_value);
+		SABE_PA_DLL void operator<<<SavedActiveObjectState>(gd::vector<SavedActiveObjectState>& i_value);
 
 		template <>
-		SABE_PA_DLL void operator<<<ActiveSaveObject2>(gd::vector<ActiveSaveObject2>& i_value);
+		SABE_PA_DLL void operator<<<SavedSpecialObjectState>(gd::vector<SavedSpecialObjectState>& i_value);
 
 		template <>
 		SABE_PA_DLL void operator<<<CountTriggerAction>(gd::vector<CountTriggerAction>& i_value);
@@ -486,6 +531,9 @@ namespace persistenceAPI {
 		template <>
 		SABE_PA_DLL void operator<<<DynamicObjectAction>(gd::vector<DynamicObjectAction>& i_value);
 
+		template <>
+		SABE_PA_DLL void operator<<<PulseEffectAction>(gd::vector<PulseEffectAction>& i_value);
+
 		// unordered_map
 
 		template <class K, class V>
@@ -528,6 +576,15 @@ namespace persistenceAPI {
 		template <>
 		SABE_PA_DLL void operator<<<int, SongChannelState>(gd::unordered_map<int, SongChannelState>& i_value);
 
+		template <>
+		SABE_PA_DLL void operator<<<int, GJValueTween>(gd::unordered_map<int, GJValueTween>& i_value);
+
+		template <>
+		SABE_PA_DLL void operator<<<int, GameObjectPhysics>(gd::unordered_map<int, GameObjectPhysics>& i_value);
+
+		template <>
+		SABE_PA_DLL void operator<<<int, OpacityEffectAction>(gd::unordered_map<int, OpacityEffectAction>& i_value);
+
 		// unordered_set
 
 		template <class K>
@@ -566,6 +623,12 @@ namespace persistenceAPI {
 
 		template <>
 		SABE_PA_DLL void operator<<<std::pair<int,int>, SFXTriggerInstance>(gd::map<std::pair<int,int>, SFXTriggerInstance>& i_value);
+
+		template <>
+		SABE_PA_DLL void operator<<<int, EnterEffectAnimValue>(gd::map<int, EnterEffectAnimValue>& i_value);
+
+		template <>
+		SABE_PA_DLL void operator<<<std::pair<int,int>, FMODSoundTween>(gd::map<std::pair<int,int>, FMODSoundTween>& i_value);
 
 		// set
 

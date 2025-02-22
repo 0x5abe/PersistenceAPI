@@ -9,7 +9,7 @@
 #include "hooks/CollisionTriggerAction.hpp"
 #include "hooks/CountTriggerAction.hpp"
 #include "hooks/DynamicObjectAction.hpp"
-#include "hooks/DynamicSaveObject.hpp"
+#include "hooks/SavedObjectStateRef.hpp"
 #include "hooks/EffectManagerState.hpp"
 #include "hooks/EnterEffectInstance.hpp"
 #include "hooks/EventTriggerInstance.hpp"

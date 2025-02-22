@@ -1,14 +1,14 @@
 #pragma once
 #include "Geode/Geode.hpp"
-#include "Geode/modify/DynamicSaveObject.hpp"
+#include "Geode/modify/SoundStateContainer.hpp"
 #include "util/Stream.hpp"
 #include "import_export.hpp"
 
 namespace persistenceAPI {
-	class $modify(PADynamicSaveObject, DynamicSaveObject) {
-	public:
-		friend void operator>>(persistenceAPI::Stream& i_stream, PADynamicSaveObject& o_value);
-		friend void operator<<(persistenceAPI::Stream& o_stream, PADynamicSaveObject& i_value);
+	class $modify(PASoundStateContainer, SoundStateContainer) {
+	protected:
+		friend void operator>>(persistenceAPI::Stream& i_stream, PASoundStateContainer& o_value);
+		friend void operator<<(persistenceAPI::Stream& o_stream, PASoundStateContainer& i_value);
 
 	public:
 		SABE_PA_DLL void load(persistenceAPI::Stream& i_stream);

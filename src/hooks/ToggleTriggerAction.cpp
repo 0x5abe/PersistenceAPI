@@ -14,27 +14,50 @@ void PAToggleTriggerAction::save(Stream& o_stream) {
 }
 
 inline void persistenceAPI::operator>>(Stream& i_stream, PAToggleTriggerAction& o_value) {
-	i_stream.read(reinterpret_cast<char*>(&o_value), 20);
+	if (i_stream.getFileVersion() > 9) {
+		i_stream >> o_value.m_disabled;
+		SEPARATOR_I
+		i_stream >> o_value.m_targetGroupID;
+		SEPARATOR_I
+		i_stream >> o_value.m_activateGroup;
+		SEPARATOR_I
+		i_stream >> o_value.m_triggerUniqueID;
+		SEPARATOR_I
+		i_stream >> o_value.m_controlID;
+	} else {
+		i_stream.read(reinterpret_cast<char*>(&o_value), 20);
+	}
 	VEC_SEPARATOR_I
-	int l_size = o_value.m_unkVecInt.size();
-	i_stream >> o_value.m_unkVecInt;
+	i_stream >> o_value.m_remapKeys;
 	VEC_SEPARATOR_I
 }
 
 inline void persistenceAPI::operator<<(Stream& o_stream, PAToggleTriggerAction& i_value) {
-	o_stream.write(reinterpret_cast<char*>(&i_value), 20);
+	o_stream << i_value.m_disabled;
+	SEPARATOR_O
+	o_stream << i_value.m_targetGroupID;
+	SEPARATOR_O
+	o_stream << i_value.m_activateGroup;
+	SEPARATOR_O
+	o_stream << i_value.m_triggerUniqueID;
+	SEPARATOR_O
+	o_stream << i_value.m_controlID;
 	VEC_SEPARATOR_O
-	o_stream << i_value.m_unkVecInt;
+	o_stream << i_value.m_remapKeys;
 	VEC_SEPARATOR_O
 }
 
 #if defined(PA_DEBUG) && defined(PA_DESCRIBE)
 void PAToggleTriggerAction::describe() {
-	log::info("[PAToggleTriggerAction - describe] pad_1: [{}]", hexStr(reinterpret_cast<unsigned char*>(this), 20));
-	int l_size = m_unkVecInt.size();
-	log::info("[PAToggleTriggerAction - describe] m_unkVecInt.size(): {}", l_size);
+	log::info("[PAToggleTriggerAction - describe] m_disabled: {}", m_disabled);
+	log::info("[PAToggleTriggerAction - describe] m_targetGroupID: {}", m_targetGroupID);
+	log::info("[PAToggleTriggerAction - describe] m_activateGroup: {}", m_activateGroup);
+	log::info("[PAToggleTriggerAction - describe] m_triggerUniqueID: {}", m_triggerUniqueID);
+	log::info("[PAToggleTriggerAction - describe] m_controlID: {}", m_controlID);
+	int l_size = m_remapKeys.size();
+	log::info("[PAToggleTriggerAction - describe] m_remapKeys.size(): {}", l_size);
 	for (int i = 0; i < l_size; i++) {
-		log::info("[PAToggleTriggerAction - describe] m_unkVecInt[{}]: {}", i, m_unkVecInt[i]);
+		log::info("[PAToggleTriggerAction - describe] m_remapKeys[{}]: {}", i, m_remapKeys[i]);
 	}
 }
 #endif

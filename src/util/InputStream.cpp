@@ -1,6 +1,7 @@
 #include "util/Stream.hpp"
-#include "hooks/DynamicSaveObject.hpp"
-#include "hooks/ActiveSaveObject.hpp"
+#include "hooks/SavedObjectStateRef.hpp"
+#include "hooks/SavedActiveObjectState.hpp"
+#include "hooks/SavedSpecialObjectState.hpp"
 #include "hooks/SequenceTriggerState.hpp"
 #include "hooks/FMODQueuedMusic.hpp"
 #include "hooks/FMODSoundState.hpp"
@@ -21,6 +22,12 @@
 #include "hooks/SongTriggerState.hpp"
 #include "hooks/SFXTriggerState.hpp"
 #include "hooks/SFXTriggerInstance.hpp"
+#include "hooks/EnterEffectAnimValue.hpp"
+#include "hooks/FMODSoundTween.hpp"
+#include "hooks/GJValueTween.hpp"
+#include "hooks/GameObjectPhysics.hpp"
+#include "hooks/OpacityEffectAction.hpp"
+#include "hooks/PulseEffectAction.hpp"
 #include "hooks/DynamicObjectAction.hpp"
 #include "hooks/PlayLayer.hpp"
 
@@ -49,6 +56,14 @@ void Stream::operator>>(SongTriggerGameObject*& o_value) {
 	readGenericGameObjectPtr<SongTriggerGameObject>(this, &o_value);
 }
 
+void Stream::operator>>(DashRingObject*& o_value) {
+	readGenericGameObjectPtr<DashRingObject>(this, &o_value);
+}
+
+void Stream::operator>>(EnterEffectObject*& o_value) {
+	readGenericGameObjectPtr<EnterEffectObject>(this, &o_value);
+}
+
 // vector
 
 template<class T, class U>
@@ -67,18 +82,18 @@ inline void readGenericVector(Stream* i_stream, gd::vector<T>& o_value) {
 }
 
 template <>
-void Stream::operator>><DynamicSaveObject>(gd::vector<DynamicSaveObject>& o_value) {
-	readGenericVector<DynamicSaveObject, PADynamicSaveObject>(this, o_value);
+void Stream::operator>><SavedObjectStateRef>(gd::vector<SavedObjectStateRef>& o_value) {
+	readGenericVector<SavedObjectStateRef, PASavedObjectStateRef>(this, o_value);
 }
 
 template <>
-void Stream::operator>><ActiveSaveObject1>(gd::vector<ActiveSaveObject1>& o_value) {
-	readGenericVector<ActiveSaveObject1, PAActiveSaveObject1>(this, o_value);
+void Stream::operator>><SavedActiveObjectState>(gd::vector<SavedActiveObjectState>& o_value) {
+	readGenericVector<SavedActiveObjectState, PASavedActiveObjectState>(this, o_value);
 }
 
 template <>
-void Stream::operator>><ActiveSaveObject2>(gd::vector<ActiveSaveObject2>& o_value) {
-	readGenericVector<ActiveSaveObject2, PAActiveSaveObject2>(this, o_value);
+void Stream::operator>><SavedSpecialObjectState>(gd::vector<SavedSpecialObjectState>& o_value) {
+	readGenericVector<SavedSpecialObjectState, PASavedSpecialObjectState>(this, o_value);
 }
 
 template <>
@@ -156,6 +171,12 @@ void Stream::operator>><DynamicObjectAction>(gd::vector<DynamicObjectAction>& o_
 	readGenericVector<DynamicObjectAction, PADynamicObjectAction>(this, o_value);
 }
 
+template <>
+void Stream::operator>><PulseEffectAction>(gd::vector<PulseEffectAction>& o_value) {
+	geode::log::info("444444444444444411111111111111 VECTOR CustomRead PulseEffectAction");
+	readGenericVector<PulseEffectAction, PAPulseEffectAction>(this, o_value);
+}
+
 // unordered_map
 
 template<class K, class V, class W>
@@ -200,6 +221,24 @@ void Stream::operator>><int, SongChannelState>(gd::unordered_map<int, SongChanne
 }
 
 template <>
+void Stream::operator>><int, GJValueTween>(gd::unordered_map<int, GJValueTween>& o_value) {
+	geode::log::info("************************ Unordered Map CustomRead GJValueTween");
+	readGenericUnorderedMap<int, GJValueTween, PAGJValueTween>(this, o_value);
+}
+
+template <>
+void Stream::operator>><int, GameObjectPhysics>(gd::unordered_map<int, GameObjectPhysics>& o_value) {
+	geode::log::info("&&&&&&&&&&&&&&&&&&&&&&&&& Unordered Map CustomRead GameObjectPhysics");
+	readGenericUnorderedMap<int, GameObjectPhysics, PAGameObjectPhysics>(this, o_value);
+}
+
+template <>
+void Stream::operator>><int, OpacityEffectAction>(gd::unordered_map<int, OpacityEffectAction>& o_value) {
+	geode::log::info("^^^^^^^^^^^^^^^^^^^^^^^^^^ Unordered Map CustomRead OpacityEffectAction");
+	readGenericUnorderedMap<int, OpacityEffectAction, PAOpacityEffectAction>(this, o_value);
+}
+
+template <>
 void Stream::operator>><int, EnhancedGameObject*>(gd::unordered_map<int, EnhancedGameObject*>& o_value) {
 	unsigned int l_size;
 	this->read(reinterpret_cast<char*>(&l_size), 4);
@@ -241,4 +280,16 @@ template <>
 void Stream::operator>><std::pair<int,int>, SFXTriggerInstance>(gd::map<std::pair<int,int>, SFXTriggerInstance>& o_value) {
 	//geode::log::info("jjjjjjjjjjjjjjjjjjjjj Map CustomRead SFXTriggerInstance");
 	readGenericMap<std::pair<int,int>, SFXTriggerInstance, PASFXTriggerInstance>(this, o_value);
+}
+
+template <>
+void Stream::operator>><int, EnterEffectAnimValue>(gd::map<int, EnterEffectAnimValue>& o_value) {
+	geode::log::info("ooooooooooooooooooooooooooooooo Map CustomRead EnterEffectAnimValue");
+	readGenericMap<int, EnterEffectAnimValue, PAEnterEffectAnimValue>(this, o_value);
+}
+
+template <>
+void Stream::operator>><std::pair<int,int>, FMODSoundTween>(gd::map<std::pair<int,int>, FMODSoundTween>& o_value) {
+	geode::log::info("aaaaaaaaaaaaaaaaaaaaaaaaaaa Map CustomRead FMODSoundTween");
+	readGenericMap<std::pair<int,int>, FMODSoundTween, PAFMODSoundTween>(this, o_value);
 }

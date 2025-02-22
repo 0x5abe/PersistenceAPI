@@ -1,12 +1,12 @@
 #pragma once
 #if defined(PA_DEBUG) && (defined(PA_DESCRIBE) || defined(PA_SEPARATORS))
-#include "iomanip"
-#include "sstream"
-#include "string"
+	#include "iomanip"
+	#include "sstream"
+	#include "string"
 #endif
 
 namespace persistenceAPI {
-	#if defined(PA_DEBUG) && defined(PA_DESCRIBE)
+#if defined(PA_DEBUG) && defined(PA_DESCRIBE)
 	inline std::string hexStr(const uint8_t *data, int len)
 	{
 		std::stringstream ss;
@@ -15,9 +15,9 @@ namespace persistenceAPI {
 			ss << std::setw(2) << std::setfill('0') << (int)data[i];
 		return ss.str();
 	}
-	#endif
+#endif
 
-	#if defined(PA_DEBUG) && defined(PA_SEPARATORS)
+#if defined(PA_DEBUG) && defined(PA_SEPARATORS)
 	#include "util/Stream.hpp"
 
 	static char l_testSeparator[] = { 'T', 'E', 'S', 'T' };
@@ -30,8 +30,13 @@ namespace persistenceAPI {
 	static char l_uSetSeparator[] = { 'S', 'E', 'T', 'U' };
 	static char l_setSeparator[] = { 'S', 'E', 'T', 'O' };
 
-	void writeSeparator(std::string i_string, persistenceAPI::Stream& o_stream);
-	void readSeparator(std::string o_string, persistenceAPI::Stream& i_stream);
+	void writeSeparator(std::string i_string, persistenceAPI::Stream& o_stream) {
+		o_stream.write(i_string.data(),i_string.length());
+	}
+
+	void readSeparator(std::string o_string, persistenceAPI::Stream& i_stream) {
+		i_stream.ignore(o_string.length());
+	}
 
 	#define SEPARATOR_O o_stream.write(l_testSeparator, 4);
 	#define SEPARATOR_O_C(s) writeSeparator(#s, o_stream);
@@ -54,7 +59,7 @@ namespace persistenceAPI {
 	#define SET_SEPARATOR_I i_stream.ignore(4);
 	#define SEPARATOR_I_END i_stream.ignore(4);
 
-	#else
+#else
 
 	#define SEPARATOR_O
 	#define SEPARATOR_O_C(s)
@@ -77,5 +82,5 @@ namespace persistenceAPI {
 	#define SET_SEPARATOR_I
 	#define SEPARATOR_I_END
 
-	#endif
+#endif
 }

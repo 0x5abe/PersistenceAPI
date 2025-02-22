@@ -15,23 +15,99 @@ void PAFMODQueuedMusic::save(Stream& o_stream) {
 
 inline void persistenceAPI::operator>>(Stream& i_stream, PAFMODQueuedMusic& o_value) {
 	STR_SEPARATOR_I
-	i_stream >> o_value.m_unkString;
+	i_stream >> o_value.m_filePath;
 	STR_SEPARATOR_I
-	i_stream.read(reinterpret_cast<char*>(&o_value) + offsetof(PAFMODQueuedMusic,m_unkString) + sizeof(gd::string), 56);
+	if (i_stream.getFileVersion() > 9) {
+		i_stream >> o_value.m_unkFloat1;
+		SEPARATOR_I
+		i_stream >> o_value.m_unkFloat2;
+		SEPARATOR_I
+		i_stream >> o_value.m_unkFloat3;
+		SEPARATOR_I
+		i_stream >> o_value.m_unkInt1;
+		SEPARATOR_I
+		i_stream >> o_value.m_unkInt2;
+		SEPARATOR_I
+		i_stream >> o_value.m_unkInt3;
+		SEPARATOR_I
+		i_stream >> o_value.m_unkInt4;
+		SEPARATOR_I
+		i_stream >> o_value.m_unkBool1;
+		SEPARATOR_I
+		i_stream >> o_value.m_keyForFMODMusicMap1;
+		SEPARATOR_I
+		i_stream >> o_value.m_unkBool2;
+		SEPARATOR_I
+		i_stream >> o_value.m_keyForFMODMusicMap2;
+		SEPARATOR_I
+		i_stream >> o_value.m_unkBool3;
+		SEPARATOR_I
+		i_stream >> o_value.m_unkFloat4;
+		SEPARATOR_I
+		//TODO: load this properly with preloadMusic
+		i_stream >> *reinterpret_cast<uint64_t*>(&o_value.m_sound);
+		SEPARATOR_I
+		i_stream >> o_value.m_dontReset;
+	} else {
+		i_stream.read(reinterpret_cast<char*>(&o_value) + offsetof(PAFMODQueuedMusic,m_filePath) + sizeof(gd::string), 56);
+	}
 	SEPARATOR_I
 }
 
 inline void persistenceAPI::operator<<(Stream& o_stream, PAFMODQueuedMusic& i_value) {
 	STR_SEPARATOR_O
-	o_stream << i_value.m_unkString;
+	o_stream << i_value.m_filePath;
 	STR_SEPARATOR_O
-	o_stream.write(reinterpret_cast<char*>(&i_value) + offsetof(PAFMODQueuedMusic,m_unkString) + sizeof(gd::string), 56);
+	o_stream << i_value.m_unkFloat1;
+	SEPARATOR_O
+	o_stream << i_value.m_unkFloat2;
+	SEPARATOR_O
+	o_stream << i_value.m_unkFloat3;
+	SEPARATOR_O
+	o_stream << i_value.m_unkInt1;
+	SEPARATOR_O
+	o_stream << i_value.m_unkInt2;
+	SEPARATOR_O
+	o_stream << i_value.m_unkInt3;
+	SEPARATOR_O
+	o_stream << i_value.m_unkInt4;
+	SEPARATOR_O
+	o_stream << i_value.m_unkBool1;
+	SEPARATOR_O
+	o_stream << i_value.m_keyForFMODMusicMap1;
+	SEPARATOR_O
+	o_stream << i_value.m_unkBool2;
+	SEPARATOR_O
+	o_stream << i_value.m_keyForFMODMusicMap2;
+	SEPARATOR_O
+	o_stream << i_value.m_unkBool3;
+	SEPARATOR_O
+	o_stream << i_value.m_unkFloat4;
+	SEPARATOR_O
+	//TODO: load this properly with preloadMusic
+	o_stream << *reinterpret_cast<uint64_t*>(&i_value.m_sound);
+	SEPARATOR_O
+	o_stream << i_value.m_dontReset;
 	SEPARATOR_O
 }
 
 #if defined(PA_DEBUG) && defined(PA_DESCRIBE)
 void PAFMODQueuedMusic::describe() {
-	log::info("[PAFMODQueuedMusic - describe] m_unkString: {}", m_unkString);
-	log::info("[PAFMODQueuedMusic - describe] pad_1: [{}]", hexStr(reinterpret_cast<unsigned char*>(this) + offsetof(PAFMODQueuedMusic,m_unkString) + sizeof(gd::string), 56));
+	log::info("[PAFMODQueuedMusic - describe] m_filePath: {}", m_filePath);
+	log::info("[PAFMODQueuedMusic - describe] m_unkFloat1: {}", m_unkFloat1);
+	log::info("[PAFMODQueuedMusic - describe] m_unkFloat2: {}", m_unkFloat2);
+	log::info("[PAFMODQueuedMusic - describe] m_unkFloat3: {}", m_unkFloat3);
+	log::info("[PAFMODQueuedMusic - describe] m_unkInt1: {}", m_unkInt1);
+	log::info("[PAFMODQueuedMusic - describe] m_unkInt2: {}", m_unkInt2);
+	log::info("[PAFMODQueuedMusic - describe] m_unkInt3: {}", m_unkInt3);
+	log::info("[PAFMODQueuedMusic - describe] m_unkInt4: {}", m_unkInt4);
+	log::info("[PAFMODQueuedMusic - describe] m_unkBool1: {}", m_unkBool1);
+	log::info("[PAFMODQueuedMusic - describe] m_keyForFMODMusicMap1: {}", m_keyForFMODMusicMap1);
+	log::info("[PAFMODQueuedMusic - describe] m_unkBool2: {}", m_unkBool2);
+	log::info("[PAFMODQueuedMusic - describe] m_keyForFMODMusicMap2: {}", m_keyForFMODMusicMap2);
+	log::info("[PAFMODQueuedMusic - describe] m_unkBool3: {}", m_unkBool3);
+	log::info("[PAFMODQueuedMusic - describe] m_unkFloat4: {}", m_unkFloat4);
+	log::info("[PAFMODQueuedMusic - describe] m_sound: {}", *reinterpret_cast<uint64_t*>(&m_sound));
+	log::info("[PAFMODQueuedMusic - describe] m_dontReset: {}", m_dontReset);
 }
 #endif

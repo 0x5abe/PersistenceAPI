@@ -28,6 +28,24 @@ if (PROJECT_IS_TOP_LEVEL)
     target_compile_definitions(${PROJECT_NAME} PRIVATE SABE_PA_EXPORTING)
 endif()
 
+target_compile_definitions(${PROJECT_NAME}
+    PUBLIC
+      $<$<CONFIG:Debug>:PA_DEBUG>
+      $<$<CONFIG:RelWithDebInfo>:PA_DEBUG>
+      $<$<CONFIG:Release>:PA_RELEASE>
+      $<$<CONFIG:MinSizeRel>:PA_RELEASE>
+)
+
+option(WITH_PA_DESCRIBE "Log in depth info for saved/loaded classes" OFF)
+option(WITH_PA_SEPARATORS "Add separators between saved fields for debugging purposes" OFF)
+
+if(WITH_PA_DESCRIBE)
+	add_definitions(-DPA_DESCRIBE)
+endif()
+if(WITH_PA_SEPARATORS)
+	add_definitions(-DPA_SEPARATORS)
+endif()
+
 if (NOT DEFINED ENV{GEODE_SDK})
     message(FATAL_ERROR "Unable to find Geode SDK! Please define GEODE_SDK environment variable to point to Geode")
 else()
