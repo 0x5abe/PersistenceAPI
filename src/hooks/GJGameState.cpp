@@ -745,7 +745,6 @@ void PAGJGameState::clean() {
 	gd::vector<AdvancedFollowInstance>().swap(m_advanceFollowInstances);
 }
 
-// TODO FIX DESCRIBE
 #if defined(PA_DEBUG) && defined(PA_DESCRIBE)
 void PAGJGameState::describe() {
 	log::info("[PAGJGameState - describe] m_cameraZoom: {}", m_cameraZoom);

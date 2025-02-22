@@ -84,7 +84,7 @@ inline void persistenceAPI::operator<<(Stream& o_stream, PAFMODQueuedMusic& i_va
 	SEPARATOR_O
 	o_stream << i_value.m_unkFloat4;
 	SEPARATOR_O
-	//TODO: load this properly with preloadMusic
+	//TODO: SAVE this properly
 	o_stream << *reinterpret_cast<uint64_t*>(&i_value.m_sound);
 	SEPARATOR_O
 	o_stream << i_value.m_dontReset;
