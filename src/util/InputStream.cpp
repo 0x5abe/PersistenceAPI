@@ -226,10 +226,27 @@ void Stream::operator>><int, GJValueTween>(gd::unordered_map<int, GJValueTween>&
 	readGenericUnorderedMap<int, GJValueTween, PAGJValueTween>(this, o_value);
 }
 
-template <>
+template<>
 void Stream::operator>><int, GameObjectPhysics>(gd::unordered_map<int, GameObjectPhysics>& o_value) {
+	if (o_value.size() != 0) {
+		if (getPAVersion() > 1) {
+			o_value.clear();
+		} else {
+			(*(reinterpret_cast<gd::unordered_map<int, OldGameObjectPhysics>*>(&o_value))).clear();
+		}
+	}
+	unsigned int l_size;
+	this->read(reinterpret_cast<char*>(&l_size), 4);
 	geode::log::info("&&&&&&&&&&&&&&&&&&&&&&&&& Unordered Map CustomRead GameObjectPhysics");
-	readGenericUnorderedMap<int, GameObjectPhysics, PAGameObjectPhysics>(this, o_value);
+	for (int i = 0; i < l_size; i++) {
+		int l_key;
+		this->read(reinterpret_cast<char*>(&l_key), sizeof(int));
+		if (getPAVersion() > 1) {
+			reinterpret_cast<PAGameObjectPhysics&>(o_value[l_key]).load(*this);
+		} else {
+			reinterpret_cast<PAGameObjectPhysics&>((*(reinterpret_cast<gd::unordered_map<int, OldGameObjectPhysics>*>(&o_value)))[l_key]).load(*this);
+		}
+	}
 }
 
 template <>
@@ -288,8 +305,25 @@ void Stream::operator>><int, EnterEffectAnimValue>(gd::map<int, EnterEffectAnimV
 	readGenericMap<int, EnterEffectAnimValue, PAEnterEffectAnimValue>(this, o_value);
 }
 
-template <>
+template<>
 void Stream::operator>><std::pair<int,int>, FMODSoundTween>(gd::map<std::pair<int,int>, FMODSoundTween>& o_value) {
+	if (o_value.size() != 0) {
+		if (getPAVersion() > 1) {
+			o_value.clear();
+		} else {
+			(*(reinterpret_cast<gd::map<std::pair<int,int>, OldFMODSoundTween>*>(&o_value))).clear();
+		}
+	}
+	unsigned int l_size;
+	this->read(reinterpret_cast<char*>(&l_size), 4);
 	geode::log::info("aaaaaaaaaaaaaaaaaaaaaaaaaaa Map CustomRead FMODSoundTween");
-	readGenericMap<std::pair<int,int>, FMODSoundTween, PAFMODSoundTween>(this, o_value);
+	for (int i = 0; i < l_size; i++) {
+		std::pair<int,int> l_key;
+		this->read(reinterpret_cast<char*>(&l_key), sizeof(std::pair<int,int>));
+		if (getPAVersion() > 1) {
+			reinterpret_cast<PAFMODSoundTween&>(o_value[l_key]).load(*this);
+		} else {
+			reinterpret_cast<PAFMODSoundTween&>((*(reinterpret_cast<gd::map<std::pair<int,int>, OldFMODSoundTween>*>(&o_value)))[l_key]).load(*this);
+		}
+	}
 }

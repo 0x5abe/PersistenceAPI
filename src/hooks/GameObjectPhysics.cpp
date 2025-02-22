@@ -32,10 +32,10 @@ inline void persistenceAPI::operator>>(Stream& i_stream, PAGameObjectPhysics& o_
 		i_stream >> o_value.m_unkInt2;
 		SEPARATOR_I
 		i_stream >> o_value.m_unkInt3;
+		SEPARATOR_I
 	} else {
 		i_stream.read(reinterpret_cast<char*>(&o_value), 40);
 	}
-	SEPARATOR_I
 }
 
 inline void persistenceAPI::operator<<(Stream& o_stream, PAGameObjectPhysics& i_value) {

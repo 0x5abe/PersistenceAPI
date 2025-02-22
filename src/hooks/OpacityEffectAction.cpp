@@ -38,10 +38,10 @@ inline void persistenceAPI::operator>>(Stream& i_stream, PAOpacityEffectAction& 
 		i_stream >> o_value.m_deltaTimeRelated;
 		SEPARATOR_I;
 		i_stream >> o_value.m_durationRelated;
+		SEPARATOR_I;
 	} else {
 		i_stream.read(reinterpret_cast<char*>(&o_value), sizeof(OpacityEffectAction));
 	}
-	SEPARATOR_I;
 }
 
 inline void persistenceAPI::operator<<(Stream& o_stream, PAOpacityEffectAction& i_value) {

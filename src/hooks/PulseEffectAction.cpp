@@ -48,10 +48,10 @@ inline void persistenceAPI::operator>>(Stream& i_stream, PAPulseEffectAction& o_
 		i_stream >> o_value.m_controlID;
 		SEPARATOR_I;
 		i_stream >> o_value.m_startTime;
+		SEPARATOR_I;
 	} else {
 		i_stream.read(reinterpret_cast<char*>(&o_value), sizeof(PulseEffectAction));
 	}
-	SEPARATOR_I;
 }
 
 inline void persistenceAPI::operator<<(Stream& o_stream, PAPulseEffectAction& i_value) {

@@ -20,10 +20,10 @@ inline void persistenceAPI::operator>>(Stream& i_stream, PAFMODSoundTween& o_val
 		i_stream >> o_value.m_unkDouble2;
 		SEPARATOR_I;
 		i_stream >> o_value.m_unkDouble3;
+		SEPARATOR_I;
 	} else {
-		i_stream.read(reinterpret_cast<char*>(&o_value), sizeof(FMODSoundTween));
+		i_stream.read(reinterpret_cast<char*>(&o_value), 40);
 	}
-	SEPARATOR_I;
 }
 
 inline void persistenceAPI::operator<<(Stream& o_stream, PAFMODSoundTween& i_value) {

@@ -30,10 +30,10 @@ inline void persistenceAPI::operator>>(Stream& i_stream, PAEnterEffectAnimValue&
 		i_stream >> o_value.m_easingRate;
 		SEPARATOR_I;
 		i_stream >> o_value.m_easingBuffer;
+		SEPARATOR_I;
 	} else {
 		i_stream.read(reinterpret_cast<char*>(&o_value), sizeof(EnterEffectAnimValue));
 	}
-	SEPARATOR_I;
 }
 
 inline void persistenceAPI::operator<<(Stream& o_stream, PAEnterEffectAnimValue& i_value) {

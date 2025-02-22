@@ -5,6 +5,10 @@
 #include "import_export.hpp"
 
 namespace persistenceAPI {
+	class OldFMODSoundTween {
+		uint8_t pad[40];
+	};
+
 	class $modify(PAFMODSoundTween, FMODSoundTween) {
 	protected:
 		friend void operator>>(persistenceAPI::Stream& i_stream, PAFMODSoundTween& o_value);

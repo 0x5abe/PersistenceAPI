@@ -5,6 +5,10 @@
 #include "import_export.hpp"
 
 namespace persistenceAPI {
+	class OldGameObjectPhysics {
+		uint8_t pad[40];
+	};
+
 	class $modify(PAGameObjectPhysics, GameObjectPhysics) {
 	protected:
 		friend void operator>>(persistenceAPI::Stream& i_stream, PAGameObjectPhysics& o_value);
