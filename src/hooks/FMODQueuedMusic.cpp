@@ -1,4 +1,5 @@
 #include "hooks/FMODQueuedMusic.hpp"
+#include "Geode/binding/FMODAudioEngine.hpp"
 #include "hooks/cocos2d/CCNode.hpp"
 #include "util/debug.hpp"
 
@@ -44,8 +45,14 @@ inline void persistenceAPI::operator>>(Stream& i_stream, PAFMODQueuedMusic& o_va
 		SEPARATOR_I
 		i_stream >> o_value.m_unkFloat4;
 		SEPARATOR_I
-		//TODO: load this properly with preloadMusic
-		i_stream >> *reinterpret_cast<uint64_t*>(&o_value.m_sound);
+		int l_dummy;
+		i_stream >> l_dummy;
+		if (l_dummy != -1) {
+			geode::log::info("!!!!!!!!!!!!!!!!!!! Trying to load FMODQueuedMusic with preloadMusic");
+			o_value.m_sound = FMODAudioEngine::get()->preloadMusic(o_value.m_filePath, true, o_value.m_keyForFMODMusicMap1);
+		} else {
+			o_value.m_sound = nullptr;
+		}
 		SEPARATOR_I
 		i_stream >> o_value.m_dontReset;
 	} else {
@@ -84,8 +91,13 @@ inline void persistenceAPI::operator<<(Stream& o_stream, PAFMODQueuedMusic& i_va
 	SEPARATOR_O
 	o_stream << i_value.m_unkFloat4;
 	SEPARATOR_O
-	//TODO: SAVE this properly
-	o_stream << *reinterpret_cast<uint64_t*>(&i_value.m_sound);
+	int l_dummy;
+	if (i_value.m_sound != nullptr) {
+		l_dummy = -1;
+	} else {
+		l_dummy = -2;
+	}
+	o_stream << l_dummy;
 	SEPARATOR_O
 	o_stream << i_value.m_dontReset;
 	SEPARATOR_O
