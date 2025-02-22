@@ -3,6 +3,7 @@
 	#include "iomanip"
 	#include "sstream"
 	#include "string"
+	#include "util/Stream.hpp"
 #endif
 
 namespace persistenceAPI {
@@ -18,8 +19,6 @@ namespace persistenceAPI {
 #endif
 
 #if defined(PA_DEBUG) && defined(PA_SEPARATORS)
-	#include "util/Stream.hpp"
-
 	static char l_testSeparator[] = { 'T', 'E', 'S', 'T' };
 	static char l_vecSeparator[] = { 'V', 'E', 'C', 'T' };
 	static char l_endSeparator[] = { 'E', 'N', 'D', 'E' };
@@ -30,13 +29,8 @@ namespace persistenceAPI {
 	static char l_uSetSeparator[] = { 'S', 'E', 'T', 'U' };
 	static char l_setSeparator[] = { 'S', 'E', 'T', 'O' };
 
-	void writeSeparator(std::string i_string, persistenceAPI::Stream& o_stream) {
-		o_stream.write(i_string.data(),i_string.length());
-	}
-
-	void readSeparator(std::string o_string, persistenceAPI::Stream& i_stream) {
-		i_stream.ignore(o_string.length());
-	}
+	void writeSeparator(std::string i_string, persistenceAPI::Stream& o_stream);
+	void readSeparator(std::string o_string, persistenceAPI::Stream& i_stream);
 
 	#define SEPARATOR_O o_stream.write(l_testSeparator, 4);
 	#define SEPARATOR_O_C(s) writeSeparator(#s, o_stream);

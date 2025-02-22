@@ -14,7 +14,7 @@ void PACAState::save(Stream& o_stream) {
 }
 
 inline void persistenceAPI::operator>>(Stream& i_stream, PACAState& o_value) {
-	if (i_stream.getFileVersion() > 9) {
+	if (i_stream.getPAVersion() > 1) {
 		i_stream >> o_value.m_fromColor;
 		SEPARATOR_I
 		i_stream >> o_value.m_toColor;

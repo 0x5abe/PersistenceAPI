@@ -17,7 +17,7 @@ inline void persistenceAPI::operator>>(Stream& i_stream, PAFMODQueuedMusic& o_va
 	STR_SEPARATOR_I
 	i_stream >> o_value.m_filePath;
 	STR_SEPARATOR_I
-	if (i_stream.getFileVersion() > 9) {
+	if (i_stream.getPAVersion() > 1) {
 		i_stream >> o_value.m_unkFloat1;
 		SEPARATOR_I
 		i_stream >> o_value.m_unkFloat2;

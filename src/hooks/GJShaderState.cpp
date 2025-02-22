@@ -20,7 +20,7 @@ inline void persistenceAPI::operator>>(Stream& i_stream, PAGJShaderState& o_valu
 	UMAP_SEPARATOR_I
 	i_stream >> o_value.m_someIntToDoubleMap;
 	UMAP_SEPARATOR_I
-	if (i_stream.getFileVersion() > 9) {
+	if (i_stream.getPAVersion() > 1) {
 		i_stream >> o_value.m_time;
 		SEPARATOR_I
 		i_stream >> o_value.m_prevTime;

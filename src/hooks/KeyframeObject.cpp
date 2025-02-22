@@ -15,7 +15,7 @@ void PAKeyframeObject::save(Stream& o_stream) {
 }
 
 inline void persistenceAPI::operator>>(Stream& i_stream, PAKeyframeObject& o_value) {
-	if (i_stream.getFileVersion() > 9) {
+	if (i_stream.getPAVersion() > 1) {
 		i_stream >> o_value.m_unk000;
 		SEPARATOR_I
     	i_stream >> o_value.m_unk008;
@@ -37,8 +37,9 @@ inline void persistenceAPI::operator>>(Stream& i_stream, PAKeyframeObject& o_val
 		i_stream.read(reinterpret_cast<char*>(&o_value), 32);
 	}
 	VEC_SEPARATOR_I
-	if (i_stream.getFileVersion() > 9) {
+	if (i_stream.getPAVersion() > 1) {
 		reinterpret_cast<PAtk_spline*>(&o_value.m_spline1)->load(i_stream);
+		VEC_SEPARATOR_I
 		reinterpret_cast<PAtk_spline*>(&o_value.m_spline2)->load(i_stream);
 		i_stream >> o_value.m_unk170;
 		SEPARATOR_I
@@ -112,6 +113,7 @@ inline void persistenceAPI::operator<<(Stream& o_stream, PAKeyframeObject& i_val
     o_stream << i_value.m_unk01e;
 	VEC_SEPARATOR_O
 	reinterpret_cast<PAtk_spline*>(&i_value.m_spline1)->save(o_stream);
+	VEC_SEPARATOR_O
 	reinterpret_cast<PAtk_spline*>(&i_value.m_spline2)->save(o_stream);
 	o_stream << i_value.m_unk170;
 	SEPARATOR_O

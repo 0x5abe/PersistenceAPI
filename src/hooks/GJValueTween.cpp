@@ -14,7 +14,7 @@ void PAGJValueTween::save(Stream& o_stream) {
 }
 
 inline void persistenceAPI::operator>>(Stream& i_stream, PAGJValueTween& o_value) {
-	if (i_stream.getFileVersion() > 9) {
+	if (i_stream.getPAVersion() > 1) {
 		i_stream >> o_value.m_fromValue;
 		SEPARATOR_I;
 		i_stream >> o_value.m_toValue;

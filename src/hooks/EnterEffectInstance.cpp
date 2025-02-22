@@ -19,7 +19,7 @@ inline void persistenceAPI::operator>>(Stream& i_stream, PAEnterEffectInstance& 
 	MAP_SEPARATOR_I
 	i_stream >> o_value.m_enterEffectAnimMap;
 	MAP_SEPARATOR_I
-	if (i_stream.getFileVersion() > 9) {
+	if (i_stream.getPAVersion() > 1) {
 		i_stream >> o_value.m_length;
 		SEPARATOR_I
 		i_stream >> o_value.m_lengthVariance;
@@ -89,7 +89,7 @@ inline void persistenceAPI::operator>>(Stream& i_stream, PAEnterEffectInstance& 
 	SEPARATOR_I
 	i_stream >> o_value.m_gameObject;
 	SEPARATOR_I
-	if (i_stream.getFileVersion() > 9) {
+	if (i_stream.getPAVersion() > 1) {
 		i_stream >> o_value.m_unkBool1;
 		SEPARATOR_I
 		i_stream >> o_value.m_unkFloat1;

@@ -17,7 +17,7 @@ void PAGroupCommandObject2::save(Stream& o_stream) {
 }
 
 inline void persistenceAPI::operator>>(Stream& i_stream, PAGroupCommandObject2& o_value) {
-	if (i_stream.getFileVersion() > 9) {
+	if (i_stream.getPAVersion() > 1) {
 		i_stream >> o_value.m_groupCommandUniqueID;
 		SEPARATOR_I
 		i_stream >> o_value.m_moveOffset;
@@ -168,11 +168,11 @@ inline void persistenceAPI::operator>>(Stream& i_stream, PAGroupCommandObject2& 
 	i_stream >> o_value.m_splineRelated;
 	SEPARATOR_I
 	i_stream >> o_value.m_gameObject;
-	if (i_stream.getFileVersion() <= 9) {
+	if (i_stream.getPAVersion() <= 1) {
 		i_stream.ignore(4); // pad to keep same size for compatibility with older versions
 	}
 	SEPARATOR_I
-	if (i_stream.getFileVersion() > 9) {
+	if (i_stream.getPAVersion() > 1) {
 		i_stream >> o_value.m_gameObjectRotation;
 	} else {
 		i_stream.read(reinterpret_cast<char*>(&o_value) + offsetof(PAGroupCommandObject2,m_gameObjectRotation), 8);
@@ -180,7 +180,7 @@ inline void persistenceAPI::operator>>(Stream& i_stream, PAGroupCommandObject2& 
 	VEC_SEPARATOR_I
 	i_stream >> o_value.m_remapKeys;
 	VEC_SEPARATOR_I
-	if (i_stream.getFileVersion() > 9) {
+	if (i_stream.getPAVersion() > 1) {
 		i_stream >> o_value.m_someInterpValue2RelatedTrue;
 		SEPARATOR_I
 		i_stream >> o_value.m_unkFloat204;

@@ -14,7 +14,7 @@ void PATimerItem::save(Stream& o_stream) {
 }
 
 inline void persistenceAPI::operator>>(Stream& i_stream, PATimerItem& o_value) {
-	if (i_stream.getFileVersion() > 9) {
+	if (i_stream.getPAVersion() > 1) {
 		i_stream >> o_value.m_itemID;
 		SEPARATOR_I
 		i_stream >> o_value.m_time;
@@ -40,7 +40,7 @@ inline void persistenceAPI::operator>>(Stream& i_stream, PATimerItem& o_value) {
 	VEC_SEPARATOR_I
 	i_stream >> o_value.m_remapKeys;
 	VEC_SEPARATOR_I
-	if (i_stream.getFileVersion() > 9) {
+	if (i_stream.getPAVersion() > 1) {
 		i_stream >> o_value.m_disabled;
 	} else {
 		i_stream.read(reinterpret_cast<char*>(&o_value) + offsetof(PATimerItem,m_remapKeys) + sizeof(gd::vector<int>), 4);

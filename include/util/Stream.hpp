@@ -25,19 +25,19 @@ namespace persistenceAPI {
 	protected:
 		std::fstream* m_stream;
 		unsigned int* m_bytesRead;
-		int m_fileVersion;
+		int m_PAVersion;
 		const char m_zeros[256] = {};
 	public:
-		SABE_PA_DLL Stream(std::string i_filePath, bool i_trunc = false, int i_fileVersion = -1) {
+		SABE_PA_DLL Stream(std::string i_filePath, bool i_trunc = false, int i_PAVersion = -1) {
 			int l_mode = std::ios_base::binary | std::ios_base::out;
 			if (std::filesystem::exists(i_filePath)) {
 				l_mode |= std::ios_base::in;
 			}
 			if (i_trunc) l_mode |= std::ios_base::trunc;
 			m_stream = new std::fstream(i_filePath, l_mode);
-			m_fileVersion = i_fileVersion;
+			m_PAVersion = i_PAVersion;
 		}
-		SABE_PA_DLL Stream(std::string i_filePath, unsigned int* i_bytesRead, bool i_trunc = false, int i_fileVersion = -1) {
+		SABE_PA_DLL Stream(std::string i_filePath, unsigned int* i_bytesRead, bool i_trunc = false, int i_PAVersion = -1) {
 			int l_mode = std::ios_base::binary | std::ios_base::out;
 			if (std::filesystem::exists(i_filePath)) {
 				l_mode |= std::ios_base::in;
@@ -45,7 +45,7 @@ namespace persistenceAPI {
 			if (i_trunc) l_mode |= std::ios_base::trunc;
 			m_stream = new std::fstream(i_filePath, l_mode);
 			m_bytesRead = i_bytesRead;
-			m_fileVersion = i_fileVersion;
+			m_PAVersion = i_PAVersion;
 		}
 		SABE_PA_DLL ~Stream() { delete m_stream; }
 
@@ -176,8 +176,8 @@ namespace persistenceAPI {
 			m_stream = nullptr;
 		}
 
-		SABE_PA_DLL inline int getFileVersion() {
-			return m_fileVersion;
+		SABE_PA_DLL inline int getPAVersion() {
+			return m_PAVersion;
 		}
 
 		// custom operators read

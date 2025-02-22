@@ -19,7 +19,7 @@ void PASFXTriggerState::save(Stream& o_stream) {
 inline void persistenceAPI::operator>>(Stream& i_stream, PASFXTriggerState& o_value) {
 	i_stream >> o_value.m_sfxTriggerGameObject;
 	SEPARATOR_I
-	if (i_stream.getFileVersion() > 9) {
+	if (i_stream.getPAVersion() > 1) {
 		i_stream >> o_value.m_unkInt1;
 		SEPARATOR_I
 		i_stream >> o_value.m_unkDouble1;

@@ -45,7 +45,7 @@ inline void persistenceAPI::operator>>(Stream& i_stream, PAPlayerCheckpoint& o_v
 	SEPARATOR_I
 	i_stream >> o_value.m_hasGhostTrail;
 	SEPARATOR_I
-	if (i_stream.getFileVersion() > 9) {
+	if (i_stream.getPAVersion() > 1) {
 		i_stream >> o_value.m_isMini;
 	} else {
 		i_stream.read((char*)o_value.m_isMini, 4);
@@ -57,7 +57,7 @@ inline void persistenceAPI::operator>>(Stream& i_stream, PAPlayerCheckpoint& o_v
 	SEPARATOR_I
 	i_stream >> o_value.m_isGoingLeft;
 	SEPARATOR_I
-	if (i_stream.getFileVersion() > 9) {
+	if (i_stream.getPAVersion() > 1) {
 		i_stream >> o_value.m_maybeReverseSpeed;
 		SEPARATOR_I
 		i_stream >> o_value.m_isDashing;
@@ -77,7 +77,7 @@ inline void persistenceAPI::operator>>(Stream& i_stream, PAPlayerCheckpoint& o_v
 	SEPARATOR_I
 	i_stream >> o_value.m_isAutoCheckpoint;
 	SEPARATOR_I
-	if (i_stream.getFileVersion() > 9) {
+	if (i_stream.getPAVersion() > 1) {
 		i_stream >> o_value.m_lastFlipTime;
 	} else {
 		i_stream.read(reinterpret_cast<char*>(&o_value) + offsetof(PAPlayerCheckpoint,m_isAutoCheckpoint) + sizeof(bool), 7);
@@ -89,18 +89,17 @@ inline void persistenceAPI::operator>>(Stream& i_stream, PAPlayerCheckpoint& o_v
 	SEPARATOR_I
 	i_stream >> o_value.m_gravityMod;
 	SEPARATOR_I
-	if (i_stream.getFileVersion() > 9) {
+	if (i_stream.getPAVersion() > 1) {
 		i_stream >> o_value.m_decreaseBoostSlide;
 	} else {
 		i_stream.read(reinterpret_cast<char*>(&o_value) + offsetof(PAPlayerCheckpoint,m_decreaseBoostSlide), sizeof(int));
 	}
-
 	SEPARATOR_I
 	i_stream >> o_value.m_followRelated;
 	VEC_SEPARATOR_I
 	i_stream >> o_value.m_playerFollowFloats;
 	VEC_SEPARATOR_I
-	if (i_stream.getFileVersion() > 9) {
+	if (i_stream.getPAVersion() > 1) {
 		i_stream >> o_value.m_followRelated2;
 	} else {
 		i_stream.read(reinterpret_cast<char*>(&o_value) + offsetof(PAPlayerCheckpoint,m_followRelated2), 8);
