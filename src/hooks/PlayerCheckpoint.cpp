@@ -48,7 +48,7 @@ inline void persistenceAPI::operator>>(Stream& i_stream, PAPlayerCheckpoint& o_v
 	if (i_stream.getPAVersion() > 1) {
 		i_stream >> o_value.m_isMini;
 	} else {
-		i_stream.read((char*)o_value.m_isMini, 4);
+		i_stream.read(reinterpret_cast<char*>(&o_value.m_isMini), 4);
 	}
 	SEPARATOR_I
 	i_stream >> o_value.m_speed;

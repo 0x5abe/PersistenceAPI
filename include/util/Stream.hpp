@@ -28,7 +28,12 @@ namespace persistenceAPI {
 		int m_PAVersion;
 		const char m_zeros[256] = {};
 	public:
-		SABE_PA_DLL Stream(std::string i_filePath, bool i_trunc = false, int i_PAVersion = -1) {
+		SABE_PA_DLL Stream() {
+			m_stream = nullptr;
+			m_bytesRead = nullptr;
+			m_PAVersion = -1;
+		};
+		SABE_PA_DLL Stream(std::string i_filePath, int i_PAVersion, bool i_trunc = false) {
 			int l_mode = std::ios_base::binary | std::ios_base::out;
 			if (std::filesystem::exists(i_filePath)) {
 				l_mode |= std::ios_base::in;
@@ -37,7 +42,7 @@ namespace persistenceAPI {
 			m_stream = new std::fstream(i_filePath, l_mode);
 			m_PAVersion = i_PAVersion;
 		}
-		SABE_PA_DLL Stream(std::string i_filePath, unsigned int* i_bytesRead, bool i_trunc = false, int i_PAVersion = -1) {
+		SABE_PA_DLL Stream(std::string i_filePath, unsigned int* i_bytesRead, int i_PAVersion, bool i_trunc = false) {
 			int l_mode = std::ios_base::binary | std::ios_base::out;
 			if (std::filesystem::exists(i_filePath)) {
 				l_mode |= std::ios_base::in;
@@ -91,7 +96,7 @@ namespace persistenceAPI {
 		PA_OPERATOR_WRITE(TouchTriggerControl)
 		PA_OPERATOR_WRITE(PulseEffectType)
 
-		SABE_PA_DLL bool setFile(std::string i_filePath, unsigned int* i_bytesRead, bool i_trunc = false) {
+		SABE_PA_DLL bool setFile(std::string i_filePath, unsigned int* i_bytesRead, int i_PAVersion, bool i_trunc = false) {
 			if (m_stream) {
 				delete m_stream;
 			}
@@ -106,10 +111,11 @@ namespace persistenceAPI {
 				return false;
 			}
 			m_bytesRead = i_bytesRead;
+			m_PAVersion = i_PAVersion;
 			return true;
 		}
 
-		SABE_PA_DLL bool setFile(std::string i_filePath, bool i_trunc = false) {
+		SABE_PA_DLL bool setFile(std::string i_filePath, int i_PAVersion, bool i_trunc = false) {
 			if (m_stream) {
 				delete m_stream;
 			}
@@ -123,12 +129,16 @@ namespace persistenceAPI {
 				//geode::log::info("Failed to open file path: {}", i_filePath);
 				return false;
 			}
+			m_PAVersion = i_PAVersion;
 			return true;
 		}
 
 		SABE_PA_DLL void read(char* o_value, int i_size) { 
+			#if defined(PA_DEBUG) && defined(PA_DESCRIBE)
+				geode::log::info("---- Doing read at offset {} | size {} ----", static_cast<uint32_t>(m_stream->tellg()), i_size);
+			#endif
 			m_stream->read(o_value, i_size); 
-			
+		
 			if (m_bytesRead) {
 				*m_bytesRead += i_size;
 			}
@@ -174,10 +184,15 @@ namespace persistenceAPI {
 				delete m_stream;
 			}
 			m_stream = nullptr;
+			m_PAVersion = -1;
 		}
 
 		SABE_PA_DLL inline int getPAVersion() {
 			return m_PAVersion;
+		}
+
+		SABE_PA_DLL inline void setPAVersion(int i_PAVersion) {
+			m_PAVersion = i_PAVersion;
 		}
 
 		// custom operators read

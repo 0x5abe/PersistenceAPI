@@ -30,7 +30,7 @@ namespace persistenceAPI {
 		SABE_PA_DLL void describe();
 
 		template <>
-		void describe<GradientTriggerObject>();
+		SABE_PA_DLL void describe<GradientTriggerObject>();
 	#endif
 	};
 }

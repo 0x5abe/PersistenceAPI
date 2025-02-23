@@ -71,7 +71,7 @@ inline void readGenericVector(Stream* i_stream, gd::vector<T>& o_value) {
 	//geode::log::info("Vector CustomRead Existing SIZE: {}", o_value.size());
 	unsigned int l_size;
 	i_stream->read(reinterpret_cast<char*>(&l_size), 4);
-	//geode::log::info("VECTOR SIZE CustomRead SIZE in: {}", l_size);
+	geode::log::info("VECTOR SIZE CustomRead {} SIZE in: {}", l_size, T::CLASS_NAME);
 	if (l_size == 0) return;
 	o_value.resize(l_size);
 	for (int i = 0; i < l_size; i++) {

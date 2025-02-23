@@ -168,7 +168,7 @@ inline void persistenceAPI::operator>>(Stream& i_stream, PAGroupCommandObject2& 
 	i_stream >> o_value.m_splineRelated;
 	SEPARATOR_I
 	i_stream >> o_value.m_gameObject;
-	if (i_stream.getPAVersion() <= 1) {
+	if (i_stream.getPAVersion() == 1) {
 		i_stream.ignore(4); // pad to keep same size for compatibility with older versions
 	}
 	SEPARATOR_I
