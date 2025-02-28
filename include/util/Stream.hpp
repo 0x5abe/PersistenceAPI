@@ -13,7 +13,7 @@
 #include "Geode/binding/DashRingObject.hpp"
 #include "Geode/binding/EnterEffectObject.hpp"
 #include "Geode/binding/EnterEffectAnimValue.hpp"
-#include "import_export.hpp"
+#include "../import_export.hpp"
 #include <filesystem>
 
 #define PA_OPERATOR_READ(type) SABE_PA_DLL virtual void operator>>(type& o_value) { read(reinterpret_cast<char*>(&o_value), sizeof(type)); }
@@ -135,7 +135,7 @@ namespace persistenceAPI {
 
 		SABE_PA_DLL void read(char* o_value, int i_size) { 
 			#if defined(PA_DEBUG) && defined(PA_DESCRIBE)
-				geode::log::info("---- Doing read at offset {} | size {} ----", static_cast<uint32_t>(m_stream->tellg()), i_size);
+				//geode::log::info("---- Doing read at offset {} | size {} ----", static_cast<uint32_t>(m_stream->tellg()), i_size);
 			#endif
 			m_stream->read(o_value, i_size); 
 		
@@ -192,6 +192,7 @@ namespace persistenceAPI {
 		}
 
 		SABE_PA_DLL inline void setPAVersion(int i_PAVersion) {
+			//geode::log::info("@@@@@ PAVersion set to {} @@@@@", i_PAVersion);
 			m_PAVersion = i_PAVersion;
 		}
 
@@ -330,7 +331,6 @@ namespace persistenceAPI {
 			//geode::log::info("Unordered Map key->vector<T> SIZE in: {}", l_size);
 			if (l_size == 0) return;
 			K l_key;
-			V l_value;
 			for (int i = 0; i < l_size; i++) {
 				read(reinterpret_cast<char*>(&l_key), sizeof(K));
 				*this >> o_value[l_key];

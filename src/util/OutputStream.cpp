@@ -184,7 +184,7 @@ void Stream::operator<<<DynamicObjectAction>(gd::vector<DynamicObjectAction>& i_
 
 template <>
 void Stream::operator<<<PulseEffectAction>(gd::vector<PulseEffectAction>& i_value) {
-	geode::log::info("444444444444444411111111111111 VECTOR CustomWrite PulseEffectAction");
+	//geode::log::info("444444444444444411111111111111 VECTOR CustomWrite PulseEffectAction");
 	writeGenericVector<PulseEffectAction, PAPulseEffectAction>(this, i_value);
 }
 
@@ -231,19 +231,19 @@ void Stream::operator<<<int, SongChannelState>(gd::unordered_map<int, SongChanne
 
 template <>
 void Stream::operator<<<int, GJValueTween>(gd::unordered_map<int, GJValueTween>& i_value) {
-	geode::log::info("************************ Unordered Map CustomWrite GJValueTween");
+	//geode::log::info("************************ Unordered Map CustomWrite GJValueTween");
 	writeGenericUnorderedMap<int, GJValueTween, PAGJValueTween>(this, i_value);
 }
 
 template <>
 void Stream::operator<<<int, GameObjectPhysics>(gd::unordered_map<int, GameObjectPhysics>& i_value) {
-	geode::log::info("&&&&&&&&&&&&&&&&&&&&&&&&& Unordered Map CustomWrite GameObjectPhysics");
+	//geode::log::info("&&&&&&&&&&&&&&&&&&&&&&&&& Unordered Map CustomWrite GameObjectPhysics");
 	writeGenericUnorderedMap<int, GameObjectPhysics, PAGameObjectPhysics>(this, i_value);
 }
 
 template <>
 void Stream::operator<<<int, OpacityEffectAction>(gd::unordered_map<int, OpacityEffectAction>& i_value) {
-	geode::log::info("^^^^^^^^^^^^^^^^^^^^^^^^^^ Unordered Map CustomWrite OpacityEffectAction");
+	//geode::log::info("^^^^^^^^^^^^^^^^^^^^^^^^^^ Unordered Map CustomWrite OpacityEffectAction");
 	writeGenericUnorderedMap<int, OpacityEffectAction, PAOpacityEffectAction>(this, i_value);
 }
 
@@ -285,12 +285,12 @@ void Stream::operator<<<std::pair<int,int>, SFXTriggerInstance>(gd::map<std::pai
 
 template <>
 void Stream::operator<<<int, EnterEffectAnimValue>(gd::map<int, EnterEffectAnimValue>& i_value) {
-	geode::log::info("ooooooooooooooooooooooooooooooo Map CustomWrite EnterEffectAnimValue");
+	//geode::log::info("ooooooooooooooooooooooooooooooo Map CustomWrite EnterEffectAnimValue");
 	writeGenericMap<int, EnterEffectAnimValue, PAEnterEffectAnimValue>(this, i_value);
 }
 
 template <>
 void Stream::operator<<<std::pair<int,int>, FMODSoundTween>(gd::map<std::pair<int,int>, FMODSoundTween>& i_value) {
-	geode::log::info("aaaaaaaaaaaaaaaaaaaaaaaaaaa Map CustomWrite FMODSoundTween");
+	//geode::log::info("aaaaaaaaaaaaaaaaaaaaaaaaaaa Map CustomWrite FMODSoundTween");
 	writeGenericMap<std::pair<int,int>, FMODSoundTween, PAFMODSoundTween>(this, i_value);
 }

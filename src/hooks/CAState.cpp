@@ -93,22 +93,22 @@ inline void persistenceAPI::operator<<(Stream& o_stream, PACAState& i_value) {
 
 #if defined(PA_DEBUG) && defined(PA_DESCRIBE)
 void PACAState::describe() {
-	log::info("[PACAState - describe] m_fromColor", m_fromColor);
-	log::info("[PACAState - describe] m_toColor", m_toColor);
-	log::info("[PACAState - describe] m_color", m_color);
-	log::info("[PACAState - describe] m_property19", m_property19);
-	log::info("[PACAState - describe] m_blending", m_blending);
-	log::info("[PACAState - describe] m_copyOpacity", m_copyOpacity);
-	log::info("[PACAState - describe] m_unknown", m_unknown);
-	log::info("[PACAState - describe] m_playerColor", m_playerColor);
-	log::info("[PACAState - describe] m_colorID", m_colorID);
-	log::info("[PACAState - describe] m_copyID", m_copyID);
-	log::info("[PACAState - describe] m_unknown2", m_unknown2);
-	log::info("[PACAState - describe] m_duration", m_duration);
-	log::info("[PACAState - describe] m_fromOpacity", m_fromOpacity);
-	log::info("[PACAState - describe] m_toOpacity", m_toOpacity);
-	log::info("[PACAState - describe] m_deltaTime", m_deltaTime);
-	log::info("[PACAState - describe] m_unknown3", m_unknown3);
+	log::info("[PACAState - describe] m_fromColor: {}", m_fromColor);
+	log::info("[PACAState - describe] m_toColor: {}", m_toColor);
+	log::info("[PACAState - describe] m_color: {}", m_color);
+	log::info("[PACAState - describe] m_property19: {}", m_property19);
+	log::info("[PACAState - describe] m_blending: {}", m_blending);
+	log::info("[PACAState - describe] m_copyOpacity: {}", m_copyOpacity);
+	log::info("[PACAState - describe] m_unknown: {}", m_unknown);
+	log::info("[PACAState - describe] m_playerColor: {}", m_playerColor);
+	log::info("[PACAState - describe] m_colorID: {}", m_colorID);
+	log::info("[PACAState - describe] m_copyID: {}", m_copyID);
+	log::info("[PACAState - describe] m_unknown2: {}", m_unknown2);
+	log::info("[PACAState - describe] m_duration: {}", m_duration);
+	log::info("[PACAState - describe] m_fromOpacity: {}", m_fromOpacity);
+	log::info("[PACAState - describe] m_toOpacity: {}", m_toOpacity);
+	log::info("[PACAState - describe] m_deltaTime: {}", m_deltaTime);
+	log::info("[PACAState - describe] m_unknown3: {}", m_unknown3);
 	log::info("[PACAState - describe] m_copyHSV.h: {}", m_copyHSV.h);
 	log::info("[PACAState - describe] m_copyHSV.s: {}", m_copyHSV.s);
 	log::info("[PACAState - describe] m_copyHSV.v: {}", m_copyHSV.v);

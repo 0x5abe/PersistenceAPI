@@ -93,23 +93,6 @@ inline void persistenceAPI::operator<<(Stream& o_stream, PAPulseEffectAction& i_
 
 #if defined(PA_DEBUG) && defined(PA_DESCRIBE)
 void PAPulseEffectAction::describe() {
-	bool m_disabled;
-    float m_fadeInTime;
-    float m_holdTime;
-    float m_fadeOutTime;
-    float m_deltaTime;
-    int m_targetGroupID;
-    float m_currentValue;
-    cocos2d::ccColor3B m_color;
-    PulseEffectType m_pulseEffectType;
-    cocos2d::ccHSVValue m_hsv;
-    int m_colorIndex;
-    bool m_mainOnly;
-    bool m_detailOnly;
-    bool m_isDynamicHsv;
-    int m_triggerUniqueID;
-    int m_controlID;
-    float m_startTime;
 	log::info("[PAPulseEffectAction - describe] m_disabled: {}", m_disabled);
 	log::info("[PAPulseEffectAction - describe] m_fadeInTime: {}", m_fadeInTime);
 	log::info("[PAPulseEffectAction - describe] m_holdTime: {}", m_holdTime);

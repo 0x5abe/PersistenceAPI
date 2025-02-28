@@ -103,8 +103,8 @@ inline void persistenceAPI::operator<<(Stream& o_stream, PAFMODAudioState& i_val
 
 #if defined(PA_DEBUG) && defined(PA_DESCRIBE)
 void PAFMODAudioState::describe() {
-	log::info("[PAFMODAudioState - describe] m_unkFloat1", m_unkFloat1);
-	log::info("[PAFMODAudioState - describe] m_unkFloat2", m_unkFloat2);
+	log::info("[PAFMODAudioState - describe] m_unkFloat1: {}", m_unkFloat1);
+	log::info("[PAFMODAudioState - describe] m_unkFloat2: {}", m_unkFloat2);
 	int l_size = m_unkMapPairIntIntFMODSoundTween1.size();
 	log::info("[PAFMODAudioState - describe] m_unkMapPairIntIntFMODSoundTween1.size(): {}", l_size);
 	int i = 0;
@@ -233,6 +233,6 @@ void PAFMODAudioState::describe() {
 		log::info("[PAFMODAudioState - describe] m_unkMapIntFMODSoundState element {} value:", i);
 		reinterpret_cast<PAFMODSoundState*>(&l_pair.second)->describe();
 	}
-	log::info("[PAFMODAudioState - describe] m_unkUint64_1", m_unkUint64_1);
+	log::info("[PAFMODAudioState - describe] m_unkUint64_1: {}", m_unkUint64_1);
 }
 #endif

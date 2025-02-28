@@ -735,9 +735,9 @@ void PAGJShaderState::describe() {
 	log::info("[PAGJShaderState - describe] m_lensCircleUnk170: {}", m_lensCircleUnk170);
 	log::info("[PAGJShaderState - describe] m_lensCircleUnk174: {}", m_lensCircleUnk174);
 	log::info("[PAGJShaderState - describe] m_lensCircleAdditive: {}", m_lensCircleAdditive);
-	log::info("[PAGJShaderState - describe] m_lensCircleTintR: {}", m_lensCircleTintR);
-	log::info("[PAGJShaderState - describe] m_lensCircleTintG: {}", m_lensCircleTintG);
-	log::info("[PAGJShaderState - describe] m_lensCircleTintB: {}", m_lensCircleTintB);
+	log::info("[PAGJShaderState - describe] m_lensCircleTintR: {}", static_cast<uint8_t>(m_lensCircleTintR));
+	log::info("[PAGJShaderState - describe] m_lensCircleTintG: {}", static_cast<uint8_t>(m_lensCircleTintG));
+	log::info("[PAGJShaderState - describe] m_lensCircleTintB: {}", static_cast<uint8_t>(m_lensCircleTintB));
 	log::info("[PAGJShaderState - describe] m_lensCircleUnk17c: {}", m_lensCircleUnk17c);
 	log::info("[PAGJShaderState - describe] m_lensCircleUnk184: {}", m_lensCircleUnk184);
 	log::info("[PAGJShaderState - describe] m_radialBlurUnk18c: {}", m_radialBlurUnk18c);

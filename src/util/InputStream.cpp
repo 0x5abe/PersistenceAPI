@@ -71,7 +71,7 @@ inline void readGenericVector(Stream* i_stream, gd::vector<T>& o_value) {
 	//geode::log::info("Vector CustomRead Existing SIZE: {}", o_value.size());
 	unsigned int l_size;
 	i_stream->read(reinterpret_cast<char*>(&l_size), 4);
-	geode::log::info("VECTOR SIZE CustomRead {} SIZE in: {}", l_size, T::CLASS_NAME);
+	//geode::log::info("VECTOR SIZE CustomRead {} SIZE in: {}", l_size, T::CLASS_NAME);
 	if (l_size == 0) return;
 	o_value.resize(l_size);
 	for (int i = 0; i < l_size; i++) {
@@ -173,7 +173,7 @@ void Stream::operator>><DynamicObjectAction>(gd::vector<DynamicObjectAction>& o_
 
 template <>
 void Stream::operator>><PulseEffectAction>(gd::vector<PulseEffectAction>& o_value) {
-	geode::log::info("444444444444444411111111111111 VECTOR CustomRead PulseEffectAction");
+	//geode::log::info("444444444444444411111111111111 VECTOR CustomRead PulseEffectAction");
 	readGenericVector<PulseEffectAction, PAPulseEffectAction>(this, o_value);
 }
 
@@ -222,7 +222,7 @@ void Stream::operator>><int, SongChannelState>(gd::unordered_map<int, SongChanne
 
 template <>
 void Stream::operator>><int, GJValueTween>(gd::unordered_map<int, GJValueTween>& o_value) {
-	geode::log::info("************************ Unordered Map CustomRead GJValueTween");
+	//geode::log::info("************************ Unordered Map CustomRead GJValueTween");
 	readGenericUnorderedMap<int, GJValueTween, PAGJValueTween>(this, o_value);
 }
 
@@ -237,7 +237,7 @@ void Stream::operator>><int, GameObjectPhysics>(gd::unordered_map<int, GameObjec
 	}
 	unsigned int l_size;
 	this->read(reinterpret_cast<char*>(&l_size), 4);
-	geode::log::info("&&&&&&&&&&&&&&&&&&&&&&&&& Unordered Map CustomRead GameObjectPhysics");
+	//geode::log::info("&&&&&&&&&&&&&&&&&&&&&&&&& Unordered Map CustomRead GameObjectPhysics");
 	for (int i = 0; i < l_size; i++) {
 		int l_key;
 		this->read(reinterpret_cast<char*>(&l_key), sizeof(int));
@@ -251,7 +251,7 @@ void Stream::operator>><int, GameObjectPhysics>(gd::unordered_map<int, GameObjec
 
 template <>
 void Stream::operator>><int, OpacityEffectAction>(gd::unordered_map<int, OpacityEffectAction>& o_value) {
-	geode::log::info("^^^^^^^^^^^^^^^^^^^^^^^^^^ Unordered Map CustomRead OpacityEffectAction");
+	//geode::log::info("^^^^^^^^^^^^^^^^^^^^^^^^^^ Unordered Map CustomRead OpacityEffectAction");
 	readGenericUnorderedMap<int, OpacityEffectAction, PAOpacityEffectAction>(this, o_value);
 }
 
@@ -301,7 +301,7 @@ void Stream::operator>><std::pair<int,int>, SFXTriggerInstance>(gd::map<std::pai
 
 template <>
 void Stream::operator>><int, EnterEffectAnimValue>(gd::map<int, EnterEffectAnimValue>& o_value) {
-	geode::log::info("ooooooooooooooooooooooooooooooo Map CustomRead EnterEffectAnimValue");
+	//geode::log::info("ooooooooooooooooooooooooooooooo Map CustomRead EnterEffectAnimValue");
 	readGenericMap<int, EnterEffectAnimValue, PAEnterEffectAnimValue>(this, o_value);
 }
 
@@ -316,7 +316,7 @@ void Stream::operator>><std::pair<int,int>, FMODSoundTween>(gd::map<std::pair<in
 	}
 	unsigned int l_size;
 	this->read(reinterpret_cast<char*>(&l_size), 4);
-	geode::log::info("aaaaaaaaaaaaaaaaaaaaaaaaaaa Map CustomRead FMODSoundTween");
+	//geode::log::info("aaaaaaaaaaaaaaaaaaaaaaaaaaa Map CustomRead FMODSoundTween");
 	for (int i = 0; i < l_size; i++) {
 		std::pair<int,int> l_key;
 		this->read(reinterpret_cast<char*>(&l_key), sizeof(std::pair<int,int>));

@@ -3,7 +3,7 @@
 	#include "iomanip"
 	#include "sstream"
 	#include "string"
-	#include "util/Stream.hpp"
+	#include "Stream.hpp"
 #endif
 
 namespace persistenceAPI {

@@ -1,8 +1,8 @@
 #pragma once
 #include "Geode/Geode.hpp"
 #include "Geode/modify/PlayerCheckpoint.hpp"
-#include "util/Stream.hpp"
-#include "import_export.hpp"
+#include "../util/Stream.hpp"
+#include "../import_export.hpp"
 
 namespace persistenceAPI {
 	class $modify(PAPlayerCheckpoint, PlayerCheckpoint) {

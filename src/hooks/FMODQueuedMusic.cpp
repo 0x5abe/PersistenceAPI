@@ -47,10 +47,11 @@ inline void persistenceAPI::operator>>(Stream& i_stream, PAFMODQueuedMusic& o_va
 		SEPARATOR_I
 		int l_dummy;
 		i_stream >> l_dummy;
-		if (l_dummy != -1) {
-			geode::log::info("!!!!!!!!!!!!!!!!!!! Trying to load FMODQueuedMusic with preloadMusic");
+		if (l_dummy == -1) {
+			//geode::log::info("!!!!!!!!!!!!!!!!!!! Trying to load FMODQueuedMusic with preloadMusic");
 			o_value.m_sound = FMODAudioEngine::get()->preloadMusic(o_value.m_filePath, true, o_value.m_keyForFMODMusicMap1);
 		} else {
+			//geode::log::info("!!!!!!!!!!!!!!!!!!! NOT Trying to load FMODQueuedMusic with preloadMusic CAUSE it was nullptr");
 			o_value.m_sound = nullptr;
 		}
 		SEPARATOR_I
@@ -92,10 +93,10 @@ inline void persistenceAPI::operator<<(Stream& o_stream, PAFMODQueuedMusic& i_va
 	o_stream << i_value.m_unkFloat4;
 	SEPARATOR_O
 	int l_dummy;
-	if (i_value.m_sound != nullptr) {
-		l_dummy = -1;
-	} else {
+	if (i_value.m_sound == nullptr) {
 		l_dummy = -2;
+	} else {
+		l_dummy = -1;
 	}
 	o_stream << l_dummy;
 	SEPARATOR_O

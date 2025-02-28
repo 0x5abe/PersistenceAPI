@@ -1,13 +1,13 @@
 #pragma once
 #include "Geode/Geode.hpp"
 #include "Geode/modify/PlayLayer.hpp"
-#include "import_export.hpp"
+#include "../import_export.hpp"
 
 namespace persistenceAPI {
 	class $modify(PAPlayLayer, PlayLayer) {
 	public:
 		struct Fields {
-			int m_uniqueIdBase = 12;
+			int m_uniqueIDBase = 12;
 		};
 
 		// overrides
@@ -20,7 +20,7 @@ namespace persistenceAPI {
 		SABE_PA_DLL inline int getGameObjectIndex(GameObject* i_object) {
 			if (i_object == nullptr) return -1;
 
-			int l_index = i_object->m_uniqueID-m_fields->m_uniqueIdBase;
+			int l_index = i_object->m_uniqueID-m_fields->m_uniqueIDBase;
 			if (l_index > -1) {
 				return l_index;
 			}
