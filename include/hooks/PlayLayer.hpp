@@ -48,6 +48,9 @@ namespace persistenceAPI {
 			if (i_index == -3) {
 				return m_player2;
 			}
+			if (i_index == -4) {
+				geode::log::info("!!!!!!!!!!!!!! GAMEOBJECTPHYSICS BACKWARD COMPATIBILITY GAMEOBJECT !!!!!!!!!!!!!!");
+			}
 			if (i_index == -404) {
 				geode::log::info("@@@@@@@@@@@@@@ UNKNOWN GAMEOBJECT BEING LOADED @@@@@@@@@@@@@@@");
 			}

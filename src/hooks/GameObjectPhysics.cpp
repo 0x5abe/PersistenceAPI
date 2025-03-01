@@ -39,7 +39,13 @@ inline void persistenceAPI::operator>>(Stream& i_stream, PAGameObjectPhysics& o_
 }
 
 inline void persistenceAPI::operator<<(Stream& o_stream, PAGameObjectPhysics& i_value) {
-	o_stream << i_value.m_gameObject;
+	if (o_stream.getPAVersion() > 1) {
+		o_stream << i_value.m_gameObject;
+	} else {
+		geode::log::info("[GameObjectPhysics::save] Backwards compat i_value.m_gameObject: {}", *reinterpret_cast<size_t*>(&i_value.m_gameObject));
+		int l_objectIndex = -4;
+		o_stream.write(reinterpret_cast<char*>(&l_objectIndex), 4);
+	}
 	SEPARATOR_O
 	o_stream << i_value.m_unkPoint1;
 	SEPARATOR_O
@@ -60,7 +66,7 @@ inline void persistenceAPI::operator<<(Stream& o_stream, PAGameObjectPhysics& i_
 #if defined(PA_DEBUG) && defined(PA_DESCRIBE)
 void PAGameObjectPhysics::describe() {
 	// bool l_oldVersion = false;
-	// log::info("[PAGameObjectPhysics - describe] *reinterpret_cast<uint64_t*>(m_gameObject): {}", *reinterpret_cast<uint64_t*>(&m_gameObject));
+	// log::info("[PAGameObjectPhysics - describe] *reinterpret_cast<size_t*>(m_gameObject): {}", *reinterpret_cast<size_t*>(&m_gameObject));
 	// if (m_gameObject == nullptr) {
 	// 	l_oldVersion = true;
 	// 	log::info("[PAGameObjectPhysics - describe] m_gameObject old version so bad ptr");

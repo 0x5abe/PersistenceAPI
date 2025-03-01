@@ -40,6 +40,7 @@ namespace persistenceAPI {
 			}
 			if (i_trunc) l_mode |= std::ios_base::trunc;
 			m_stream = new std::fstream(i_filePath, l_mode);
+			//geode::log::info("@@@@@ PAVersion set to {} @@@@@", i_PAVersion);
 			m_PAVersion = i_PAVersion;
 		}
 		SABE_PA_DLL Stream(std::string i_filePath, unsigned int* i_bytesRead, int i_PAVersion, bool i_trunc = false) {
@@ -50,6 +51,7 @@ namespace persistenceAPI {
 			if (i_trunc) l_mode |= std::ios_base::trunc;
 			m_stream = new std::fstream(i_filePath, l_mode);
 			m_bytesRead = i_bytesRead;
+			//geode::log::info("@@@@@ PAVersion set to {} @@@@@", i_PAVersion);
 			m_PAVersion = i_PAVersion;
 		}
 		SABE_PA_DLL ~Stream() { delete m_stream; }
@@ -111,6 +113,7 @@ namespace persistenceAPI {
 				return false;
 			}
 			m_bytesRead = i_bytesRead;
+			//geode::log::info("@@@@@ PAVersion set to {} @@@@@", i_PAVersion);
 			m_PAVersion = i_PAVersion;
 			return true;
 		}
@@ -129,12 +132,13 @@ namespace persistenceAPI {
 				//geode::log::info("Failed to open file path: {}", i_filePath);
 				return false;
 			}
+			//geode::log::info("@@@@@ PAVersion set to {} @@@@@", i_PAVersion);
 			m_PAVersion = i_PAVersion;
 			return true;
 		}
 
 		SABE_PA_DLL void read(char* o_value, int i_size) { 
-			#if defined(PA_DEBUG) && defined(PA_DESCRIBE)
+			#if defined(PA_DEBUG)
 				//geode::log::info("---- Doing read at offset {} | size {} ----", static_cast<uint32_t>(m_stream->tellg()), i_size);
 			#endif
 			m_stream->read(o_value, i_size); 
@@ -188,6 +192,7 @@ namespace persistenceAPI {
 		}
 
 		SABE_PA_DLL inline int getPAVersion() {
+			//geode::log::info("@@@@@ PAVersion get {} @@@@@", m_PAVersion);
 			return m_PAVersion;
 		}
 

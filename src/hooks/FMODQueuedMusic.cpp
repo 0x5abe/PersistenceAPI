@@ -120,7 +120,7 @@ void PAFMODQueuedMusic::describe() {
 	log::info("[PAFMODQueuedMusic - describe] m_keyForFMODMusicMap2: {}", m_keyForFMODMusicMap2);
 	log::info("[PAFMODQueuedMusic - describe] m_unkBool3: {}", m_unkBool3);
 	log::info("[PAFMODQueuedMusic - describe] m_unkFloat4: {}", m_unkFloat4);
-	log::info("[PAFMODQueuedMusic - describe] m_sound: {}", *reinterpret_cast<uint64_t*>(&m_sound));
+	log::info("[PAFMODQueuedMusic - describe] m_sound: {}", *reinterpret_cast<size_t*>(&m_sound));
 	log::info("[PAFMODQueuedMusic - describe] m_dontReset: {}", m_dontReset);
 }
 #endif
