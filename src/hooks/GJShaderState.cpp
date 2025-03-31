@@ -309,9 +309,9 @@ inline void persistenceAPI::operator>>(Stream& i_stream, PAGJShaderState& o_valu
 		SEPARATOR_I
 		i_stream >> o_value.m_splitUnk270;
 		SEPARATOR_I
-		i_stream >> o_value.m_blurRefChannel;
+		i_stream >> o_value.m_minBlendingLayer;
 		SEPARATOR_I
-		i_stream >> o_value.m_somethingZLayerUnk278;
+		i_stream >> o_value.m_maxBlendingLayer;
 		SEPARATOR_I
 		i_stream >> o_value.m_zLayerDirty;
 		SEPARATOR_I
@@ -618,9 +618,9 @@ inline void persistenceAPI::operator<<(Stream& o_stream, PAGJShaderState& i_valu
 	SEPARATOR_O
 	o_stream << i_value.m_splitUnk270;
 	SEPARATOR_O
-	o_stream << i_value.m_blurRefChannel;
+	o_stream << i_value.m_minBlendingLayer;
 	SEPARATOR_O
-	o_stream << i_value.m_somethingZLayerUnk278;
+	o_stream << i_value.m_maxBlendingLayer;
 	SEPARATOR_O
 	o_stream << i_value.m_zLayerDirty;
 	SEPARATOR_O
@@ -793,8 +793,8 @@ void PAGJShaderState::describe() {
 	log::info("[PAGJShaderState - describe] m_splitUnk268: {}", m_splitUnk268);
 	log::info("[PAGJShaderState - describe] m_splitUnk26c: {}", m_splitUnk26c);
 	log::info("[PAGJShaderState - describe] m_splitUnk270: {}", m_splitUnk270);
-	log::info("[PAGJShaderState - describe] m_blurRefChannel: {}", m_blurRefChannel);
-	log::info("[PAGJShaderState - describe] m_somethingZLayerUnk278: {}", m_somethingZLayerUnk278);
+	log::info("[PAGJShaderState - describe] m_minBlendingLayer: {}", m_minBlendingLayer);
+	log::info("[PAGJShaderState - describe] m_maxBlendingLayer: {}", m_maxBlendingLayer);
 	log::info("[PAGJShaderState - describe] m_zLayerDirty: {}", m_zLayerDirty);
 	log::info("[PAGJShaderState - describe] m_somethingZLayerUnk27d: {}", m_somethingZLayerUnk27d);
 	log::info("[PAGJShaderState - describe] m_usesShaders: {}", m_usesShaders);

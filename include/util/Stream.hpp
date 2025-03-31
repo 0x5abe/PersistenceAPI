@@ -14,7 +14,6 @@
 #include "Geode/binding/EnterEffectObject.hpp"
 #include "Geode/binding/EnterEffectAnimValue.hpp"
 #include "../import_export.hpp"
-#include <filesystem>
 
 #define PA_OPERATOR_READ(type) SABE_PA_DLL virtual void operator>>(type& o_value) { read(reinterpret_cast<char*>(&o_value), sizeof(type)); }
 
@@ -76,6 +75,7 @@ namespace persistenceAPI {
 		PA_OPERATOR_READ(TouchTriggerType)
 		PA_OPERATOR_READ(TouchTriggerControl)
 		PA_OPERATOR_READ(PulseEffectType)
+		PA_OPERATOR_READ(GhostType)
 
 		PA_OPERATOR_WRITE(bool)
 		PA_OPERATOR_WRITE(char)
@@ -97,6 +97,7 @@ namespace persistenceAPI {
 		PA_OPERATOR_WRITE(TouchTriggerType)
 		PA_OPERATOR_WRITE(TouchTriggerControl)
 		PA_OPERATOR_WRITE(PulseEffectType)
+		PA_OPERATOR_WRITE(GhostType)
 
 		SABE_PA_DLL bool setFile(std::string i_filePath, unsigned int* i_bytesRead, int i_PAVersion, bool i_trunc = false) {
 			if (m_stream) {

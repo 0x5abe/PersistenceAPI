@@ -25,7 +25,7 @@ inline void persistenceAPI::operator>>(Stream& i_stream, PAPlayerCheckpoint& o_v
 	SEPARATOR_I
 	i_stream >> o_value.m_isUpsideDown;
 	SEPARATOR_I
-	i_stream >> o_value.m_rotateGameplayOnly;
+	i_stream >> o_value.m_isSideways;
 	SEPARATOR_I
 	i_stream >> o_value.m_isShip;
 	SEPARATOR_I
@@ -43,24 +43,24 @@ inline void persistenceAPI::operator>>(Stream& i_stream, PAPlayerCheckpoint& o_v
 	SEPARATOR_I
 	i_stream >> o_value.m_isOnGround;
 	SEPARATOR_I
-	i_stream >> o_value.m_hasGhostTrail;
+	i_stream >> o_value.m_ghostType;
 	SEPARATOR_I
 	if (i_stream.getPAVersion() > 1) {
-		i_stream >> o_value.m_isMini;
+		i_stream >> o_value.m_miniMode;
 	} else {
-		i_stream.read(reinterpret_cast<char*>(&o_value.m_isMini), 4);
+		i_stream.read(reinterpret_cast<char*>(&o_value.m_miniMode), 4);
 	}
 	SEPARATOR_I
 	i_stream >> o_value.m_speed;
 	SEPARATOR_I
-	i_stream >> o_value.m_isHidden;
+	i_stream >> o_value.m_hidden;
 	SEPARATOR_I
-	i_stream >> o_value.m_isGoingLeft;
+	i_stream >> o_value.m_goingLeft;
 	SEPARATOR_I
 	if (i_stream.getPAVersion() > 1) {
-		i_stream >> o_value.m_maybeReverseSpeed;
+		i_stream >> o_value.m_reverseSpeed;
 		SEPARATOR_I
-		i_stream >> o_value.m_isDashing;
+		i_stream >> o_value.m_dashing;
 		SEPARATOR_I
 		i_stream >> o_value.m_dashX;
 		SEPARATOR_I
@@ -70,17 +70,17 @@ inline void persistenceAPI::operator>>(Stream& i_stream, PAPlayerCheckpoint& o_v
 		SEPARATOR_I
 		i_stream >> o_value.m_dashStartTime;
 		SEPARATOR_I
-		i_stream >> o_value.m_dashRing;
+		i_stream >> o_value.m_dashRingObject;
 	} else {
-		i_stream.read(reinterpret_cast<char*>(&o_value) + offsetof(PAPlayerCheckpoint,m_isGoingLeft) + sizeof(bool), 34);
+		i_stream.read(reinterpret_cast<char*>(&o_value) + offsetof(PAPlayerCheckpoint,m_goingLeft) + sizeof(bool), 34);
 	}
 	SEPARATOR_I
-	i_stream >> o_value.m_isAutoCheckpoint;
+	i_stream >> o_value.m_platformerCheckpoint;
 	SEPARATOR_I
 	if (i_stream.getPAVersion() > 1) {
 		i_stream >> o_value.m_lastFlipTime;
 	} else {
-		i_stream.read(reinterpret_cast<char*>(&o_value) + offsetof(PAPlayerCheckpoint,m_isAutoCheckpoint) + sizeof(bool), 7);
+		i_stream.read(reinterpret_cast<char*>(&o_value) + offsetof(PAPlayerCheckpoint,m_platformerCheckpoint) + sizeof(bool), 7);
 		SEPARATOR_I
 		i_stream.read(reinterpret_cast<char*>(&o_value) + offsetof(PAPlayerCheckpoint,m_lastFlipTime), sizeof(bool));
 		SEPARATOR_I
@@ -116,7 +116,7 @@ inline void persistenceAPI::operator<<(Stream& o_stream, PAPlayerCheckpoint& i_v
 	SEPARATOR_O
 	o_stream << i_value.m_isUpsideDown;
 	SEPARATOR_O
-	o_stream << i_value.m_rotateGameplayOnly;
+	o_stream << i_value.m_isSideways;
 	SEPARATOR_O
 	o_stream << i_value.m_isShip;
 	SEPARATOR_O
@@ -134,19 +134,19 @@ inline void persistenceAPI::operator<<(Stream& o_stream, PAPlayerCheckpoint& i_v
 	SEPARATOR_O
 	o_stream << i_value.m_isOnGround;
 	SEPARATOR_O
-	o_stream << i_value.m_hasGhostTrail;
+	o_stream << i_value.m_ghostType;
 	SEPARATOR_O
-	o_stream << i_value.m_isMini;
+	o_stream << i_value.m_miniMode;
 	SEPARATOR_O
 	o_stream << i_value.m_speed;
 	SEPARATOR_O
-	o_stream << i_value.m_isHidden;
+	o_stream << i_value.m_hidden;
 	SEPARATOR_O
-	o_stream << i_value.m_isGoingLeft;
+	o_stream << i_value.m_goingLeft;
 	SEPARATOR_O
-	o_stream << i_value.m_maybeReverseSpeed;
+	o_stream << i_value.m_reverseSpeed;
 	SEPARATOR_O
-	o_stream << i_value.m_isDashing;
+	o_stream << i_value.m_dashing;
 	SEPARATOR_O
 	o_stream << i_value.m_dashX;
 	SEPARATOR_O
@@ -156,9 +156,9 @@ inline void persistenceAPI::operator<<(Stream& o_stream, PAPlayerCheckpoint& i_v
 	SEPARATOR_O
 	o_stream << i_value.m_dashStartTime;
 	SEPARATOR_O
-	o_stream << i_value.m_dashRing;
+	o_stream << i_value.m_dashRingObject;
 	SEPARATOR_O
-	o_stream << i_value.m_isAutoCheckpoint;
+	o_stream << i_value.m_platformerCheckpoint;
 	SEPARATOR_O
 	o_stream << i_value.m_lastFlipTime;
 	SEPARATOR_O
@@ -182,7 +182,7 @@ void PAPlayerCheckpoint::describe() {
 	log::info("[PAPlayerCheckpoint - describe] m_lastPosition: {}", m_lastPosition);
 	log::info("[PAPlayerCheckpoint - describe] m_yVelocity: {}", m_yVelocity);
 	log::info("[PAPlayerCheckpoint - describe] m_isUpsideDown: {}", m_isUpsideDown);
-	log::info("[PAPlayerCheckpoint - describe] m_rotateGameplayOnly: {}", m_rotateGameplayOnly);
+	log::info("[PAPlayerCheckpoint - describe] m_isSideways: {}", m_isSideways);
 	log::info("[PAPlayerCheckpoint - describe] m_isShip: {}", m_isShip);
 	log::info("[PAPlayerCheckpoint - describe] m_isBall: {}", m_isBall);
 	log::info("[PAPlayerCheckpoint - describe] m_isBird: {}", m_isBird);
@@ -191,20 +191,20 @@ void PAPlayerCheckpoint::describe() {
 	log::info("[PAPlayerCheckpoint - describe] m_isRobot: {}", m_isRobot);
 	log::info("[PAPlayerCheckpoint - describe] m_isSpider: {}", m_isSpider);
 	log::info("[PAPlayerCheckpoint - describe] m_isOnGround: {}", m_isOnGround);
-	log::info("[PAPlayerCheckpoint - describe] m_hasGhostTrail: {}", m_hasGhostTrail);
-	log::info("[PAPlayerCheckpoint - describe] m_isMini: {}", m_isMini);
+	log::info("[PAPlayerCheckpoint - describe] m_ghostType: {}", m_ghostType);
+	log::info("[PAPlayerCheckpoint - describe] m_miniMode: {}", m_miniMode);
 	log::info("[PAPlayerCheckpoint - describe] m_speed: {}", m_speed);
-	log::info("[PAPlayerCheckpoint - describe] m_isHidden: {}", m_isHidden);
-	log::info("[PAPlayerCheckpoint - describe] m_isGoingLeft: {}", m_isGoingLeft);
-	log::info("[PAPlayerCheckpoint - describe] m_maybeReverseSpeed: {}", m_maybeReverseSpeed);
-	log::info("[PAPlayerCheckpoint - describe] m_isDashing: {}", m_isDashing);
+	log::info("[PAPlayerCheckpoint - describe] m_hidden: {}", m_hidden);
+	log::info("[PAPlayerCheckpoint - describe] m_goingLeft: {}", m_goingLeft);
+	log::info("[PAPlayerCheckpoint - describe] m_reverseSpeed: {}", m_reverseSpeed);
+	log::info("[PAPlayerCheckpoint - describe] m_dashing: {}", m_dashing);
 	log::info("[PAPlayerCheckpoint - describe] m_dashX: {}", m_dashX);
 	log::info("[PAPlayerCheckpoint - describe] m_dashY: {}", m_dashY);
 	log::info("[PAPlayerCheckpoint - describe] m_dashAngle: {}", m_dashAngle);
 	log::info("[PAPlayerCheckpoint - describe] m_dashStartTime: {}", m_dashStartTime);
-	if (l_playLayer) l_objectIndex = l_playLayer->getGameObjectIndex(m_dashRing);
-	log::info("[PAPlayerCheckpoint - describe] m_dashRing: {}", l_objectIndex);
-	log::info("[PAPlayerCheckpoint - describe] m_isAutoCheckpoint: {}", m_isAutoCheckpoint);
+	if (l_playLayer) l_objectIndex = l_playLayer->getGameObjectIndex(m_dashRingObject);
+	log::info("[PAPlayerCheckpoint - describe] m_dashRingObject: {}", l_objectIndex);
+	log::info("[PAPlayerCheckpoint - describe] m_platformerCheckpoint: {}", m_platformerCheckpoint);
 	log::info("[PAPlayerCheckpoint - describe] m_lastFlipTime: {}", m_lastFlipTime);
 	log::info("[PAPlayerCheckpoint - describe] m_gravityMod: {}", m_gravityMod);
 	log::info("[PAPlayerCheckpoint - describe] m_decreaseBoostSlide: {}", m_decreaseBoostSlide);

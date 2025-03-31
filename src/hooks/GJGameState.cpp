@@ -166,7 +166,7 @@ inline void persistenceAPI::operator>>(Stream& i_stream, PAGJGameState& o_value)
 	SEPARATOR_I
 	i_stream >> o_value.m_targetCameraAngle;
 	SEPARATOR_I
-	i_stream >> o_value.m_unk184;
+	i_stream >> o_value.m_playerStreakBlend;
 	SEPARATOR_I
 	i_stream >> o_value.m_timeWarp;
 	SEPARATOR_I
@@ -511,7 +511,7 @@ inline void persistenceAPI::operator<<(Stream& o_stream, PAGJGameState& i_value)
 	SEPARATOR_O
 	o_stream << i_value.m_targetCameraAngle;
 	SEPARATOR_O
-	o_stream << i_value.m_unk184;
+	o_stream << i_value.m_playerStreakBlend;
 	SEPARATOR_O
 	o_stream << i_value.m_timeWarp;
 	SEPARATOR_O
@@ -817,7 +817,7 @@ void PAGJGameState::describe() {
 	log::info("[PAGJGameState - describe] m_unkFloat8: {}", m_unkFloat8);
 	log::info("[PAGJGameState - describe] m_cameraAngle: {}", m_cameraAngle);
 	log::info("[PAGJGameState - describe] m_targetCameraAngle: {}", m_targetCameraAngle);
-	log::info("[PAGJGameState - describe] m_unk184: {}", m_unk184);
+	log::info("[PAGJGameState - describe] m_playerStreakBlend: {}", m_playerStreakBlend);
 	log::info("[PAGJGameState - describe] m_timeWarp: {}", m_timeWarp);
 	log::info("[PAGJGameState - describe] m_timeWarpRelated: {}", m_timeWarpRelated);
 	log::info("[PAGJGameState - describe] m_currentChannel: {}", m_currentChannel);
