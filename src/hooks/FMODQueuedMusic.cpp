@@ -48,11 +48,7 @@ inline void persistenceAPI::operator>>(Stream& i_stream, PAFMODQueuedMusic& o_va
 		int l_dummy;
 		i_stream >> l_dummy;
 		if (l_dummy == -1) {
-			//TODO: copy logic from preloadMusic
-			//geode::log::info("!!!!!!!!!!!!!!!!!!! Trying to load FMODQueuedMusic with createStream");
-			//o_value.m_sound = FMODAudioEngine::get()->createStream();
-			//replace
-			geode::log::info("!!!!!!!!!!!!!!!!!!! Trying to load FMODQueuedMusic with preloadMusic");
+			//TODO: This may be wrong
 			o_value.m_sound = FMODAudioEngine::get()->preloadMusic(o_value.m_filePath, true, o_value.m_keyForFMODMusicMap1);
 		} else {
 			//geode::log::info("!!!!!!!!!!!!!!!!!!! NOT Trying to load FMODQueuedMusic with preloadMusic CAUSE it was nullptr");
