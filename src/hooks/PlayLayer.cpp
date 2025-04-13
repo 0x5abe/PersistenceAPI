@@ -9,6 +9,12 @@ using namespace persistenceAPI;
 	#define UNIQUE_ID_OFFSET 0x11fe018
 #elif  defined(GEODE_IS_ANDROID32)
 	#define UNIQUE_ID_OFFSET 0xa9f00c
+#elif defined(GEODE_IS_ARM_MAC)
+	#define UNIQUE_ID_OFFSET 0x8aa39c
+#elif defined(GEODE_IS_INTEL_MAC)
+	#define UNIQUE_ID_OFFSET 0x985500
+#elif defined(GEODE_IS_IOS)
+	#define UNIQUE_ID_OFFSET 0x83f2e8
 #endif
 
 // overrides
