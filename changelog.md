@@ -1,4 +1,4 @@
-## v1.0.0-alpha.4
+## v1.0.0
 
 * Whole rework of multiple classes, support backwards compatibility
 
