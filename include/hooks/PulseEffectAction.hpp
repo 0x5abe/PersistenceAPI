@@ -5,17 +5,17 @@
 #include "../import_export.hpp"
 
 namespace persistenceAPI {
-	class $modify(PAPulseEffectAction, PulseEffectAction) {
-	protected:
-		friend void operator>>(persistenceAPI::Stream& i_stream, PAPulseEffectAction& o_value);
-		friend void operator<<(persistenceAPI::Stream& o_stream, PAPulseEffectAction& i_value);
+    class $modify(PAPulseEffectAction, PulseEffectAction) {
+    protected:
+        friend void operator>>(persistenceAPI::Stream& i_stream, PAPulseEffectAction& o_value);
+        friend void operator<<(persistenceAPI::Stream& o_stream, PAPulseEffectAction& i_value);
 
-	public:
-		SABE_PA_DLL void load(persistenceAPI::Stream& i_stream);
-		SABE_PA_DLL void save(persistenceAPI::Stream& o_stream);
+    public:
+        SABE_PA_DLL void load(persistenceAPI::Stream& i_stream);
+        SABE_PA_DLL void save(persistenceAPI::Stream& o_stream);
 
-	#if defined(PA_DEBUG) && defined(PA_DESCRIBE)
-		SABE_PA_DLL void describe();
-	#endif
-	};
+    #if defined(PA_DEBUG) && defined(PA_DESCRIBE)
+        SABE_PA_DLL void describe();
+    #endif
+    };
 }

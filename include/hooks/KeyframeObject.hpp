@@ -5,17 +5,17 @@
 #include "../import_export.hpp"
 
 namespace persistenceAPI {
-	class $modify(PAKeyframeObject, KeyframeObject) {
-	protected:
-		friend void operator>>(persistenceAPI::Stream& i_stream, PAKeyframeObject& o_value);
-		friend void operator<<(persistenceAPI::Stream& o_stream, PAKeyframeObject& i_value);
+    class $modify(PAKeyframeObject, KeyframeObject) {
+    protected:
+        friend void operator>>(persistenceAPI::Stream& i_stream, PAKeyframeObject& o_value);
+        friend void operator<<(persistenceAPI::Stream& o_stream, PAKeyframeObject& i_value);
 
-	public:
-		SABE_PA_DLL void load(persistenceAPI::Stream& i_stream);
-		SABE_PA_DLL void save(persistenceAPI::Stream& o_stream);
+    public:
+        SABE_PA_DLL void load(persistenceAPI::Stream& i_stream);
+        SABE_PA_DLL void save(persistenceAPI::Stream& o_stream);
 
-	#if defined(PA_DEBUG) && defined(PA_DESCRIBE)
-		SABE_PA_DLL void describe();
-	#endif
-	};
+    #if defined(PA_DEBUG) && defined(PA_DESCRIBE)
+        SABE_PA_DLL void describe();
+    #endif
+    };
 }

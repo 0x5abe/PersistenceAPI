@@ -5,19 +5,19 @@
 #include "../import_export.hpp"
 
 namespace persistenceAPI {
-	class $modify(PAGJGameState, GJGameState) {
-	protected:
-		friend void operator>>(persistenceAPI::Stream& i_stream, PAGJGameState& o_value);
-		friend void operator<<(persistenceAPI::Stream& o_stream, PAGJGameState& i_value);
+    class $modify(PAGJGameState, GJGameState) {
+    protected:
+        friend void operator>>(persistenceAPI::Stream& i_stream, PAGJGameState& o_value);
+        friend void operator<<(persistenceAPI::Stream& o_stream, PAGJGameState& i_value);
 
-	public:
-		SABE_PA_DLL void load(persistenceAPI::Stream& i_stream);
-		SABE_PA_DLL void save(persistenceAPI::Stream& o_stream);
+    public:
+        SABE_PA_DLL void load(persistenceAPI::Stream& i_stream);
+        SABE_PA_DLL void save(persistenceAPI::Stream& o_stream);
 
-		SABE_PA_DLL void clean();
+        SABE_PA_DLL void clean();
 
-	#if defined(PA_DEBUG) && defined(PA_DESCRIBE)
-		SABE_PA_DLL void describe();
-	#endif
-	};
+    #if defined(PA_DEBUG) && defined(PA_DESCRIBE)
+        SABE_PA_DLL void describe();
+    #endif
+    };
 }
