@@ -1,5 +1,5 @@
 {
-	"geode": "5.0.0-beta.2",
+	"geode": "5.0.1",
 	"gd": {
 		"win": "2.2081",
 		"android": "2.2081",
@@ -11,7 +11,9 @@
 	"name": "PersistenceAPI",
 	"developer": "Sabe",
 	"description": "API for serialization/deserialization of GD classes",
-	"repository": "https://github.com/0x5abe/PersistenceAPI",
+	"links":{
+		"source": "https://github.com/0x5abe/PersistenceAPI"
+	},
 	"tags": [
 		"utility",
 		"developer"
