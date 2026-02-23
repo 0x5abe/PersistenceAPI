@@ -440,6 +440,6 @@ void PAGroupCommandObject2::describe() {
         log::info("[PAGroupCommandObject2 - describe] m_remapKeys[{}]: {}", i, m_remapKeys[i]);
     }
     log::info("[PAGroupCommandObject2 - describe] m_someInterpValue2RelatedTrue: {}", m_someInterpValue2RelatedTrue);
-    log::info("[PAGroupCommandObject2 - describe] m_unkFloat204: {}", m_unkFloat204);
+    log::info("[PAGroupCommandObject2 - describe] m_unkInt204: {}", m_unkInt204);
 }
 #endif
