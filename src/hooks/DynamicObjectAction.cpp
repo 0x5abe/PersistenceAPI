@@ -15,8 +15,7 @@ void PADynamicObjectAction::save(Stream& o_stream) {
 }
 
 inline void persistenceAPI::operator>>(Stream& i_stream, PADynamicObjectAction& o_value) {
-    GameObject* gameObject1 = static_cast<GameObject*>(o_value.m_gameObject1);
-    i_stream >> gameObject1;
+    i_stream >> o_value.m_gameObject1;
     SEPARATOR_I
     i_stream >> o_value.m_gameObject2;
     SEPARATOR_I
@@ -59,8 +58,7 @@ inline void persistenceAPI::operator>>(Stream& i_stream, PADynamicObjectAction& 
 }
 
 inline void persistenceAPI::operator<<(Stream& o_stream, PADynamicObjectAction& i_value) {
-    GameObject* gameObject1 = static_cast<GameObject*>(i_value.m_gameObject1);
-    o_stream << gameObject1;
+    o_stream << i_value.m_gameObject1;
     SEPARATOR_O
     o_stream << i_value.m_gameObject2;
     SEPARATOR_O

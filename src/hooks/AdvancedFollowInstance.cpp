@@ -16,9 +16,7 @@ void PAAdvancedFollowInstance::save(Stream& o_stream) {
 }
 
 inline void persistenceAPI::operator>>(Stream& i_stream, PAAdvancedFollowInstance& o_value) {
-    GameObject* gameObject;
-    i_stream >> gameObject;
-    o_value.m_gameObject = static_cast<AdvancedFollowTriggerObject*>(gameObject);
+    i_stream >> o_value.m_gameObject;
     SEPARATOR_I
     if (i_stream.getPAVersion() > 1) {
         i_stream >> o_value.m_group;
@@ -45,8 +43,7 @@ inline void persistenceAPI::operator>>(Stream& i_stream, PAAdvancedFollowInstanc
 }
 
 inline void persistenceAPI::operator<<(Stream& o_stream, PAAdvancedFollowInstance& i_value) {
-    GameObject* gameObject = static_cast<GameObject*>(i_value.m_gameObject);
-    o_stream << gameObject;
+    o_stream << i_value.m_gameObject;
     SEPARATOR_O
     o_stream << i_value.m_group;
     SEPARATOR_O

@@ -13,6 +13,8 @@
 #include "Geode/binding/DashRingObject.hpp"
 #include "Geode/binding/EnterEffectObject.hpp"
 #include "Geode/binding/EnterEffectAnimValue.hpp"
+#include "Geode/binding/EffectGameObject.hpp"
+#include "Geode/binding/AdvancedFollowTriggerObject.hpp"
 #include "../import_export.hpp"
 
 #define PA_OPERATOR_READ(type) SABE_PA_DLL virtual void operator>>(type& o_value) { read(reinterpret_cast<char*>(&o_value), sizeof(type)); }
@@ -219,6 +221,10 @@ namespace persistenceAPI {
         SABE_PA_DLL void operator>>(DashRingObject*& o_value);
 
         SABE_PA_DLL void operator>>(EnterEffectObject*& o_value);
+
+        SABE_PA_DLL void operator>>(EffectGameObject*& o_value);
+
+        SABE_PA_DLL void operator>>(AdvancedFollowTriggerObject*& o_value);
 
         // vector
 
@@ -491,6 +497,10 @@ namespace persistenceAPI {
         SABE_PA_DLL void operator<<(DashRingObject*& i_value);
 
         SABE_PA_DLL void operator<<(EnterEffectObject*& i_value);
+
+        SABE_PA_DLL void operator<<(EffectGameObject*& i_value);
+
+        SABE_PA_DLL void operator<<(AdvancedFollowTriggerObject*& i_value);
 
         // vector
 

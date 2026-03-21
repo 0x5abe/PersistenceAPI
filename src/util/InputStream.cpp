@@ -64,6 +64,14 @@ void Stream::operator>>(EnterEffectObject*& o_value) {
     readGenericGameObjectPtr<EnterEffectObject>(this, &o_value);
 }
 
+void Stream::operator>>(EffectGameObject*& o_value) {
+    readGenericGameObjectPtr<EffectGameObject>(this, &o_value);
+}
+
+void Stream::operator>>(AdvancedFollowTriggerObject*& o_value) {
+    readGenericGameObjectPtr<AdvancedFollowTriggerObject>(this, &o_value);
+}
+
 // vector
 
 template<class T, class U>
