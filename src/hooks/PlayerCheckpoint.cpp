@@ -22,7 +22,7 @@ inline void persistenceAPI::operator>>(Stream& i_stream, PAPlayerCheckpoint& o_v
     SEPARATOR_I
     i_stream >> o_value.m_lastPosition;
     SEPARATOR_I
-    i_stream >> o_value.m_yVelocity;
+    i_stream >> o_value.m_yVelocityUnrounded;
     SEPARATOR_I
     i_stream >> o_value.m_isUpsideDown;
     SEPARATOR_I
@@ -422,7 +422,7 @@ inline void persistenceAPI::operator<<(Stream& o_stream, PAPlayerCheckpoint& i_v
     SEPARATOR_O
     o_stream << i_value.m_lastPosition;
     SEPARATOR_O
-    o_stream << i_value.m_yVelocity;
+    o_stream << i_value.m_yVelocityUnrounded;
     SEPARATOR_O
     o_stream << i_value.m_isUpsideDown;
     SEPARATOR_O
@@ -804,7 +804,7 @@ void PAPlayerCheckpoint::describe() {
     PAPlayLayer* l_playLayer = static_cast<PAPlayLayer*>(PlayLayer::get());
     log::info("[PAPlayerCheckpoint - describe] m_position: {}", m_position);
     log::info("[PAPlayerCheckpoint - describe] m_lastPosition: {}", m_lastPosition);
-    log::info("[PAPlayerCheckpoint - describe] m_yVelocity: {}", m_yVelocity);
+    log::info("[PAPlayerCheckpoint - describe] m_yVelocityUnrounded: {}", m_yVelocityUnrounded);
     log::info("[PAPlayerCheckpoint - describe] m_isUpsideDown: {}", m_isUpsideDown);
     log::info("[PAPlayerCheckpoint - describe] m_isSideways: {}", m_isSideways);
     log::info("[PAPlayerCheckpoint - describe] m_isShip: {}", m_isShip);
