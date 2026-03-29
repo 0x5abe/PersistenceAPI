@@ -19,7 +19,7 @@ inline void persistenceAPI::operator>>(Stream& i_stream, PATimerItem& o_value) {
         SEPARATOR_I
         i_stream >> o_value.m_time;
         SEPARATOR_I
-        i_stream >> o_value.m_paused;
+        i_stream >> o_value.m_active;
         SEPARATOR_I
         i_stream >> o_value.m_timeMod;
         SEPARATOR_I
@@ -53,7 +53,7 @@ inline void persistenceAPI::operator<<(Stream& o_stream, PATimerItem& i_value) {
     SEPARATOR_O
     o_stream << i_value.m_time;
     SEPARATOR_O
-    o_stream << i_value.m_paused;
+    o_stream << i_value.m_active;
     SEPARATOR_O
     o_stream << i_value.m_timeMod;
     SEPARATOR_O
@@ -79,7 +79,7 @@ inline void persistenceAPI::operator<<(Stream& o_stream, PATimerItem& i_value) {
 void PATimerItem::describe() {
     log::info("[PATimerItem - describe] m_itemID: {}", m_itemID);
     log::info("[PATimerItem - describe] m_time: {}", m_time);
-    log::info("[PATimerItem - describe] m_paused: {}", m_paused);
+    log::info("[PATimerItem - describe] m_active: {}", m_active);
     log::info("[PATimerItem - describe] m_timeMod: {}", m_timeMod);
     log::info("[PATimerItem - describe] m_ignoreTimeWarp: {}", m_ignoreTimeWarp);
     log::info("[PATimerItem - describe] m_targetTime: {}", m_targetTime);

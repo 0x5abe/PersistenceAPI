@@ -58,7 +58,7 @@ inline void persistenceAPI::operator>>(Stream& i_stream, PACCNode& o_value) {
     SEPARATOR_I
     i_stream >> o_value.m_bReorderChildDirty;
     SEPARATOR_I
-    i_stream >> o_value.m_bUnkBool1;
+    i_stream >> o_value.m_bUseChildIndex;
     SEPARATOR_I
     i_stream >> o_value.m_bUnkBool2;
     SEPARATOR_I
@@ -107,7 +107,7 @@ inline void persistenceAPI::operator<<(Stream& o_stream, PACCNode& i_value) {
     SEPARATOR_O
     o_stream << i_value.m_bReorderChildDirty;
     SEPARATOR_O
-    o_stream << i_value.m_bUnkBool1;
+    o_stream << i_value.m_bUseChildIndex;
     SEPARATOR_O
     o_stream << i_value.m_bUnkBool2;
     SEPARATOR_O
@@ -151,7 +151,7 @@ void PACCNode::describe() {
     log::info("[PACCNode - describe] m_bVisible: {}", m_bVisible);
     log::info("[PACCNode - describe] m_bIgnoreAnchorPointForPosition: {}", m_bIgnoreAnchorPointForPosition);
     log::info("[PACCNode - describe] m_bReorderChildDirty: {}", m_bReorderChildDirty);
-    log::info("[PACCNode - describe] m_bUnkBool1: {}", m_bUnkBool1);
+    log::info("[PACCNode - describe] m_bUseChildIndex: {}", m_bUseChildIndex);
     log::info("[PACCNode - describe] m_bUnkBool2: {}", m_bUnkBool2);
 }
 #endif

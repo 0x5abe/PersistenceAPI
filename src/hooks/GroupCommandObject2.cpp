@@ -183,7 +183,7 @@ inline void persistenceAPI::operator>>(Stream& i_stream, PAGroupCommandObject2& 
     if (i_stream.getPAVersion() > 1) {
         i_stream >> o_value.m_someInterpValue2RelatedTrue;
         SEPARATOR_I
-        i_stream >> o_value.m_unkFloat204;
+        i_stream >> o_value.m_unkInt204;
     } else {
         i_stream.read(reinterpret_cast<char*>(&o_value) + offsetof(PAGroupCommandObject2,m_someInterpValue2RelatedTrue), 8);
     }
@@ -345,7 +345,7 @@ inline void persistenceAPI::operator<<(Stream& o_stream, PAGroupCommandObject2& 
     VEC_SEPARATOR_O
     o_stream << i_value.m_someInterpValue2RelatedTrue;
     SEPARATOR_O
-    o_stream << i_value.m_unkFloat204;
+    o_stream << i_value.m_unkInt204;
     SEPARATOR_O
 }
 
@@ -440,6 +440,6 @@ void PAGroupCommandObject2::describe() {
         log::info("[PAGroupCommandObject2 - describe] m_remapKeys[{}]: {}", i, m_remapKeys[i]);
     }
     log::info("[PAGroupCommandObject2 - describe] m_someInterpValue2RelatedTrue: {}", m_someInterpValue2RelatedTrue);
-    log::info("[PAGroupCommandObject2 - describe] m_unkFloat204: {}", m_unkFloat204);
+    log::info("[PAGroupCommandObject2 - describe] m_unkInt204: {}", m_unkInt204);
 }
 #endif

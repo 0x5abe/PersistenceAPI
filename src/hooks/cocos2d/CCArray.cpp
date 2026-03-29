@@ -30,6 +30,31 @@ void PACCArray::save(Stream& o_stream) {
 }
 
 template <>
+void PACCArray::load<GameObject>(Stream& i_stream) {
+    removeAllObjects();
+    unsigned int l_size;
+    i_stream >> l_size;
+    PAPlayLayer* l_playLayer = static_cast<PAPlayLayer*>(PlayLayer::get());
+    for (int i = 0; i < l_size; i++) {
+        int l_objectIndex;
+        i_stream >> l_objectIndex;
+        if (l_playLayer) addObject(l_playLayer->getGameObject(l_objectIndex));
+    }
+}
+
+template <>
+void PACCArray::save<GameObject>(Stream& o_stream) {
+    unsigned int l_size = count();
+    o_stream << l_size;
+    PAPlayLayer* l_playLayer = static_cast<PAPlayLayer*>(PlayLayer::get());
+    for (int i = 0; i < l_size; i++) {
+        int l_objectIndex = -1;
+        if (l_playLayer) l_objectIndex = l_playLayer->getGameObjectIndex(static_cast<GameObject*>(objectAtIndex(i)));
+        o_stream << l_objectIndex;
+    }
+}
+
+template <>
 void PACCArray::load<GradientTriggerObject>(Stream& i_stream) {
     removeAllObjects();
     unsigned int l_size;

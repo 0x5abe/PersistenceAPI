@@ -64,6 +64,14 @@ void Stream::operator<<(EnterEffectObject*& i_value) {
     writeGenericGameObjectPtr<EnterEffectObject>(this, &i_value);
 }
 
+void Stream::operator<<(EffectGameObject*& i_value) {
+    writeGenericGameObjectPtr<EffectGameObject>(this, &i_value);
+}
+
+void Stream::operator<<(AdvancedFollowTriggerObject*& i_value) {
+    writeGenericGameObjectPtr<AdvancedFollowTriggerObject>(this, &i_value);
+}
+
 // vector
 
 template<class T, class U>

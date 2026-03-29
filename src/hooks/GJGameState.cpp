@@ -188,7 +188,7 @@ inline void persistenceAPI::operator>>(Stream& i_stream, PAGJGameState& o_value)
     SEPARATOR_I
     i_stream >> o_value.m_unkDouble3;
     SEPARATOR_I
-    i_stream >> o_value.m_unkUint2;
+    i_stream >> o_value.m_commandIndex;
     SEPARATOR_I
     i_stream >> o_value.m_unkUint3;
     SEPARATOR_I
@@ -254,7 +254,7 @@ inline void persistenceAPI::operator>>(Stream& i_stream, PAGJGameState& o_value)
     i_stream >> o_value.m_timeModRelated2;
     SEPARATOR_I
     UMAP_SEPARATOR_I
-    i_stream >> o_value.m_unkMapPairIntIntInt;
+    i_stream >> o_value.m_activatedObjectIDs;
     UMAP_SEPARATOR_I
     SEPARATOR_I
     i_stream >> o_value.m_unkUint13;
@@ -324,9 +324,9 @@ inline void persistenceAPI::operator>>(Stream& i_stream, PAGJGameState& o_value)
     VEC_SEPARATOR_I
     i_stream >> o_value.m_advanceFollowInstances;
     VEC_SEPARATOR_I
-    i_stream >> o_value.m_dynamicObjActions1;
+    i_stream >> o_value.m_dynamicMoveActions;
     VEC_SEPARATOR_I
-    i_stream >> o_value.m_dynamicObjActions2;
+    i_stream >> o_value.m_dynamicRotateActions;
     VEC_SEPARATOR_I
     SEPARATOR_I
     i_stream >> o_value.m_unkBool28;
@@ -533,7 +533,7 @@ inline void persistenceAPI::operator<<(Stream& o_stream, PAGJGameState& i_value)
     SEPARATOR_O
     o_stream << i_value.m_unkDouble3;
     SEPARATOR_O
-    o_stream << i_value.m_unkUint2;
+    o_stream << i_value.m_commandIndex;
     SEPARATOR_O
     o_stream << i_value.m_unkUint3;
     SEPARATOR_O
@@ -599,7 +599,7 @@ inline void persistenceAPI::operator<<(Stream& o_stream, PAGJGameState& i_value)
     o_stream << i_value.m_timeModRelated2;
     SEPARATOR_O
     UMAP_SEPARATOR_O
-    o_stream << i_value.m_unkMapPairIntIntInt;
+    o_stream << i_value.m_activatedObjectIDs;
     UMAP_SEPARATOR_O
     SEPARATOR_O
     o_stream << i_value.m_unkUint13;
@@ -669,9 +669,9 @@ inline void persistenceAPI::operator<<(Stream& o_stream, PAGJGameState& i_value)
     VEC_SEPARATOR_O
     o_stream << i_value.m_advanceFollowInstances;
     VEC_SEPARATOR_O
-    o_stream << i_value.m_dynamicObjActions1;
+    o_stream << i_value.m_dynamicMoveActions;
     VEC_SEPARATOR_O
-    o_stream << i_value.m_dynamicObjActions2;
+    o_stream << i_value.m_dynamicRotateActions;
     VEC_SEPARATOR_O
     SEPARATOR_O
     o_stream << i_value.m_unkBool28;
@@ -837,7 +837,7 @@ void PAGJGameState::describe() {
     log::info("[PAGJGameState - describe] m_totalTime: {}", m_totalTime);
     log::info("[PAGJGameState - describe] m_levelTime: {}", m_levelTime);
     log::info("[PAGJGameState - describe] m_unkDouble3: {}", m_unkDouble3);
-    log::info("[PAGJGameState - describe] m_unkUint2: {}", m_unkUint2);
+    log::info("[PAGJGameState - describe] m_commandIndex: {}", m_commandIndex);
     log::info("[PAGJGameState - describe] m_unkUint3: {}", m_unkUint3);
     log::info("[PAGJGameState - describe] m_currentProgress: {}", m_currentProgress);
     log::info("[PAGJGameState - describe] m_unkUint4: {}", m_unkUint4);
@@ -893,9 +893,9 @@ void PAGJGameState::describe() {
     log::info("[PAGJGameState - describe] m_timeModRelated: {}", m_timeModRelated);
     log::info("[PAGJGameState - describe] m_timeModRelated2: {}", m_timeModRelated2);
     i = 0;
-    for (gd::pair<std::pair<int, int>, int> l_pair : m_unkMapPairIntIntInt) {
-        log::info("[PAGJGameState - describe] m_unkMapPairIntIntInt element {} key: {}", i, l_pair.first);
-        log::info("[PAGJGameState - describe] m_unkMapPairIntIntInt element {} value: {}", i, l_pair.second);
+    for (gd::pair<std::pair<int, int>, int> l_pair : m_activatedObjectIDs) {
+        log::info("[PAGJGameState - describe] m_activatedObjectIDs element {} key: {}", i, l_pair.first);
+        log::info("[PAGJGameState - describe] m_activatedObjectIDs element {} value: {}", i, l_pair.second);
         i++;
     }
     log::info("[PAGJGameState - describe] m_unkUint13: {}", m_unkUint13);
@@ -1018,17 +1018,17 @@ void PAGJGameState::describe() {
         log::info("[PAGJGameState - describe] m_advanceFollowInstances element[{}]:", i);
         reinterpret_cast<PAAdvancedFollowInstance*>(&m_advanceFollowInstances[i])->describe();
     }
-    l_size = m_dynamicObjActions1.size();
-    log::info("[PAGJGameState - describe] m_dynamicObjActions1.size(): {}", l_size);
+    l_size = m_dynamicMoveActions.size();
+    log::info("[PAGJGameState - describe] m_dynamicMoveActions.size(): {}", l_size);
     for (int i = 0; i < l_size; i++) {
-        log::info("[PAGJGameState - describe] m_dynamicObjActions1[{}]:", i);
-        reinterpret_cast<PADynamicObjectAction*>(&m_dynamicObjActions1[i])->describe();
+        log::info("[PAGJGameState - describe] m_dynamicMoveActions[{}]:", i);
+        reinterpret_cast<PADynamicObjectAction*>(&m_dynamicMoveActions[i])->describe();
     }
-    l_size = m_dynamicObjActions2.size();
-    log::info("[PAGJGameState - describe] m_dynamicObjActions2.size(): {}", l_size);
+    l_size = m_dynamicRotateActions.size();
+    log::info("[PAGJGameState - describe] m_dynamicRotateActions.size(): {}", l_size);
     for (int i = 0; i < l_size; i++) {
-        log::info("[PAGJGameState - describe] m_dynamicObjActions2[{}]:", i);
-        reinterpret_cast<PADynamicObjectAction*>(&m_dynamicObjActions2[i])->describe();
+        log::info("[PAGJGameState - describe] m_dynamicRotateActions[{}]:", i);
+        reinterpret_cast<PADynamicObjectAction*>(&m_dynamicRotateActions[i])->describe();
     }
     log::info("[PAGJGameState - describe] m_unkBool28: {}", m_unkBool28);
     log::info("[PAGJGameState - describe] m_unkBool29: {}", m_unkBool29);
