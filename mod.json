@@ -1,30 +1,30 @@
 {
-	"geode": "5.4.1",
-	"gd": {
-		"win": "2.2081",
-		"android": "2.2081",
-		"mac": "2.2081",
-		"ios": "2.2081"
-	},
-	"version": "v1.1.0",
-	"id": "sabe.persistenceapi",
-	"name": "PersistenceAPI",
-	"developer": "Sabe",
-	"description": "API for serialization/deserialization of GD classes",
-	"links":{
-		"source": "https://github.com/0x5abe/PersistenceAPI"
-	},
-	"tags": [
-		"utility",
-		"developer"
-	],
-	"early-load": true,
-	"api": {
-		"include": [
-			"include/*.hpp",
-			"include/hooks/cocos2d/*.hpp",
-			"include/hooks/*.hpp",
-			"include/util/*.hpp"
-		]
-	}
+    "geode": "5.4.1",
+    "gd": {
+        "win": "2.2081",
+        "android": "2.2081",
+        "mac": "2.2081",
+        "ios": "2.2081"
+    },
+    "version": "v1.2.0",
+    "id": "sabe.persistenceapi",
+    "name": "PersistenceAPI",
+    "developer": "Sabe",
+    "description": "API for serialization/deserialization of GD classes",
+    "links": {
+        "source": "https://github.com/0x5abe/PersistenceAPI"
+    },
+    "tags": [
+        "utility",
+        "developer"
+    ],
+    "early-load": true,
+    "api": {
+        "include": [
+            "include/*.hpp",
+            "include/hooks/cocos2d/*.hpp",
+            "include/hooks/*.hpp",
+            "include/util/*.hpp"
+        ]
+    }
 }
